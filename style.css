@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'Borel';
+  src: url('./Borel-Regular.ttf');
+}
+
+body {
+  font-family: Borel;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+#heading {
+  animation: fadeInUp 0.4s ease-in forwards;
+}
+.animate-text {
+  animation: fadeInUp 0.7s ease-in forwards;
+  opacity: 0; /* Start with opacity 0 to make the text invisible */
+}
+
+.social-btns {
+  position: absolute;
+  bottom: 20px;
+}
+
+.social-btns a {
+  margin-right: 10px;
+}
+
+.social-btns a:hover {
+}
+
+/* Define the keyframes for the animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(
+      20px
+    ); /* Move the text 20 pixels down from its initial position */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Move the text back to its original position */
+  }
+}

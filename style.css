@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Borel';
-  src: url('./Borel-Regular.ttf');
+  src: url('./assets/Borel-Regular.ttf');
 }
 
 body {
@@ -26,6 +26,7 @@ a {
 .social-btns {
   position: absolute;
   bottom: 20px;
+  z-index: 20;
 }
 
 .social-btns a {
@@ -62,4 +63,10 @@ main {
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+
+@media screen and (max-width: 768px) {
+  video {
+    display: none;
+  }
 }

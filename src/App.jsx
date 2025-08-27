@@ -124,6 +124,45 @@ export default function App() {
           </motion.div>
         </div>
       </section>
+                {/* About */}
+<section id="about" className="border-b border-gray-200">
+  <div className="max-w-6xl mx-auto px-4 py-16">
+    <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">About</h2>
+    <div className="mt-6 grid md:grid-cols-12 gap-8 items-start">
+      <div className="md:col-span-7">
+        <p className="text-gray-700">
+          I blend machine learning with clinical needs to build practical tools for prosthetics and neuro-rehabilitation.
+        </p>
+        <ul className="list-disc ml-6 mt-4 space-y-2 text-gray-700">
+          <li>Real-time sEMG acquisition & control (Biometrics DLL → Python → UDP → Unity).</li>
+          <li>AR-based myoelectric training (up to 17 movement classes).</li>
+          <li>OpenSim & Moco gait modelling for hemiparesis.</li>
+          <li>Imaging: 44-feature descriptors + U-Net segmentation.</li>
+        </ul>
+        <div className="mt-6 flex gap-3 flex-wrap">
+          <a href="#projects" className="px-4 py-2 rounded-md border text-gray-900 hover:bg-gray-50">View projects</a>
+          <a href="mailto:syuzi.matevosyan1802@gmail.com" className="px-4 py-2 rounded-md border text-gray-900 hover:bg-gray-50">Email me</a>
+        </div>
+      </div>
+      <div className="md:col-span-5">
+        <div className="rounded-xl border p-5">
+          <h3 className="text-sm font-semibold text-gray-900">Quick facts</h3>
+          <ul className="mt-3 space-y-2 text-sm text-gray-700">
+            <li>📍 Based in Greece · from Armenia</li>
+            <li>🎓 Erasmus Mundus MSc Biomedical Engineering</li>
+            <li>🧠 Focus: EMG, rehab tech, imaging, HTA</li>
+            <li>💬 English, Armenian, Russian</li>
+          </ul>
+          <div className="mt-4 flex gap-2 flex-wrap">
+            <a href="https://www.linkedin.com/in/symatevo/" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border text-xs hover:bg-gray-50">LinkedIn</a>
+            <a href="https://github.com/symatevo" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border text-xs hover:bg-gray-50">GitHub</a>
+            <a href="/Syuzanna_Matevosyan_CV.pdf" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border text-xs hover:bg-gray-50">CV</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   );
 }

@@ -9,6 +9,7 @@ export default function Home() {
     linkedin: "https://www.linkedin.com/in/symatevo/",
     cv: "/Syuzanna_Matevosyan_CV.pdf",
     email: "syuzi.matevosyan1802@gmail.com",
+    portfolio: "/SM_Portfolio.pdf",
   };
 
   // asset paths in /public/images
@@ -121,55 +122,8 @@ export default function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-gray-200">
         {/* Single artistic hero sketch (hands) */}
-        <Sketch
-          src={IMAGES.heroHands}
-          alt="hand studies / prosthesis gestures"
-          className="pointer-events-none absolute right-[-2rem] top-1/2 -translate-y-1/2 w-[22rem] md:w-[32rem] lg:w-[38rem] opacity-20 mix-blend-multiply"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0.12, 0.2, 0.12], rotate: [0, -1.5, 0], scale: [1, 1.02, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
-          >
-            {/* Minimal hero copy (no big bold title) */}
-            <p className="text-sm uppercase tracking-wider text-gray-500">Biomedical engineering</p>
-            <h2 className="mt-2 text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
-              AI & rehabilitation • biosignals • medical imaging
-            </h2>
-            <p className="mt-3 text-gray-600">
-              I design and evaluate practical systems for prosthetics and neuro‑rehabilitation—bridging research and clinic with EMG control, AR interactions, and gait modelling.
-            </p>
-            <div className="mt-6 flex gap-4">
-              <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50">GitHub ↗</a>
-              <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50">LinkedIn ↗</a>
-              <a href={LINKS.cv} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50">Download CV ↗</a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* About */}
-      <section id="about" className="relative overflow-hidden border-b border-gray-200 scroll-mt-24"> 
-        {/* artistic accents for About */}
-        <Sketch
-          src={IMAGES.aboutScribble}
-          alt="EMG electrodes doodle"
-          className="absolute -top-3 left-3 w-24 opacity-30"
-          animate={{ opacity: [0.2, 0.35, 0.2], y: [0, -2, 0] }}
-          transition={{ duration: 16, repeat: Infinity }}
-        />
-        <Sketch
-          src={IMAGES.aboutDesk}
-          alt="Desk with EMG setup"
-          className="hidden md:block absolute -bottom-6 right-6 w-72 opacity-15 mix-blend-multiply"
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        />
+        
+        
         <div className="max-w-6xl mx-auto px-4 py-16">
           <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">About</motion.h2>
           <div className="mt-6 grid md:grid-cols-12 gap-8 items-start">
@@ -202,9 +156,18 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          <div className="mt-10 flex justify-center">
+            <a
+              href={LINKS.portfolio}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="px-5 py-2 rounded-md bg-gray-900 text-white hover:bg-black shadow-sm"
+            >
+              Download portfolio (PDF)
+            </a>
           </div>
-        </div>
-      </section>
+        $1
 
       {/* Projects */}
       <section id="projects" className="border-b border-gray-200 scroll-mt-24">

@@ -22,6 +22,7 @@ export default function Home() {
     heroPortrait: "/images/hero-portrait.png",
     aboutDesk: "/images/about-desk.png",
     aboutScribble: "/images/about-emg-scribble.png",
+    heroHands: "/images/hero-hands-sketch.png",
   };
 
   const nav = [
@@ -119,33 +120,29 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-gray-200">
-        {/* Hero accent lines & portrait (optional) */}
+        {/* Single artistic hero sketch (hands) */}
         <Sketch
-          src={IMAGES.heroAccent}
-          alt="abstract ink accent"
-          className="absolute -top-6 right-6 w-48 opacity-30"
+          src={IMAGES.heroHands}
+          alt="hand studies / prosthesis gestures"
+          className="pointer-events-none absolute right-[-2rem] top-1/2 -translate-y-1/2 w-[22rem] md:w-[32rem] lg:w-[38rem] opacity-20 mix-blend-multiply"
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0.15, 0.3, 0.15] }}
-          transition={{ duration: 14, repeat: Infinity }}
+          animate={{ opacity: [0.12, 0.2, 0.12], rotate: [0, -1.5, 0], scale: [1, 1.02, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
         />
-        <Sketch
-          src={IMAGES.heroPortrait}
-          alt="Syuzanna portrait"
-          className="hidden md:block absolute bottom-0 right-8 w-60 translate-y-8 opacity-90 drop-shadow-xl"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        />
-        <div className="max-w-6xl mx-auto px-4 py-20 md:py-24 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Biomedical Engineer</h1>
-            <p className="mt-4 text-lg text-gray-600">
-              Focused on AI‑driven biosignals, medical imaging, prosthetics, and rehabilitation. Erasmus Mundus MSc Biomedical Engineering scholar with hands‑on experience in EMG control, AR/VR therapy systems, and OpenSim gait modelling.
+            {/* Minimal hero copy (no big bold title) */}
+            <p className="text-sm uppercase tracking-wider text-gray-500">Biomedical engineering</p>
+            <h2 className="mt-2 text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
+              AI & rehabilitation • biosignals • medical imaging
+            </h2>
+            <p className="mt-3 text-gray-600">
+              I design and evaluate practical systems for prosthetics and neuro‑rehabilitation—bridging research and clinic with EMG control, AR interactions, and gait modelling.
             </p>
             <div className="mt-6 flex gap-4">
               <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50">GitHub ↗</a>
@@ -235,7 +232,7 @@ export default function Home() {
               <Sketch
                 src={IMAGES.arSketch}
                 alt="AR display & myoelectric control sketch"
-                className="pointer-events-none select-none absolute -top-10 -right-12 w-[17.5rem] md:w-[23rem] lg:w-[28rem] opacity-30 mix-blend-multiply"
+                className="pointer-events-none select-none absolute -top-8 -right-14 w-[13rem] md:w-[18rem] lg:w-[22rem] opacity-30 mix-blend-multiply"
                 animate={{ y: [0, -6, 0], rotate: [0, -2, 2, 0] }}
                 transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
               />

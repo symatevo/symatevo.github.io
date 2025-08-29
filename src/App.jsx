@@ -13,7 +13,7 @@ export default function Home() {
 
   // asset paths in /public/images
   const IMAGES = {
-    arSketch: "/images/ar-sketch.png",
+    arSketch: "/images/ar-virtual-arm.png",
     opensimGait: "/images/opensim-gait-sketch.png",
     unetSketch: "/images/unet-diagram-sketch.png",
     ninaproSketch: "/images/ninapro-flow-sketch.png",
@@ -226,7 +226,7 @@ export default function Home() {
               {/* floating blob */}
               <motion.div
                 aria-hidden
-                className="pointer-events-none absolute -top-16 -right-10 w-72 h-72 rounded-full bg-indigo-100/60 blur-2xl"
+                className="pointer-events-none absolute -top-24 -right-16 w-96 h-96 md:w-[28rem] md:h-[28rem] rounded-full bg-indigo-100/60 blur-2xl"
                 initial={{ opacity: 0.35 }}
                 animate={{ opacity: [0.25, 0.4, 0.25], scale: [1, 1.05, 1] }}
                 transition={{ duration: 14, repeat: Infinity }}
@@ -235,7 +235,7 @@ export default function Home() {
               <Sketch
                 src={IMAGES.arSketch}
                 alt="AR display & myoelectric control sketch"
-                className="pointer-events-none select-none absolute -top-6 -right-4 w-64 opacity-30 mix-blend-multiply"
+                className="pointer-events-none select-none absolute -top-10 -right-8 w-72 md:w-96 lg:w-[30rem] opacity-30 mix-blend-multiply"
                 animate={{ y: [0, -6, 0], rotate: [0, -2, 2, 0] }}
                 transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
               />

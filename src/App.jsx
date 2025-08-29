@@ -14,6 +14,14 @@ export default function Home() {
   // asset paths in /public/images
   const IMAGES = {
     arSketch: "/images/ar-sketch.png",
+    opensimGait: "/images/opensim-gait-sketch.png",
+    unetSketch: "/images/unet-diagram-sketch.png",
+    ninaproSketch: "/images/ninapro-flow-sketch.png",
+    paper: "/images/paper-texture.png",
+    heroAccent: "/images/ink-swoosh-1.png",
+    heroPortrait: "/images/hero-portrait.png",
+    aboutDesk: "/images/about-desk.png",
+    aboutScribble: "/images/about-emg-scribble.png",
   };
 
   const nav = [
@@ -25,23 +33,46 @@ export default function Home() {
     { href: "#contact", label: "Contact" },
   ];
 
+  // Reusable sketch component that hides itself if image is missing
+  const Sketch = ({ src, alt = "", className = "", initial, animate, transition }) => {
+    const [ok, setOk] = useState(true);
+    if (!ok || !src) return null;
+    return (
+      <motion.img
+        src={src}
+        alt={alt}
+        onError={() => setOk(false)}
+        className={className}
+        initial={initial}
+        animate={animate}
+        transition={transition}
+      />
+    );
+  };
+
   return (
     <div className="min-h-screen text-gray-900 bg-white relative overflow-hidden scroll-smooth">
-      {/* Subtle animated background */}
+      {/* Paper texture overlay (very subtle) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-multiply"
+        style={{ backgroundImage: `url(${IMAGES.paper})`, backgroundSize: "600px 600px", backgroundRepeat: "repeat" }}
+      />
+      {/* Subtle page background accents */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.15, scale: [1, 1.1, 1] }}
+        animate={{ opacity: 0.12, scale: [1, 1.05, 1] }}
         transition={{ repeat: Infinity, duration: 20 }}
-        className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-indigo-100 blur-3xl"
+        className="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-indigo-100 blur-3xl"
       />
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.15, scale: [1.1, 1, 1.1] }}
-        transition={{ repeat: Infinity, duration: 25 }}
-        className="absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-sky-100 blur-3xl"
+        animate={{ opacity: 0.12, scale: [1.05, 1, 1.05] }}
+        transition={{ repeat: Infinity, duration: 24 }}
+        className="pointer-events-none absolute -bottom-40 -right-40 w-[520px] h-[520px] rounded-full bg-sky-100 blur-3xl"
       />
 
-      {/* Header - Minimal Academic Style */}
+      {/* Header */}
       <header className="sticky top-0 z-30 border-b border-gray-200 bg-white/95 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-20">
           <div className="flex flex-col">
@@ -86,68 +117,67 @@ export default function Home() {
         )}
       </header>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="relative overflow-hidden border-b border-gray-200">
-        <div className="max-w-6xl mx-auto px-4 py-24 relative z-10">
+        {/* Hero accent lines & portrait (optional) */}
+        <Sketch
+          src={IMAGES.heroAccent}
+          alt="abstract ink accent"
+          className="absolute -top-6 right-6 w-48 opacity-30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0.15, 0.3, 0.15] }}
+          transition={{ duration: 14, repeat: Infinity }}
+        />
+        <Sketch
+          src={IMAGES.heroPortrait}
+          alt="Syuzanna portrait"
+          className="hidden md:block absolute bottom-0 right-8 w-60 translate-y-8 opacity-90 drop-shadow-xl"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        />
+        <div className="max-w-6xl mx-auto px-4 py-20 md:py-24 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
-              Biomedical Engineer
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Biomedical Engineer</h1>
             <p className="mt-4 text-lg text-gray-600">
-              Focused on AI-driven biosignals, medical imaging, prosthetics, and rehabilitation. Erasmus Mundus MSc Biomedical Engineering scholar with hands-on experience in EMG control, AR/VR therapy systems, and OpenSim gait modelling.
+              Focused on AI‑driven biosignals, medical imaging, prosthetics, and rehabilitation. Erasmus Mundus MSc Biomedical Engineering scholar with hands‑on experience in EMG control, AR/VR therapy systems, and OpenSim gait modelling.
             </p>
             <div className="mt-6 flex gap-4">
-              <a
-                href={LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
-              >
-                GitHub ↗
-              </a>
-              <a
-                href={LINKS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
-              >
-                LinkedIn ↗
-              </a>
-              <a
-                href={LINKS.cv}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
-              >
-                Download CV ↗
-              </a>
+              <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50">GitHub ↗</a>
+              <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50">LinkedIn ↗</a>
+              <a href={LINKS.cv} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50">Download CV ↗</a>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* About */}
-      <section id="about" className="border-b border-gray-200 scroll-mt-24">
+      <section id="about" className="relative overflow-hidden border-b border-gray-200 scroll-mt-24"> 
+        {/* artistic accents for About */}
+        <Sketch
+          src={IMAGES.aboutScribble}
+          alt="EMG electrodes doodle"
+          className="absolute -top-3 left-3 w-24 opacity-30"
+          animate={{ opacity: [0.2, 0.35, 0.2], y: [0, -2, 0] }}
+          transition={{ duration: 16, repeat: Infinity }}
+        />
+        <Sketch
+          src={IMAGES.aboutDesk}
+          alt="Desk with EMG setup"
+          className="hidden md:block absolute -bottom-6 right-6 w-72 opacity-15 mix-blend-multiply"
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        />
         <div className="max-w-6xl mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900"
-          >
-            About
-          </motion.h2>
+          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">About</motion.h2>
           <div className="mt-6 grid md:grid-cols-12 gap-8 items-start">
             <div className="md:col-span-7">
-              <p className="text-gray-700">
-                I blend machine learning with clinical needs to build practical tools for prosthetics and neuro‑rehabilitation. I thrive at the interface of engineering and healthcare: rapid prototyping, clear evaluation, and clinician collaboration.
-              </p>
+              <p className="text-gray-700">I blend machine learning with clinical needs to build practical tools for prosthetics and neuro‑rehabilitation. I thrive at the interface of engineering and healthcare: rapid prototyping, clear evaluation, and clinician collaboration.</p>
               <ul className="list-disc ml-6 mt-4 space-y-2 text-gray-700">
                 <li>Real‑time sEMG acquisition & control (Biometrics Ltd DataLITE DLL → Python → UDP → Unity).</li>
                 <li>AR‑based myoelectric training game; explored up to 17 movement classes with advanced control strategies.</li>
@@ -182,26 +212,35 @@ export default function Home() {
       {/* Projects */}
       <section id="projects" className="border-b border-gray-200 scroll-mt-24">
         <div className="max-w-6xl mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900"
-          >
-            Projects
-          </motion.h2>
+          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">Projects</motion.h2>
 
           <div className="mt-6 grid md:grid-cols-2 gap-6">
-            {/* Project 1 */}
+            {/* Project 1 with artistic floating sketch */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="rounded-xl border p-6 hover:shadow-sm transition-shadow"
+              className="rounded-xl border p-6 hover:shadow-sm transition-shadow relative overflow-hidden group"
             >
-              <div className="flex items-start justify-between gap-4">
+              {/* floating blob */}
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute -top-16 -right-10 w-72 h-72 rounded-full bg-indigo-100/60 blur-2xl"
+                initial={{ opacity: 0.35 }}
+                animate={{ opacity: [0.25, 0.4, 0.25], scale: [1, 1.05, 1] }}
+                transition={{ duration: 14, repeat: Infinity }}
+              />
+              {/* drifting sketch */}
+              <Sketch
+                src={IMAGES.arSketch}
+                alt="AR display & myoelectric control sketch"
+                className="pointer-events-none select-none absolute -top-6 -right-4 w-64 opacity-30 mix-blend-multiply"
+                animate={{ y: [0, -6, 0], rotate: [0, -2, 2, 0] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              <div className="flex items-start justify-between gap-4 relative z-10">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">AR‑based Myoelectric Prosthesis Training</h3>
                   <p className="text-sm text-gray-500 mt-1">Unity · Python · Biometrics DataLITE · UDP</p>
@@ -210,34 +249,27 @@ export default function Home() {
                   <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border text-sm hover:bg-gray-50">Code ↗</a>
                 </div>
               </div>
-
-              <div className="mt-3 grid md:grid-cols-5 gap-4 items-start">
-                <div className="md:col-span-3">
-                  <p className="prose prose-sm max-w-none text-gray-700">
-                    End‑to‑end pipeline to acquire sEMG via vendor DLL, process in Python (windowing, features, NN classifier), and stream to Unity for interactive AR tasks. Explored 17 movement classes and advanced control strategies for robust control.
-                  </p>
-                  <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600">
-                    <span className="px-2 py-1 rounded-full border">Real‑time EMG</span>
-                    <span className="px-2 py-1 rounded-full border">AR/VR Rehab</span>
-                    <span className="px-2 py-1 rounded-full border">Gesture Classification</span>
-                  </div>
-                </div>
-                <div className="md:col-span-2">
-                  <img src={IMAGES.arSketch} alt="AR display system & myoelectric control sketch" className="w-full rounded-lg border object-contain bg-white"/>
-                  <p className="text-xs text-gray-500 mt-2">AR display system & myoelectric control (sketch)</p>
+              <div className="mt-3 relative z-10">
+                <p className="prose prose-sm max-w-none text-gray-700">End‑to‑end pipeline to acquire sEMG via vendor DLL, process in Python (windowing, features, NN classifier), and stream to Unity for interactive AR tasks. Explored 17 movement classes and advanced control strategies for robust control.</p>
+                <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600">
+                  <span className="px-2 py-1 rounded-full border bg-white/70">Real‑time EMG</span>
+                  <span className="px-2 py-1 rounded-full border bg-white/70">AR/VR Rehab</span>
+                  <span className="px-2 py-1 rounded-full border bg-white/70">Gesture Classification</span>
                 </div>
               </div>
             </motion.div>
 
             {/* Project 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rounded-xl border p-6 hover:shadow-sm transition-shadow"
-            >
-              <div className="flex items-start justify-between gap-4">
+            <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-xl border p-6 hover:shadow-sm transition-shadow relative overflow-hidden">
+              {/* floating gait sketch */}
+              <Sketch
+                src={IMAGES.opensimGait}
+                alt="Gait silhouette sketch"
+                className="pointer-events-none absolute -top-8 -right-6 w-56 opacity-25 mix-blend-multiply"
+                animate={{ y: [0, -5, 0], rotate: [0, 1.5, 0] }}
+                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="flex items-start justify-between gap-4 relative z-10">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">Stroke Rehabilitation Modelling</h3>
                   <p className="text-sm text-gray-500 mt-1">OpenSim & Moco</p>
@@ -246,24 +278,23 @@ export default function Home() {
                   <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border text-sm hover:bg-gray-50">Methods ↗</a>
                 </div>
               </div>
-              <p className="prose prose-sm max-w-none text-gray-700 mt-3">
-                Modelled hemiparesis‑related gait abnormalities and tested interventions (muscle strengthening, gait retraining) using trajectory optimization to compare outcomes.
-              </p>
-              <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600">
-                <span className="px-2 py-1 rounded-full border">Gait</span>
-                <span className="px-2 py-1 rounded-full border">Optimization</span>
+              <p className="prose prose-sm max-w-none text-gray-700 mt-3">Modelled hemiparesis‑related gait abnormalities and tested interventions (muscle strengthening, gait retraining) using trajectory optimization to compare outcomes.</p>
+              <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600 relative z-10">
+                <span className="px-2 py-1 rounded-full border bg-white/70">Gait</span>
+                <span className="px-2 py-1 rounded-full border bg-white/70">Optimization</span>
               </div>
             </motion.div>
 
             {/* Project 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rounded-xl border p-6 hover:shadow-sm transition-shadow"
-            >
-              <div className="flex items-start justify-between gap-4">
+            <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-xl border p-6 hover:shadow-sm transition-shadow relative overflow-hidden">
+              <Sketch
+                src={IMAGES.unetSketch}
+                alt="U‑Net block sketch"
+                className="pointer-events-none absolute -top-10 -right-6 w-56 opacity-25 mix-blend-multiply"
+                animate={{ y: [0, -4, 0], rotate: [0, -1, 1, 0] }}
+                transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="flex items-start justify-between gap-4 relative z-10">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">Medical Image Segmentation & Clustering</h3>
                   <p className="text-sm text-gray-500 mt-1">U‑Net · GLCM/LBP · Tissue characterization</p>
@@ -272,24 +303,23 @@ export default function Home() {
                   <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border text-sm hover:bg-gray-50">Code ↗</a>
                 </div>
               </div>
-              <p className="prose prose-sm max-w-none text-gray-700 mt-3">
-                Built a 44‑feature descriptor over 11×11 neighborhoods (mean, entropy; GLCM: contrast, homogeneity, energy; LBP) for foreground/background clustering; implemented U‑Net variants with thorough metric evaluation.
-              </p>
-              <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600">
-                <span className="px-2 py-1 rounded-full border">Imaging</span>
-                <span className="px-2 py-1 rounded-full border">ML</span>
+              <p className="prose prose-sm max-w-none text-gray-700 mt-3">Built a 44‑feature descriptor over 11×11 neighborhoods (mean, entropy; GLCM: contrast, homogeneity, energy; LBP) for foreground/background clustering; implemented U‑Net variants with thorough metric evaluation.</p>
+              <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600 relative z-10">
+                <span className="px-2 py-1 rounded-full border bg-white/70">Imaging</span>
+                <span className="px-2 py-1 rounded-full border bg-white/70">ML</span>
               </div>
             </motion.div>
 
             {/* Project 4 */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rounded-xl border p-6 hover:shadow-sm transition-shadow"
-            >
-              <div className="flex items-start justify-between gap-4">
+            <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-xl border p-6 hover:shadow-sm transition-shadow relative overflow-hidden">
+              <Sketch
+                src={IMAGES.ninaproSketch}
+                alt="Ninapro flow sketch"
+                className="pointer-events-none absolute -top-6 -right-5 w-56 opacity-25 mix-blend-multiply"
+                animate={{ y: [0, -4, 0], rotate: [0, 1, -1, 0] }}
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="flex items-start justify-between gap-4 relative z-10">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">Ninapro DB7 — sEMG & IMU Analysis</h3>
                   <p className="text-sm text-gray-500 mt-1">Dimensionality reduction · Classification</p>
@@ -298,12 +328,10 @@ export default function Home() {
                   <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md border text-sm hover:bg-gray-50">Notebook ↗</a>
                 </div>
               </div>
-              <p className="prose prose-sm max-w-none text-gray-700 mt-3">
-                Extracted features and applied PCA/tensor methods to decode task variables and characterize neuromuscular responses for movement classification.
-              </p>
-              <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600">
-                <span className="px-2 py-1 rounded-full border">PCA</span>
-                <span className="px-2 py-1 rounded-full border">Tensor Decomposition</span>
+              <p className="prose prose-sm max-w-none text-gray-700 mt-3">Extracted features and applied PCA/tensor methods to decode task variables and characterize neuromuscular responses for movement classification.</p>
+              <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600 relative z-10">
+                <span className="px-2 py-1 rounded-full border bg-white/70">PCA</span>
+                <span className="px-2 py-1 rounded-full border bg-white/70">Tensor Decomposition</span>
               </div>
             </motion.div>
           </div>

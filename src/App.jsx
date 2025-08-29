@@ -235,7 +235,7 @@ export default function Home() {
               <Sketch
                 src={IMAGES.arSketch}
                 alt="AR display & myoelectric control sketch"
-                className="pointer-events-none select-none absolute -top-10 -right-8 w-72 md:w-96 lg:w-[30rem] opacity-30 mix-blend-multiply"
+                className="pointer-events-none select-none absolute -top-10 -right-12 w-[17.5rem] md:w-[23rem] lg:w-[28rem] opacity-30 mix-blend-multiply"
                 animate={{ y: [0, -6, 0], rotate: [0, -2, 2, 0] }}
                 transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
               />
@@ -262,12 +262,19 @@ export default function Home() {
             {/* Project 2 */}
             <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-xl border p-6 hover:shadow-sm transition-shadow relative overflow-hidden">
               {/* floating gait sketch */}
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute -top-16 -right-12 w-72 h-72 rounded-full bg-sky-100/60 blur-2xl"
+                initial={{ opacity: 0.3 }}
+                animate={{ opacity: [0.22, 0.38, 0.22], scale: [1, 1.06, 1] }}
+                transition={{ duration: 16, repeat: Infinity }}
+              />
               <Sketch
                 src={IMAGES.opensimGait}
                 alt="Gait silhouette sketch"
                 className="pointer-events-none absolute -top-8 -right-6 w-56 opacity-25 mix-blend-multiply"
-                animate={{ y: [0, -5, 0], rotate: [0, 1.5, 0] }}
-                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+                animate={{ y: [0, -6, 0], rotate: [0, -2, 2, 0] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
               />
               <div className="flex items-start justify-between gap-4 relative z-10">
                 <div>

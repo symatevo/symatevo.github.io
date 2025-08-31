@@ -39,7 +39,7 @@ export default function App() {
       --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
       --mast:#f3f4f6;
       --badge-adv:#d1fae5; --badge-int:#dbeafe; --badge-bas:#fde68a;
-      --hero-img:url('https://drive.google.com/file/d/1OsFrzAUeld7QDz5JOQ7e-D0QMH6y_mBy/view?usp=sharing');
+      --hero-img:url('/header.png');
     }
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);
@@ -129,7 +129,6 @@ export default function App() {
       <div className="masthead">
         <div className="wrap hero">
           <div className="header">
-            <div className="logo">🧪</div>
             <div>
               <h1>Syuzanna Matevosyan — Portfolio</h1>
             </div>

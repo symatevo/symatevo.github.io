@@ -1,540 +1,278 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Syuzanna Matevosyan — Portfolio</title>
+  <style>
+    :root{
+      --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
+      --badge-adv:#d1fae5; --badge-int:#dbeafe; --badge-bas:#fde68a;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);
+      font: 400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
+    .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 72px}
 
-export default function App() {
-  const [open, setOpen] = useState(false);
+    /* Header */
+    .header{display:flex;align-items:center;gap:16px;padding:18px 0 22px;border-bottom:1px solid var(--line)}
+    .logo{width:56px;height:56px;border-radius:12px;background:#e5e7eb;display:grid;place-items:center;font-size:28px}
+    h1{margin:0;font-weight:800;letter-spacing:-.02em}
 
-  const LINKS = {
-    github: "https://github.com/symatevo",
-    linkedin: "https://www.linkedin.com/in/symatevo/",
-    cv: "/Syuzanna_Matevosyan_CV.pdf",
-    email: "syuzi.matevosyan1802@gmail.com",
-    portfolio: "/SM_Portfolio.pdf",
-  };
+    /* 2-column layout */
+    .grid{display:grid;grid-template-columns: 0.9fr 1.4fr;gap:28px;margin-top:22px}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
 
-  // Images in /public/images (components hide if a file is missing)
-  const IMAGES = {
-    heroHands: "/images/hero-hands-sketch.png",
-    paper: "/images/paper-texture.png",
-    arSketch: "/images/ar-virtual-arm.png",
-    opensimGait: "/images/opensim-gait-sketch.png",
-  };
+    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+    .muted{color:var(--muted)}
+    .h3{font-size:18px;font-weight:700;margin:0 0 12px}
 
-  const nav = [
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Projects" },
-    { href: "#publications", label: "Publications" },
-    { href: "#skills", label: "Skills" },
-    { href: "#education", label: "Education" },
-    { href: "#contact", label: "Contact" },
-  ];
+    /* Left column */
+    .name{font-weight:800;font-size:22px;margin:2px 0 2px}
+    .roles{font-weight:700;color:#374151}
+    .about{margin-top:10px}
+    .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
+    .btn:hover{background:#f3f4f6}
 
-  // Reusable image that quietly hides itself if the file isn't present
-  const Sketch = ({ src, alt = "", className = "", initial, animate, transition }) => {
-    const [ok, setOk] = useState(true);
-    if (!src || !ok) return null;
-    return (
-      <motion.img
-        src={src}
-        alt={alt}
-        onError={() => setOk(false)}
-        className={className}
-        initial={initial}
-        animate={animate}
-        transition={transition}
-      />
-    );
-  };
+    /* Skills */
+    .tabs{display:flex;gap:18px;margin:0 0 14px}
+    .tab{display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600}
+    .tab.active{color:var(--text)}
+    .tab .dot{width:8px;height:8px;border-radius:999px;background:#1113}
+    .tab.active .dot{background:#1119}
 
-  return (
-    <div className="min-h-screen text-gray-900 bg-white relative overflow-hidden scroll-smooth">
-      {/* super light paper grain (optional; harmless if image missing) */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-multiply"
-        style={{ backgroundImage: `url(${IMAGES.paper})`, backgroundSize: "600px 600px", backgroundRepeat: "repeat" }}
-      />
+    .grid-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media (max-width: 700px){.grid-chips{grid-template-columns:1fr 1fr}}
+    .chip{background:#f9fafb;border:1px solid var(--line);border-radius:10px;padding:12px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .badge{font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid #0001;background:#fff}
+    .adv{background:var(--badge-adv);border-color:#065f46;color:#064e3b}
+    .int{background:var(--badge-int);border-color:#1d4ed8;color:#1e40af}
+    .bas{background:var(--badge-bas);border-color:#92400e;color:#78350f}
 
-      {/* HEADER */}
-      <header className="sticky top-0 z-30 border-b border-gray-200 bg-white/95 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-20">
-          <div className="flex flex-col">
-            <span className="text-xl font-bold tracking-tight text-gray-900">Syuzanna Matevosyan</span>
-            <span className="text-sm text-gray-500">AI & Rehab Tech · Biomedical Engineering</span>
-          </div>
+    /* Projects */
+    .projects{margin-top:32px}
+    .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width: 900px){.cards{grid-template-columns:1fr}}
+    .proj{border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px}
+    .proj h4{margin:2px 0 8px;font-size:16px}
+    .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+    .tag{font-size:12px;padding:3px 8px;border-radius:999px;background:#f3f4f6;border:1px solid var(--line);color:#374151}
+    .kv{margin:0 0 8px}
+    .kv b{color:#111827}
+    .links-row{display:flex;gap:10px;flex-wrap:wrap}
+    .plink{font-weight:600;text-decoration:none;color:#0f62fe}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">🧪</div>
+      <div>
+        <h1>THE Data Scientist’s Portfolio</h1>
+      </div>
+    </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            {nav.map((n) => (
-              <a key={n.href} href={n.href} className="text-gray-600 hover:text-gray-900">
-                {n.label}
-              </a>
-            ))}
-            <a href={LINKS.cv} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
-              CV ↗
-            </a>
-            <a
-              href="#contact"
-              className="ml-2 px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm"
-            >
-              Contact
-            </a>
-          </nav>
-
-          <button
-            className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-md border border-gray-300"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle Menu"
-          >
-            ☰
-          </button>
-        </div>
-
-        {open && (
-          <div className="md:hidden border-t border-gray-200 bg-white px-4 py-3 grid gap-2 text-sm">
-            {nav.map((n) => (
-              <a key={n.href} href={n.href} className="text-gray-700" onClick={() => setOpen(false)}>
-                {n.label}
-              </a>
-            ))}
-            <a href={LINKS.cv} target="_blank" rel="noopener noreferrer" className="text-gray-700">
-              CV ↗
-            </a>
-          </div>
-        )}
-      </header>
-
-      {/* HERO (minimal) */}
-      <section className="relative overflow-hidden border-b border-gray-200">
-        {/* one artistic background sketch */}
-        <Sketch
-          src={IMAGES.heroHands}
-          alt="hand studies / prosthesis gestures"
-          className="pointer-events-none absolute right-[-2rem] top-1/2 -translate-y-1/2 w-[22rem] md:w-[32rem] lg:w-[38rem] opacity-20 mix-blend-multiply"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0.12, 0.2, 0.12], rotate: [0, -1.5, 0], scale: [1, 1.02, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
-          >
-            <p className="text-xs uppercase tracking-wider text-gray-500">Biomedical engineering</p>
-            <h2 className="mt-2 text-2xl md:text-3xl font-semibold tracking-tight text-gray-900">
-              AI & rehabilitation • biosignals • medical imaging
-            </h2>
-            <p className="mt-3 text-gray-600">
-              Practical systems for prosthetics and neuro-rehabilitation — EMG control, AR interactions, and gait
-              modelling.
-            </p>
-            <div className="mt-6 flex gap-4">
-              <a
-                href={LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
-              >
-                GitHub ↗
-              </a>
-              <a
-                href={LINKS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
-              >
-                LinkedIn ↗
-              </a>
-              <a
-                href={LINKS.cv}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
-              >
-                Download CV ↗
-              </a>
-            </div>
-          </motion.div>
+    <div class="grid">
+      <!-- LEFT: shorter About -->
+      <section class="card">
+        <div class="name">SYUZANNA MATEVOSYAN</div>
+        <div class="roles">AI & Rehabilitation • Biosignals • Medical Imaging</div>
+        <p class="about">I design data‑driven tools for prosthetics & neuro‑rehab: real‑time sEMG control, AR interactions, gait modeling (OpenSim/Moco), and medical‑image segmentation.</p>
+        <div class="links">
+          <a class="btn" href="#" target="_blank">GitHub ↗</a>
+          <a class="btn" href="#" target="_blank">LinkedIn ↗</a>
+          <a class="btn" href="#" target="_blank">Download CV ↗</a>
         </div>
       </section>
 
-      {/* ABOUT (no images) */}
-      <section id="about" className="border-b border-gray-200 scroll-mt-24">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900"
-          >
-            About
-          </motion.h2>
-          <div className="mt-6 grid md:grid-cols-12 gap-8 items-start">
-            <div className="md:col-span-7">
-              <p className="text-gray-700">
-                I blend machine learning with clinical needs to build practical tools for prosthetics and
-                neuro-rehabilitation. I thrive at the interface of engineering and healthcare: rapid prototyping, clear
-                evaluation, and clinician collaboration.
-              </p>
-              <ul className="list-disc ml-6 mt-4 space-y-2 text-gray-700">
-                <li>Real-time sEMG acquisition & control (Biometrics DLL → Python → UDP → Unity).</li>
-                <li>AR-based myoelectric training (17 movement classes; robust control strategies).</li>
-                <li>Gait modelling in OpenSim & Moco for hemiparesis.</li>
-                <li>Medical imaging & tissue characterization; U-Net segmentation.</li>
-              </ul>
-            </div>
-            <div className="md:col-span-5">
-              <div className="rounded-xl border p-5">
-                <h3 className="text-sm font-semibold text-gray-900">Quick facts</h3>
-                <ul className="mt-3 space-y-2 text-sm text-gray-700">
-                  <li>📍 Based in Greece · from Armenia</li>
-                  <li>🎓 Erasmus Mundus MSc Biomedical Engineering</li>
-                  <li>🧠 Focus: EMG, rehab tech, imaging, HTA</li>
-                  <li>💬 English, Armenian, Russian</li>
-                </ul>
-                <div className="mt-4 flex gap-2 flex-wrap">
-                  <a
-                    href={LINKS.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-md border text-xs hover:bg-gray-50"
-                  >
-                    LinkedIn
-                  </a>
-                  <a
-                    href={LINKS.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-md border text-xs hover:bg-gray-50"
-                  >
-                    GitHub
-                  </a>
-                  <a
-                    href={LINKS.cv}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-md border text-xs hover:bg-gray-50"
-                  >
-                    CV
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+      <!-- RIGHT: Skills only -->
+      <section class="card">
+        <div class="h3">Skills</div>
+        <div class="tabs">
+          <div class="tab active"><span class="dot"></span>Software</div>
+          <div class="tab"><span class="dot"></span>Expertise</div>
+          <div class="tab"><span class="dot"></span>Language</div>
         </div>
-      </section>
 
-      {/* PROJECTS */}
-      <section id="projects" className="border-b border-gray-200 scroll-mt-24">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900"
-          >
-            Projects
-          </motion.h2>
-
-          <div className="mt-6 grid md:grid-cols-2 gap-6">
-            {/* AR project with subtle floating sketch (smaller & more right) */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rounded-xl border p-6 hover:shadow-sm transition-shadow relative overflow-hidden group"
-            >
-              <motion.div
-                aria-hidden
-                className="pointer-events-none absolute -top-24 -right-16 w-96 h-96 md:w-[28rem] md:h-[28rem] rounded-full bg-indigo-100/60 blur-2xl"
-                initial={{ opacity: 0.3 }}
-                animate={{ opacity: [0.22, 0.36, 0.22], scale: [1, 1.05, 1] }}
-                transition={{ duration: 14, repeat: Infinity }}
-              />
-              <Sketch
-                src={IMAGES.arSketch}
-                alt="AR display & myoelectric control sketch"
-                className="pointer-events-none select-none absolute -top-8 -right-14 w-[13rem] md:w-[18rem] lg:w-[22rem] opacity-30 mix-blend-multiply"
-                animate={{ y: [0, -6, 0], rotate: [0, -2, 2, 0] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <div className="flex items-start justify-between gap-4 relative z-10">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">AR-based Myoelectric Prosthesis Training</h3>
-                  <p className="text-sm text-gray-500 mt-1">Unity · Python · Biometrics DataLITE · UDP</p>
-                </div>
-                <div className="flex gap-2">
-                  <a
-                    href={LINKS.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-md border text-sm hover:bg-gray-50"
-                  >
-                    Code ↗
-                  </a>
-                </div>
-              </div>
-              <div className="mt-3 relative z-10">
-                <p className="prose prose-sm max-w-none text-gray-700">
-                  sEMG via vendor DLL → Python features/classifier → Unity AR tasks. Explored 17 movement classes and
-                  robust control strategies.
-                </p>
-                <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600">
-                  <span className="px-2 py-1 rounded-full border bg-white/70">Real-time EMG</span>
-                  <span className="px-2 py-1 rounded-full border bg-white/70">AR/VR Rehab</span>
-                  <span className="px-2 py-1 rounded-full border bg-white/70">Gesture Classification</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Stroke rehab (OpenSim) with matching floating style */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rounded-xl border p-6 hover:shadow-sm transition-shadow relative overflow-hidden group"
-            >
-              <motion.div
-                aria-hidden
-                className="pointer-events-none absolute -top-16 -right-12 w-72 h-72 rounded-full bg-sky-100/60 blur-2xl"
-                initial={{ opacity: 0.3 }}
-                animate={{ opacity: [0.22, 0.38, 0.22], scale: [1, 1.06, 1] }}
-                transition={{ duration: 16, repeat: Infinity }}
-              />
-              <Sketch
-                src={IMAGES.opensimGait}
-                alt="Gait silhouette sketch"
-                className="pointer-events-none absolute -top-8 -right-6 w-56 opacity-25 mix-blend-multiply"
-                animate={{ y: [0, -6, 0], rotate: [0, -2, 2, 0] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <div className="flex items-start justify-between gap-4 relative z-10">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">Stroke Rehabilitation Modelling</h3>
-                  <p className="text-sm text-gray-500 mt-1">OpenSim & Moco</p>
-                </div>
-                <div className="flex gap-2">
-                  <a
-                    href={LINKS.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-md border text-sm hover:bg-gray-50"
-                  >
-                    Methods ↗
-                  </a>
-                </div>
-              </div>
-              <p className="prose prose-sm max-w-none text-gray-700 mt-3">
-                Modelled hemiparesis-related gait abnormalities and tested interventions using trajectory optimization.
-              </p>
-              <div className="mt-3 flex gap-2 flex-wrap text-xs text-gray-600">
-                <span className="px-2 py-1 rounded-full border bg-white/70">Gait</span>
-                <span className="px-2 py-1 rounded-full border bg-white/70">Optimization</span>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Download portfolio button */}
-          <div className="mt-10 flex justify-center">
-            <a
-              href={LINKS.portfolio}
-              target="_blank"
-              rel="noopener noreferrer"
-              download
-              className="px-5 py-2 rounded-md bg-gray-900 text-white hover:bg-black shadow-sm"
-            >
-              Download portfolio (PDF)
-            </a>
-          </div>
+        <!-- Software -->
+        <div class="grid-chips">
+          <div class="chip"><span>Python</span><span class="badge adv">Advanced</span></div>
+          <div class="chip"><span>NumPy · Pandas</span><span class="badge adv">Advanced</span></div>
+          <div class="chip"><span>scikit‑learn</span><span class="badge adv">Advanced</span></div>
+          <div class="chip"><span>TensorFlow · Keras</span><span class="badge int">Intermediate</span></div>
+          <div class="chip"><span>PyTorch</span><span class="badge bas">Basic</span></div>
+          <div class="chip"><span>OpenCV</span><span class="badge int">Intermediate</span></div>
+          <div class="chip"><span>MATLAB</span><span class="badge int">Intermediate</span></div>
+          <div class="chip"><span>Unity (C/C#)</span><span class="badge int">Intermediate</span></div>
+          <div class="chip"><span>OpenSim & Moco</span><span class="badge int">Intermediate</span></div>
+          <div class="chip"><span>Git / GitHub</span><span class="badge adv">Advanced</span></div>
+          <div class="chip"><span>Jupyter / Colab</span><span class="badge adv">Advanced</span></div>
+          <div class="chip"><span>Biometrics DataLite DLL</span><span class="badge int">Intermediate</span></div>
         </div>
-      </section>
 
-      {/* PUBLICATIONS */}
-      <section id="publications" className="border-b border-gray-200 scroll-mt-24">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900"
-          >
-            Publications & Presentations
-          </motion.h2>
-          <div className="mt-6 grid md:grid-cols-2 gap-6">
-            <div className="rounded-xl border p-6">
-              <h3 className="font-semibold">Electromyography Signal Acquisition Development and Analysis</h3>
-              <p className="text-sm text-gray-500 mt-1">Bachelor Thesis · YSU · 2024</p>
-              <p className="mt-2 text-gray-700 text-sm">
-                End-to-end EMG acquisition and analysis pipeline with hardware integration and signal processing.
-              </p>
-            </div>
-            <div className="rounded-xl border p-6">
-              <h3 className="font-semibold">TCL Programming Language in Bioinformatics</h3>
-              <p className="text-sm text-gray-500 mt-1">In the World of Science · Journal 2 · 2022</p>
-              <p className="mt-2 text-gray-700 text-sm">Exploratory paper on TCL for computational biology workflows.</p>
-            </div>
-          </div>
+        <!-- Expertise -->
+        <div style="height:18px"></div>
+        <div class="h3">Expertise</div>
+        <div class="grid-chips">
+          <div class="chip"><span>sEMG Acquisition & Control</span><span class="badge adv">Real‑time</span></div>
+          <div class="chip"><span>AR/VR Interactions</span><span class="badge int">Unity</span></div>
+          <div class="chip"><span>Gesture Classification</span><span class="badge int">17 classes</span></div>
+          <div class="chip"><span>Signal Processing</span><span class="badge int">Filtering · Features</span></div>
+          <div class="chip"><span>Texture Features</span><span class="badge int">GLCM · LBP</span></div>
+          <div class="chip"><span>Segmentation</span><span class="badge int">U‑Net</span></div>
+          <div class="chip"><span>Biomechanics</span><span class="badge int">Gait · Hemiparesis</span></div>
+          <div class="chip"><span>Optimization</span><span class="badge int">Moco</span></div>
+          <div class="chip"><span>Dataset Curation</span><span class="badge int">Ninapro DB7</span></div>
         </div>
-      </section>
 
-      {/* SKILLS */}
-      <section id="skills" className="border-b border-gray-200 scroll-mt-24">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900"
-          >
-            Skills
-          </motion.h2>
-          <div className="mt-6 grid md:grid-cols-3 gap-6">
-            <div className="rounded-xl border p-6">
-              <h3 className="text-sm font-semibold text-gray-900">Programming</h3>
-              <ul className="list-disc ml-5 mt-3 text-sm text-gray-700 space-y-1">
-                <li>Python, C/C++, MATLAB, TCL</li>
-                <li>TensorFlow/Keras, scikit-learn</li>
-              </ul>
-            </div>
-            <div className="rounded-xl border p-6">
-              <h3 className="text-sm font-semibold text-gray-900">Biomedical & Systems</h3>
-              <ul className="list-disc ml-5 mt-3 text-sm text-gray-700 space-y-1">
-                <li>sEMG/EEG/IMU acquisition & processing</li>
-                <li>Signal & Image Processing, U-Net</li>
-                <li>OpenSim & Moco (gait), Unity AR/VR</li>
-                <li>Healthcare Technology Assessment (HTA)</li>
-              </ul>
-            </div>
-            <div className="rounded-xl border p-6">
-              <h3 className="text-sm font-semibold text-gray-900">Highlights</h3>
-              <ul className="list-disc ml-5 mt-3 text-sm text-gray-700 space-y-1">
-                <li>ECTS A in core modules</li>
-                <li>Clinician collaboration</li>
-                <li>Rapid prototyping & evaluation</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* EDUCATION */}
-      <section id="education" className="border-b border-gray-200 scroll-mt-24">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900"
-          >
-            Education
-          </motion.h2>
-          <div className="mt-6 grid md:grid-cols-2 gap-6">
-            <div className="rounded-xl border p-6">
-              <h3 className="font-semibold">Erasmus Mundus MSc in Biomedical Engineering</h3>
-              <p className="text-sm text-gray-500 mt-1">2024 – Present · Serbia · Greece · Romania</p>
-            </div>
-            <div className="rounded-xl border p-6">
-              <h3 className="font-semibold">BSc Biophysics & Bioinformatics</h3>
-              <p className="text-sm text-gray-500 mt-1">Yerevan State University · 2024</p>
-              <p className="text-sm text-gray-700 mt-2">
-                Thesis: Electromyography Signal Acquisition Development and Analysis.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CONTACT */}
-      <section id="contact" className="scroll-mt-24">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900"
-          >
-            Contact
-          </motion.h2>
-          <div className="mt-6 grid md:grid-cols-2 gap-8 items-start">
-            <div>
-              <p className="text-gray-700">
-                Open to PhD collaborations, internships, and research projects in prosthetics, rehabilitation, and
-                intelligent biosignal processing.
-              </p>
-              <div className="mt-6 flex gap-3 flex-wrap text-sm">
-                <a href={`mailto:${LINKS.email}`} className="px-4 py-2 rounded-md border text-gray-900 hover:bg-gray-50">
-                  Email
-                </a>
-                <a
-                  href={LINKS.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-md border text-gray-900 hover:bg-gray-50"
-                >
-                  LinkedIn ↗
-                </a>
-                <a
-                  href={LINKS.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-md border text-gray-900 hover:bg-gray-50"
-                >
-                  GitHub ↗
-                </a>
-                <a
-                  href={LINKS.cv}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-md border text-gray-900 hover:bg-gray-50"
-                >
-                  Download CV ↗
-                </a>
-              </div>
-            </div>
-            <form className="rounded-xl border p-6 grid gap-4">
-              <div>
-                <label className="text-sm text-gray-600">Name</label>
-                <input
-                  type="text"
-                  className="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-300"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label className="text-sm text-gray-600">Email</label>
-                <input
-                  type="email"
-                  className="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-300"
-                  placeholder="you@example.com"
-                />
-              </div>
-              <div>
-                <label className="text-sm text-gray-600">Message</label>
-                <textarea
-                  className="mt-1 w-full border rounded-md px-3 py-2 h-28 focus:outline-none focus:ring-1 focus:ring-gray-300"
-                  placeholder="Short message…"
-                />
-              </div>
-              <button type="button" className="px-4 py-2 rounded-md bg-gray-900 text-white hover:bg-black">
-                Send (opens email)
-              </button>
-              <p className="text-xs text-gray-500">
-                This demo form does not submit to a server. Use the Email/LinkedIn buttons to reach me.
-              </p>
-            </form>
-          </div>
-          <p className="mt-10 text-xs text-gray-500">© {new Date().getFullYear()} Syuzanna Matevosyan</p>
+        <!-- Languages -->
+        <div style="height:18px"></div>
+        <div class="h3">Languages</div>
+        <div class="grid-chips">
+          <div class="chip"><span>English</span><span class="badge adv">C1</span></div>
+          <div class="chip"><span>French</span><span class="badge int">Intermediate</span></div>
+          <div class="chip"><span>Romanian</span><span class="badge bas">Learning</span></div>
+          <div class="chip"><span>Armenian</span><span class="badge adv">Native</span></div>
+          <div class="chip"><span>Greek</span><span class="badge bas">Basic</span></div>
         </div>
       </section>
     </div>
-  );
-}
+
+    <!-- Projects start full width below -->
+    <div class="projects">
+      <div class="h3">Projects</div>
+      <div class="cards">
+        <article class="proj">
+          <h4>Real‑time sEMG Acquisition & Control</h4>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Biometrics DLL</span><span class="tag">UDP → Unity</span></div>
+          <p class="kv"><b>Problem:</b> Need robust, low‑latency control for training & research.</p>
+          <p class="kv"><b>Approach:</b> Windowed features → classifier; UDP to a Unity game for feedback.</p>
+          <p class="kv"><b>Results:</b> Stable control across 17 movement classes; real‑time demos.</p>
+        </article>
+
+        <article class="proj">
+          <h4>AR‑based Myoelectric Training</h4>
+          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">sEMG</span></div>
+          <p class="kv"><b>Problem:</b> Traditional training is monotonous; poor engagement.</p>
+          <p class="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; analytics.</p>
+          <p class="kv"><b>Results:</b> Higher engagement & smoother signal separation during sessions.</p>
+        </article>
+
+        <article class="proj">
+          <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
+          <div class="tags"><span class="tag">OpenSim</span><span class="tag">Moco</span><span class="tag">Optimization</span></div>
+          <p class="kv"><b>Problem:</b> Quantify effects of weakness and retraining strategies.</p>
+          <p class="kv"><b>Approach:</b> Build subject‑specific models; cost functions for symmetry & effort.</p>
+          <p class="kv"><b>Results:</b> Insights on strengthening vs. retraining trade‑offs; reproducible notebooks.</p>
+        </article>
+
+        <article class="proj">
+          <h4>Medical Imaging Segmentation</h4>
+          <div class="tags"><span class="tag">U‑Net</span><span class="tag">OpenCV</span><span class="tag">GLCM/LBP</span></div>
+          <p class="kv"><b>Problem:</b> Tissue delineation & texture characterization.</p>
+          <p class="kv"><b>Approach:</b> U‑Net baseline + classical features for analysis; clean training pipeline.</p>
+          <p class="kv"><b>Results:</b> Strong Dice on validation; interpretable texture metrics for regions.</p>
+        </article>
+
+        <article class="proj">
+          <h4>Stroke Rehabilitation Modeling</h4>
+          <div class="tags"><span class="tag">OpenSim</span><span class="tag">Moco</span><span class="tag">Rehab</span></div>
+          <p class="kv"><b>Problem:</b> Hemiparesis‑related gait abnormalities require tailored strategies.</p>
+          <p class="kv"><b>Approach:</b> Simulate muscle strengthening and gait retraining in OpenSim with optimization.</p>
+          <p class="kv"><b>Results:</b> Identified effective intervention parameters; draft thesis simulations.</p>
+        </article>
+
+        <article class="proj">
+          <h4>EMG + AR Games for Prosthetics</h4>
+          <div class="tags"><span class="tag">Unity</span><span class="tag">Python</span><span class="tag">UDP</span></div>
+          <p class="kv"><b>Problem:</b> Amputees need motivating pre‑prosthetic training.</p>
+          <p class="kv"><b>Approach:</b> Virtual arm controlled via EMG; AR games to encourage repeated practice.</p>
+          <p class="kv"><b>Results:</b> Prototype tested; smoother muscle signal generation in sessions.</p>
+        </article>
+      </div>
+        </div>
+
+    <!-- FULL-WIDTH PROJECTS -->
+    <section class="card" style="margin-top:24px">
+      <div class="h3">Projects</div>
+      <p class="muted" style="margin-top:0">Selected, recent & in‑progress. Problem → Approach → Results. Links to code / demos when available.</p>
+      <div class="cards" style="margin-top:12px">
+        <!-- 1 -->
+        <article class="proj">
+          <h4>Real‑time sEMG Acquisition & Control</h4>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Biometrics DLL</span><span class="tag">UDP → Unity</span><span class="tag">Keras</span></div>
+          <p class="kv"><b>Problem:</b> Robust, low‑latency control for research & training.</p>
+          <p class="kv"><b>Approach:</b> Windowed features → NN classifier; streaming via UDP to game engine; logging & replay.</p>
+          <p class="kv"><b>Results:</b> Stable control across <b>17 movement classes</b>; reproducible pipeline.</p>
+          <div class="links-row"><a class="plink" href="#">Code</a> · <a class="plink" href="#">Demo</a></div>
+        </article>
+        <!-- 2 -->
+        <article class="proj">
+          <h4>EMG‑Controlled Virtual Arm (Pre‑prosthetic Training)</h4>
+          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">sEMG</span></div>
+          <p class="kv"><b>Problem:</b> Users need engaging practice before prosthesis fitting.</p>
+          <p class="kv"><b>Approach:</b> UDP‑driven avatar + task library; calibration & adaptive thresholds; session analytics.</p>
+          <p class="kv"><b>Results:</b> Robust control & improved session engagement.</p>
+          <div class="links-row"><a class="plink" href="#">Video</a></div>
+        </article>
+        <!-- 3 -->
+        <article class="proj">
+          <h4>AR‑Based Myoelectric Training</h4>
+          <div class="tags"><span class="tag">AR</span><span class="tag">Unity</span><span class="tag">Interaction</span></div>
+          <p class="kv"><b>Problem:</b> Monotony leads to abandonment in training.</p>
+          <p class="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; real‑time feedback.</p>
+          <p class="kv"><b>Results:</b> Higher engagement & smoother signal separation.</p>
+          <div class="links-row"><a class="plink" href="#">Video</a></div>
+        </article>
+        <!-- 4 -->
+        <article class="proj">
+          <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
+          <div class="tags"><span class="tag">OpenSim</span><span class="tag">Moco</span><span class="tag">Optimization</span></div>
+          <p class="kv"><b>Problem:</b> Evaluate strengthening vs. gait retraining strategies.</p>
+          <p class="kv"><b>Approach:</b> Subject‑specific models; symmetry/effort costs; parameter sweeps.</p>
+          <p class="kv"><b>Results:</b> Clear trade‑off insights; reusable notebooks for replication.</p>
+          <div class="links-row"><a class="plink" href="#">Notebook</a></div>
+        </article>
+        <!-- 5 -->
+        <article class="proj">
+          <h4>Medical Imaging Segmentation</h4>
+          <div class="tags"><span class="tag">U‑Net</span><span class="tag">OpenCV</span><span class="tag">PyTorch/TensorFlow</span></div>
+          <p class="kv"><b>Problem:</b> Tissue delineation for downstream quantification.</p>
+          <p class="kv"><b>Approach:</b> U‑Net baseline; training pipeline with augmentation & QA.</p>
+          <p class="kv"><b>Results:</b> Strong Dice on validation; clean inference scripts.</p>
+          <div class="links-row"><a class="plink" href="#">Repo</a> · <a class="plink" href="#">Report</a></div>
+        </article>
+        <!-- 6 -->
+        <article class="proj">
+          <h4>Tissue Characterization & Clustering</h4>
+          <div class="tags"><span class="tag">GLCM</span><span class="tag">LBP</span><span class="tag">11×11</span><span class="tag">44 features</span></div>
+          <p class="kv"><b>Problem:</b> Foreground/background & tissue‑type separation.</p>
+          <p class="kv"><b>Approach:</b> Per‑pixel feature vectors on 11×11 neighborhoods; classical stats + clustering.</p>
+          <p class="kv"><b>Results:</b> Reliable separation; interpretable feature importance.</p>
+          <div class="links-row"><a class="plink" href="#">Notebook</a></div>
+        </article>
+        <!-- 7 -->
+        <article class="proj">
+          <h4>Ninapro DB7 Multimodal Decoding</h4>
+          <div class="tags"><span class="tag">sEMG</span><span class="tag">IMU</span><span class="tag">PCA</span><span class="tag">Tensor Decomp</span></div>
+          <p class="kv"><b>Problem:</b> Decode task variables from EMG/IMU.</p>
+          <p class="kv"><b>Approach:</b> Dimensionality reduction + supervised classifiers; response characterization.</p>
+          <p class="kv"><b>Results:</b> Competitive accuracy; clear visualizations of components.</p>
+          <div class="links-row"><a class="plink" href="#">Code</a></div>
+        </article>
+        <!-- 8 -->
+        <article class="proj">
+          <h4>Socket‑Level Haptic Feedback (Closed‑Loop)</h4>
+          <div class="tags"><span class="tag">Prototype</span><span class="tag">Haptics</span><span class="tag">sEMG</span></div>
+          <p class="kv"><b>Status:</b> In progress.</p>
+          <p class="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training.</p>
+          <div class="links-row"><a class="plink" href="#">Design Notes</a></div>
+        </article>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

@@ -1,8 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function App() {
   useEffect(() => {
     document.title = "Syuzanna Matevosyan — Portfolio";
+  }, []);
+
+  // Active tab for dot highlight
+  const [active, setActive] = useState("software");
+
+  // Refs to watch sections while scrolling (so the dot stays correct)
+  const softwareRef = useRef(null);
+  const expertiseRef = useRef(null);
+  const languagesRef = useRef(null);
+
+  useEffect(() => {
+    const sections = [
+      { id: "software", el: softwareRef.current },
+      { id: "expertise", el: expertiseRef.current },
+      { id: "languages", el: languagesRef.current },
+    ].filter(s => s.el);
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        // Pick the most visible one
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target?.id) setActive(visible.target.id);
+      },
+      { rootMargin: "-30% 0px -60% 0px", threshold: [0.1, 0.25, 0.5, 0.75, 1] }
+    );
+
+    sections.forEach(s => obs.observe(s.el));
+    return () => obs.disconnect();
   }, []);
 
   const css = `
@@ -13,9 +43,7 @@ export default function App() {
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);
       font: 400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
-    /* Smooth scroll to anchors */
     html{scroll-behavior:smooth}
-
     .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 72px}
 
     /* Header */
@@ -43,15 +71,12 @@ export default function App() {
     .tabs{display:flex;gap:18px;margin:0 0 14px}
     .tab{
       display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600;
-      text-decoration:none;
+      text-decoration:none; cursor:pointer;
     }
-    .tab:hover{color:var(--text)}
-    .tab .dot{width:8px;height:8px;border-radius:999px;background:#1113}
+    .tab .dot{width:8px;height:8px;border-radius:999px;background:#1113;transition:background .15s ease}
+    .tab.active{color:var(--text)}
+    .tab.active .dot{background:#000} /* <<< black when active */
     .tab:focus-visible{outline:2px solid #0002; outline-offset:2px; border-radius:6px}
-    /* Optional: highlight the dot when the section is the target */
-    :target ~ .skills-content .section-anchor[data-for="software"]:target ~ .h3 .dot,
-    :target ~ .skills-content .section-anchor[data-for="expertise"]:target ~ .h3 .dot,
-    :target ~ .skills-content .section-anchor[data-for="languages"]:target ~ .h3 .dot { background:#1119 }
 
     .grid-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     @media (max-width: 700px){.grid-chips{grid-template-columns:1fr 1fr}}
@@ -75,9 +100,15 @@ export default function App() {
     .plink{font-weight:600;text-decoration:none;color:#0f62fe}
     .center{display:flex;justify-content:center;margin-top:16px}
 
-    /* Anchor offset so headings don't hide under fixed UI (tweak if you add sticky header) */
+    /* Anchor offset (if you add sticky header later, tweak this) */
     .section-anchor{position:relative;top:-8px}
   `;
+
+  // helper to both jump and mark active immediately
+  const handleTabClick = (id) => {
+    setActive(id);
+    // allow default anchor behavior via href to handle scroll
+  };
 
   return (
     <>
@@ -112,15 +143,33 @@ export default function App() {
           <section className="card">
             <div className="h3">Skills</div>
 
-            {/* Tabs as anchor links */}
+            {/* Tabs */}
             <nav className="tabs" aria-label="Jump to skills sections">
-              <a className="tab" href="#software"><span className="dot" />Software</a>
-              <a className="tab" href="#expertise"><span className="dot" />Expertise</a>
-              <a className="tab" href="#languages"><span className="dot" />Language</a>
+              <a
+                className={`tab ${active === "software" ? "active" : ""}`}
+                href="#software"
+                onClick={() => handleTabClick("software")}
+              >
+                <span className="dot" />Software
+              </a>
+              <a
+                className={`tab ${active === "expertise" ? "active" : ""}`}
+                href="#expertise"
+                onClick={() => handleTabClick("expertise")}
+              >
+                <span className="dot" />Expertise
+              </a>
+              <a
+                className={`tab ${active === "languages" ? "active" : ""}`}
+                href="#languages"
+                onClick={() => handleTabClick("languages")}
+              >
+                <span className="dot" />Language
+              </a>
             </nav>
 
-            {/* SOFTWARE (visible) */}
-            <a id="software" className="section-anchor" data-for="software" />
+            {/* SOFTWARE */}
+            <a id="software" className="section-anchor" ref={softwareRef} />
             <div className="h3">Software</div>
             <div className="grid-chips" aria-label="Software">
               <div className="chip"><span>Python</span><span className="badge adv">Advanced</span></div>
@@ -137,8 +186,8 @@ export default function App() {
               <div className="chip"><span>Biometrics DataLite DLL</span><span className="badge int">Intermediate</span></div>
             </div>
 
-            {/* EXPERTISE (visible) */}
-            <a id="expertise" className="section-anchor" data-for="expertise" />
+            {/* EXPERTISE */}
+            <a id="expertise" className="section-anchor" ref={expertiseRef} />
             <div style={{ height: "18px" }} />
             <div className="h3">Expertise</div>
             <div className="grid-chips" aria-label="Expertise">
@@ -153,8 +202,8 @@ export default function App() {
               <div className="chip"><span>Dataset Curation</span><span className="badge int">Ninapro DB7</span></div>
             </div>
 
-            {/* LANGUAGES (visible) */}
-            <a id="languages" className="section-anchor" data-for="languages" />
+            {/* LANGUAGES */}
+            <a id="languages" className="section-anchor" ref={languagesRef} />
             <div style={{ height: "18px" }} />
             <div className="h3">Languages</div>
             <div className="grid-chips" aria-label="Languages">
@@ -245,13 +294,6 @@ export default function App() {
               <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training.</p>
               <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
             </article>
-          </div>
-
-          {/* Download Portfolio */}
-          <div className="center">
-            <a className="btn" href="/SM_Portfolio.pdf" target="_blank" rel="noreferrer" download>
-              Download Portfolio (PDF)
-            </a>
           </div>
         </section>
       </div>

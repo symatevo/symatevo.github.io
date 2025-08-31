@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Syuzanna Matevosyan — Portfolio</title>
-  <style>
+import { useEffect } from "react";
+
+export default function App() {
+  useEffect(() => {
+    document.title = "Syuzanna Matevosyan — Portfolio";
+  }, []);
+
+  const css = `
     :root{
       --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
       --badge-adv:#d1fae5; --badge-int:#dbeafe; --badge-bas:#fde68a;
@@ -62,217 +63,233 @@
     .kv b{color:#111827}
     .links-row{display:flex;gap:10px;flex-wrap:wrap}
     .plink{font-weight:600;text-decoration:none;color:#0f62fe}
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <!-- Header -->
-    <div class="header">
-      <div class="logo">🧪</div>
-      <div>
-        <h1>THE Data Scientist’s Portfolio</h1>
+    .center{display:flex;justify-content:center;margin-top:16px}
+  `;
+
+  return (
+    <>
+      <style>{css}</style>
+
+      <div className="wrap">
+        {/* Header */}
+        <div className="header">
+          <div className="logo">🧪</div>
+          <div>
+            <h1>Syuzanna Matevosyan — Portfolio</h1>
+          </div>
+        </div>
+
+        <div className="grid">
+          {/* LEFT: shorter About */}
+          <section className="card">
+            <div className="name">SYUZANNA MATEVOSYAN</div>
+            <div className="roles">AI & Rehabilitation • Biosignals • Medical Imaging</div>
+            <p className="about">
+              I design data-driven tools for prosthetics & neuro-rehab: real-time sEMG control, AR interactions,
+              gait modeling (OpenSim/Moco), and medical-image segmentation.
+            </p>
+            <div className="links">
+              <a className="btn" href="https://github.com/symatevo" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <a className="btn" href="https://www.linkedin.com/in/symatevo/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              <a className="btn" href="/Syuzanna_Matevosyan_CV.pdf" target="_blank" rel="noreferrer">Download CV ↗</a>
+            </div>
+          </section>
+
+          {/* RIGHT: Skills only */}
+          <section className="card">
+            <div className="h3">Skills</div>
+            <div className="tabs">
+              <div className="tab active"><span className="dot" />Software</div>
+              <div className="tab"><span className="dot" />Expertise</div>
+              <div className="tab"><span className="dot" />Language</div>
+            </div>
+
+            {/* Software */}
+            <div className="grid-chips">
+              <div className="chip"><span>Python</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>NumPy · Pandas</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>scikit-learn</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>TensorFlow · Keras</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>PyTorch</span><span className="badge bas">Basic</span></div>
+              <div className="chip"><span>OpenCV</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>MATLAB</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>Unity (C/C#)</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>OpenSim & Moco</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>Git / GitHub</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>Jupyter / Colab</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>Biometrics DataLite DLL</span><span className="badge int">Intermediate</span></div>
+            </div>
+
+            {/* Expertise */}
+            <div style={{ height: "18px" }} />
+            <div className="h3">Expertise</div>
+            <div className="grid-chips">
+              <div className="chip"><span>sEMG Acquisition & Control</span><span className="badge adv">Real-time</span></div>
+              <div className="chip"><span>AR/VR Interactions</span><span className="badge int">Unity</span></div>
+              <div className="chip"><span>Gesture Classification</span><span className="badge int">17 classes</span></div>
+              <div className="chip"><span>Signal Processing</span><span className="badge int">Filtering · Features</span></div>
+              <div className="chip"><span>Texture Features</span><span className="badge int">GLCM · LBP</span></div>
+              <div className="chip"><span>Segmentation</span><span className="badge int">U-Net</span></div>
+              <div className="chip"><span>Biomechanics</span><span className="badge int">Gait · Hemiparesis</span></div>
+              <div className="chip"><span>Optimization</span><span className="badge int">Moco</span></div>
+              <div className="chip"><span>Dataset Curation</span><span className="badge int">Ninapro DB7</span></div>
+            </div>
+
+            {/* Languages */}
+            <div style={{ height: "18px" }} />
+            <div className="h3">Languages</div>
+            <div className="grid-chips">
+              <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
+              <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>Romanian</span><span className="badge bas">Learning</span></div>
+              <div className="chip"><span>Armenian</span><span className="badge adv">Native</span></div>
+              <div className="chip"><span>Greek</span><span className="badge bas">Basic</span></div>
+            </div>
+          </section>
+        </div>
+
+        {/* Projects start full width below */}
+        <div className="projects">
+          <div className="h3">Projects</div>
+          <div className="cards">
+            <article className="proj">
+              <h4>Real-time sEMG Acquisition & Control</h4>
+              <div className="tags"><span className="tag">Python</span><span className="tag">Biometrics DLL</span><span className="tag">UDP → Unity</span></div>
+              <p className="kv"><b>Problem:</b> Need robust, low-latency control for training & research.</p>
+              <p className="kv"><b>Approach:</b> Windowed features → classifier; UDP to a Unity game for feedback.</p>
+              <p className="kv"><b>Results:</b> Stable control across 17 movement classes; real-time demos.</p>
+            </article>
+
+            <article className="proj">
+              <h4>AR-based Myoelectric Training</h4>
+              <div className="tags"><span className="tag">Unity</span><span className="tag">C#</span><span className="tag">sEMG</span></div>
+              <p className="kv"><b>Problem:</b> Traditional training is monotonous; poor engagement.</p>
+              <p className="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; analytics.</p>
+              <p className="kv"><b>Results:</b> Higher engagement & smoother signal separation during sessions.</p>
+            </article>
+
+            <article className="proj">
+              <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
+              <div className="tags"><span className="tag">OpenSim</span><span className="tag">Moco</span><span className="tag">Optimization</span></div>
+              <p className="kv"><b>Problem:</b> Quantify effects of weakness and retraining strategies.</p>
+              <p className="kv"><b>Approach:</b> Build subject-specific models; cost functions for symmetry & effort.</p>
+              <p className="kv"><b>Results:</b> Insights on strengthening vs. retraining trade-offs; reproducible notebooks.</p>
+            </article>
+
+            <article className="proj">
+              <h4>Medical Imaging Segmentation</h4>
+              <div className="tags"><span className="tag">U-Net</span><span className="tag">OpenCV</span><span className="tag">GLCM/LBP</span></div>
+              <p className="kv"><b>Problem:</b> Tissue delineation & texture characterization.</p>
+              <p className="kv"><b>Approach:</b> U-Net baseline + classical features for analysis; clean training pipeline.</p>
+              <p className="kv"><b>Results:</b> Strong Dice on validation; interpretable texture metrics for regions.</p>
+            </article>
+
+            <article className="proj">
+              <h4>Stroke Rehabilitation Modeling</h4>
+              <div className="tags"><span className="tag">OpenSim</span><span className="tag">Moco</span><span className="tag">Rehab</span></div>
+              <p className="kv"><b>Problem:</b> Hemiparesis-related gait abnormalities require tailored strategies.</p>
+              <p className="kv"><b>Approach:</b> Simulate muscle strengthening and gait retraining in OpenSim with optimization.</p>
+              <p className="kv"><b>Results:</b> Identified effective intervention parameters; draft thesis simulations.</p>
+            </article>
+
+            <article className="proj">
+              <h4>EMG + AR Games for Prosthetics</h4>
+              <div className="tags"><span className="tag">Unity</span><span className="tag">Python</span><span className="tag">UDP</span></div>
+              <p className="kv"><b>Problem:</b> Amputees need motivating pre-prosthetic training.</p>
+              <p className="kv"><b>Approach:</b> Virtual arm controlled via EMG; AR games to encourage repeated practice.</p>
+              <p className="kv"><b>Results:</b> Prototype tested; smoother muscle signal generation in sessions.</p>
+            </article>
+          </div>
+        </div>
+
+        {/* FULL-WIDTH PROJECTS */}
+        <section className="card" style={{ marginTop: 24 }}>
+          <div className="h3">Projects</div>
+          <p className="muted" style={{ marginTop: 0 }}>
+            Selected, recent & in-progress. Problem → Approach → Results. Links to code / demos when available.
+          </p>
+          <div className="cards" style={{ marginTop: 12 }}>
+            {/* 1 */}
+            <article className="proj">
+              <h4>Real-time sEMG Acquisition & Control</h4>
+              <div className="tags"><span className="tag">Python</span><span className="tag">Biometrics DLL</span><span className="tag">UDP → Unity</span><span className="tag">Keras</span></div>
+              <p className="kv"><b>Problem:</b> Robust, low-latency control for research & training.</p>
+              <p className="kv"><b>Approach:</b> Windowed features → NN classifier; streaming via UDP to game engine; logging & replay.</p>
+              <p className="kv"><b>Results:</b> Stable control across <b>17 movement classes</b>; reproducible pipeline.</p>
+              <div className="links-row"><a className="plink" href="#">Code</a> · <a className="plink" href="#">Demo</a></div>
+            </article>
+            {/* 2 */}
+            <article className="proj">
+              <h4>EMG-Controlled Virtual Arm (Pre-prosthetic Training)</h4>
+              <div className="tags"><span className="tag">Unity</span><span className="tag">C#</span><span className="tag">sEMG</span></div>
+              <p className="kv"><b>Problem:</b> Users need engaging practice before prosthesis fitting.</p>
+              <p className="kv"><b>Approach:</b> UDP-driven avatar + task library; calibration & adaptive thresholds; session analytics.</p>
+              <p className="kv"><b>Results:</b> Robust control & improved session engagement.</p>
+              <div className="links-row"><a className="plink" href="#">Video</a></div>
+            </article>
+            {/* 3 */}
+            <article className="proj">
+              <h4>AR-Based Myoelectric Training</h4>
+              <div className="tags"><span className="tag">AR</span><span className="tag">Unity</span><span className="tag">Interaction</span></div>
+              <p className="kv"><b>Problem:</b> Monotony leads to abandonment in training.</p>
+              <p className="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; real-time feedback.</p>
+              <p className="kv"><b>Results:</b> Higher engagement & smoother signal separation.</p>
+              <div className="links-row"><a className="plink" href="#">Video</a></div>
+            </article>
+            {/* 4 */}
+            <article className="proj">
+              <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
+              <div className="tags"><span className="tag">OpenSim</span><span className="tag">Moco</span><span className="tag">Optimization</span></div>
+              <p className="kv"><b>Problem:</b> Evaluate strengthening vs. gait retraining strategies.</p>
+              <p className="kv"><b>Approach:</b> Subject-specific models; symmetry/effort costs; parameter sweeps.</p>
+              <p className="kv"><b>Results:</b> Clear trade-off insights; reusable notebooks for replication.</p>
+              <div className="links-row"><a className="plink" href="#">Notebook</a></div>
+            </article>
+            {/* 5 */}
+            <article className="proj">
+              <h4>Medical Imaging Segmentation</h4>
+              <div className="tags"><span className="tag">U-Net</span><span className="tag">OpenCV</span><span className="tag">PyTorch/TensorFlow</span></div>
+              <p className="kv"><b>Problem:</b> Tissue delineation for downstream quantification.</p>
+              <p className="kv"><b>Approach:</b> U-Net baseline; training pipeline with augmentation & QA.</p>
+              <p className="kv"><b>Results:</b> Strong Dice on validation; clean inference scripts.</p>
+              <div className="links-row"><a className="plink" href="#">Repo</a> · <a className="plink" href="#">Report</a></div>
+            </article>
+            {/* 6 */}
+            <article className="proj">
+              <h4>Tissue Characterization & Clustering</h4>
+              <div className="tags"><span className="tag">GLCM</span><span className="tag">LBP</span><span className="tag">11×11</span><span className="tag">44 features</span></div>
+              <p className="kv"><b>Problem:</b> Foreground/background & tissue-type separation.</p>
+              <p className="kv"><b>Approach:</b> Per-pixel feature vectors on 11×11 neighborhoods; classical stats + clustering.</p>
+              <p className="kv"><b>Results:</b> Reliable separation; interpretable feature importance.</p>
+              <div className="links-row"><a className="plink" href="#">Notebook</a></div>
+            </article>
+            {/* 7 */}
+            <article className="proj">
+              <h4>Ninapro DB7 Multimodal Decoding</h4>
+              <div className="tags"><span className="tag">sEMG</span><span className="tag">IMU</span><span className="tag">PCA</span><span className="tag">Tensor Decomp</span></div>
+              <p className="kv"><b>Problem:</b> Decode task variables from EMG/IMU.</p>
+              <p className="kv"><b>Approach:</b> Dimensionality reduction + supervised classifiers; response characterization.</p>
+              <p className="kv"><b>Results:</b> Competitive accuracy; clear visualizations of components.</p>
+              <div className="links-row"><a className="plink" href="#">Code</a></div>
+            </article>
+            {/* 8 */}
+            <article className="proj">
+              <h4>Socket-Level Haptic Feedback (Closed-Loop)</h4>
+              <div className="tags"><span className="tag">Prototype</span><span className="tag">Haptics</span><span className="tag">sEMG</span></div>
+              <p className="kv"><b>Status:</b> In progress.</p>
+              <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training.</p>
+              <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
+            </article>
+          </div>
+
+          {/* Download Portfolio */}
+          <div className="center">
+            <a className="btn" href="/SM_Portfolio.pdf" target="_blank" rel="noreferrer" download>
+              Download Portfolio (PDF)
+            </a>
+          </div>
+        </section>
       </div>
-    </div>
-
-    <div class="grid">
-      <!-- LEFT: shorter About -->
-      <section class="card">
-        <div class="name">SYUZANNA MATEVOSYAN</div>
-        <div class="roles">AI & Rehabilitation • Biosignals • Medical Imaging</div>
-        <p class="about">I design data‑driven tools for prosthetics & neuro‑rehab: real‑time sEMG control, AR interactions, gait modeling (OpenSim/Moco), and medical‑image segmentation.</p>
-        <div class="links">
-          <a class="btn" href="#" target="_blank">GitHub ↗</a>
-          <a class="btn" href="#" target="_blank">LinkedIn ↗</a>
-          <a class="btn" href="#" target="_blank">Download CV ↗</a>
-        </div>
-      </section>
-
-      <!-- RIGHT: Skills only -->
-      <section class="card">
-        <div class="h3">Skills</div>
-        <div class="tabs">
-          <div class="tab active"><span class="dot"></span>Software</div>
-          <div class="tab"><span class="dot"></span>Expertise</div>
-          <div class="tab"><span class="dot"></span>Language</div>
-        </div>
-
-        <!-- Software -->
-        <div class="grid-chips">
-          <div class="chip"><span>Python</span><span class="badge adv">Advanced</span></div>
-          <div class="chip"><span>NumPy · Pandas</span><span class="badge adv">Advanced</span></div>
-          <div class="chip"><span>scikit‑learn</span><span class="badge adv">Advanced</span></div>
-          <div class="chip"><span>TensorFlow · Keras</span><span class="badge int">Intermediate</span></div>
-          <div class="chip"><span>PyTorch</span><span class="badge bas">Basic</span></div>
-          <div class="chip"><span>OpenCV</span><span class="badge int">Intermediate</span></div>
-          <div class="chip"><span>MATLAB</span><span class="badge int">Intermediate</span></div>
-          <div class="chip"><span>Unity (C/C#)</span><span class="badge int">Intermediate</span></div>
-          <div class="chip"><span>OpenSim & Moco</span><span class="badge int">Intermediate</span></div>
-          <div class="chip"><span>Git / GitHub</span><span class="badge adv">Advanced</span></div>
-          <div class="chip"><span>Jupyter / Colab</span><span class="badge adv">Advanced</span></div>
-          <div class="chip"><span>Biometrics DataLite DLL</span><span class="badge int">Intermediate</span></div>
-        </div>
-
-        <!-- Expertise -->
-        <div style="height:18px"></div>
-        <div class="h3">Expertise</div>
-        <div class="grid-chips">
-          <div class="chip"><span>sEMG Acquisition & Control</span><span class="badge adv">Real‑time</span></div>
-          <div class="chip"><span>AR/VR Interactions</span><span class="badge int">Unity</span></div>
-          <div class="chip"><span>Gesture Classification</span><span class="badge int">17 classes</span></div>
-          <div class="chip"><span>Signal Processing</span><span class="badge int">Filtering · Features</span></div>
-          <div class="chip"><span>Texture Features</span><span class="badge int">GLCM · LBP</span></div>
-          <div class="chip"><span>Segmentation</span><span class="badge int">U‑Net</span></div>
-          <div class="chip"><span>Biomechanics</span><span class="badge int">Gait · Hemiparesis</span></div>
-          <div class="chip"><span>Optimization</span><span class="badge int">Moco</span></div>
-          <div class="chip"><span>Dataset Curation</span><span class="badge int">Ninapro DB7</span></div>
-        </div>
-
-        <!-- Languages -->
-        <div style="height:18px"></div>
-        <div class="h3">Languages</div>
-        <div class="grid-chips">
-          <div class="chip"><span>English</span><span class="badge adv">C1</span></div>
-          <div class="chip"><span>French</span><span class="badge int">Intermediate</span></div>
-          <div class="chip"><span>Romanian</span><span class="badge bas">Learning</span></div>
-          <div class="chip"><span>Armenian</span><span class="badge adv">Native</span></div>
-          <div class="chip"><span>Greek</span><span class="badge bas">Basic</span></div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Projects start full width below -->
-    <div class="projects">
-      <div class="h3">Projects</div>
-      <div class="cards">
-        <article class="proj">
-          <h4>Real‑time sEMG Acquisition & Control</h4>
-          <div class="tags"><span class="tag">Python</span><span class="tag">Biometrics DLL</span><span class="tag">UDP → Unity</span></div>
-          <p class="kv"><b>Problem:</b> Need robust, low‑latency control for training & research.</p>
-          <p class="kv"><b>Approach:</b> Windowed features → classifier; UDP to a Unity game for feedback.</p>
-          <p class="kv"><b>Results:</b> Stable control across 17 movement classes; real‑time demos.</p>
-        </article>
-
-        <article class="proj">
-          <h4>AR‑based Myoelectric Training</h4>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">sEMG</span></div>
-          <p class="kv"><b>Problem:</b> Traditional training is monotonous; poor engagement.</p>
-          <p class="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; analytics.</p>
-          <p class="kv"><b>Results:</b> Higher engagement & smoother signal separation during sessions.</p>
-        </article>
-
-        <article class="proj">
-          <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
-          <div class="tags"><span class="tag">OpenSim</span><span class="tag">Moco</span><span class="tag">Optimization</span></div>
-          <p class="kv"><b>Problem:</b> Quantify effects of weakness and retraining strategies.</p>
-          <p class="kv"><b>Approach:</b> Build subject‑specific models; cost functions for symmetry & effort.</p>
-          <p class="kv"><b>Results:</b> Insights on strengthening vs. retraining trade‑offs; reproducible notebooks.</p>
-        </article>
-
-        <article class="proj">
-          <h4>Medical Imaging Segmentation</h4>
-          <div class="tags"><span class="tag">U‑Net</span><span class="tag">OpenCV</span><span class="tag">GLCM/LBP</span></div>
-          <p class="kv"><b>Problem:</b> Tissue delineation & texture characterization.</p>
-          <p class="kv"><b>Approach:</b> U‑Net baseline + classical features for analysis; clean training pipeline.</p>
-          <p class="kv"><b>Results:</b> Strong Dice on validation; interpretable texture metrics for regions.</p>
-        </article>
-
-        <article class="proj">
-          <h4>Stroke Rehabilitation Modeling</h4>
-          <div class="tags"><span class="tag">OpenSim</span><span class="tag">Moco</span><span class="tag">Rehab</span></div>
-          <p class="kv"><b>Problem:</b> Hemiparesis‑related gait abnormalities require tailored strategies.</p>
-          <p class="kv"><b>Approach:</b> Simulate muscle strengthening and gait retraining in OpenSim with optimization.</p>
-          <p class="kv"><b>Results:</b> Identified effective intervention parameters; draft thesis simulations.</p>
-        </article>
-
-        <article class="proj">
-          <h4>EMG + AR Games for Prosthetics</h4>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">Python</span><span class="tag">UDP</span></div>
-          <p class="kv"><b>Problem:</b> Amputees need motivating pre‑prosthetic training.</p>
-          <p class="kv"><b>Approach:</b> Virtual arm controlled via EMG; AR games to encourage repeated practice.</p>
-          <p class="kv"><b>Results:</b> Prototype tested; smoother muscle signal generation in sessions.</p>
-        </article>
-      </div>
-        </div>
-
-    <!-- FULL-WIDTH PROJECTS -->
-    <section class="card" style="margin-top:24px">
-      <div class="h3">Projects</div>
-      <p class="muted" style="margin-top:0">Selected, recent & in‑progress. Problem → Approach → Results. Links to code / demos when available.</p>
-      <div class="cards" style="margin-top:12px">
-        <!-- 1 -->
-        <article class="proj">
-          <h4>Real‑time sEMG Acquisition & Control</h4>
-          <div class="tags"><span class="tag">Python</span><span class="tag">Biometrics DLL</span><span class="tag">UDP → Unity</span><span class="tag">Keras</span></div>
-          <p class="kv"><b>Problem:</b> Robust, low‑latency control for research & training.</p>
-          <p class="kv"><b>Approach:</b> Windowed features → NN classifier; streaming via UDP to game engine; logging & replay.</p>
-          <p class="kv"><b>Results:</b> Stable control across <b>17 movement classes</b>; reproducible pipeline.</p>
-          <div class="links-row"><a class="plink" href="#">Code</a> · <a class="plink" href="#">Demo</a></div>
-        </article>
-        <!-- 2 -->
-        <article class="proj">
-          <h4>EMG‑Controlled Virtual Arm (Pre‑prosthetic Training)</h4>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">sEMG</span></div>
-          <p class="kv"><b>Problem:</b> Users need engaging practice before prosthesis fitting.</p>
-          <p class="kv"><b>Approach:</b> UDP‑driven avatar + task library; calibration & adaptive thresholds; session analytics.</p>
-          <p class="kv"><b>Results:</b> Robust control & improved session engagement.</p>
-          <div class="links-row"><a class="plink" href="#">Video</a></div>
-        </article>
-        <!-- 3 -->
-        <article class="proj">
-          <h4>AR‑Based Myoelectric Training</h4>
-          <div class="tags"><span class="tag">AR</span><span class="tag">Unity</span><span class="tag">Interaction</span></div>
-          <p class="kv"><b>Problem:</b> Monotony leads to abandonment in training.</p>
-          <p class="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; real‑time feedback.</p>
-          <p class="kv"><b>Results:</b> Higher engagement & smoother signal separation.</p>
-          <div class="links-row"><a class="plink" href="#">Video</a></div>
-        </article>
-        <!-- 4 -->
-        <article class="proj">
-          <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
-          <div class="tags"><span class="tag">OpenSim</span><span class="tag">Moco</span><span class="tag">Optimization</span></div>
-          <p class="kv"><b>Problem:</b> Evaluate strengthening vs. gait retraining strategies.</p>
-          <p class="kv"><b>Approach:</b> Subject‑specific models; symmetry/effort costs; parameter sweeps.</p>
-          <p class="kv"><b>Results:</b> Clear trade‑off insights; reusable notebooks for replication.</p>
-          <div class="links-row"><a class="plink" href="#">Notebook</a></div>
-        </article>
-        <!-- 5 -->
-        <article class="proj">
-          <h4>Medical Imaging Segmentation</h4>
-          <div class="tags"><span class="tag">U‑Net</span><span class="tag">OpenCV</span><span class="tag">PyTorch/TensorFlow</span></div>
-          <p class="kv"><b>Problem:</b> Tissue delineation for downstream quantification.</p>
-          <p class="kv"><b>Approach:</b> U‑Net baseline; training pipeline with augmentation & QA.</p>
-          <p class="kv"><b>Results:</b> Strong Dice on validation; clean inference scripts.</p>
-          <div class="links-row"><a class="plink" href="#">Repo</a> · <a class="plink" href="#">Report</a></div>
-        </article>
-        <!-- 6 -->
-        <article class="proj">
-          <h4>Tissue Characterization & Clustering</h4>
-          <div class="tags"><span class="tag">GLCM</span><span class="tag">LBP</span><span class="tag">11×11</span><span class="tag">44 features</span></div>
-          <p class="kv"><b>Problem:</b> Foreground/background & tissue‑type separation.</p>
-          <p class="kv"><b>Approach:</b> Per‑pixel feature vectors on 11×11 neighborhoods; classical stats + clustering.</p>
-          <p class="kv"><b>Results:</b> Reliable separation; interpretable feature importance.</p>
-          <div class="links-row"><a class="plink" href="#">Notebook</a></div>
-        </article>
-        <!-- 7 -->
-        <article class="proj">
-          <h4>Ninapro DB7 Multimodal Decoding</h4>
-          <div class="tags"><span class="tag">sEMG</span><span class="tag">IMU</span><span class="tag">PCA</span><span class="tag">Tensor Decomp</span></div>
-          <p class="kv"><b>Problem:</b> Decode task variables from EMG/IMU.</p>
-          <p class="kv"><b>Approach:</b> Dimensionality reduction + supervised classifiers; response characterization.</p>
-          <p class="kv"><b>Results:</b> Competitive accuracy; clear visualizations of components.</p>
-          <div class="links-row"><a class="plink" href="#">Code</a></div>
-        </article>
-        <!-- 8 -->
-        <article class="proj">
-          <h4>Socket‑Level Haptic Feedback (Closed‑Loop)</h4>
-          <div class="tags"><span class="tag">Prototype</span><span class="tag">Haptics</span><span class="tag">sEMG</span></div>
-          <p class="kv"><b>Status:</b> In progress.</p>
-          <p class="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training.</p>
-          <div class="links-row"><a class="plink" href="#">Design Notes</a></div>
-        </article>
-      </div>
-    </section>
-
-  </div>
-</body>
-</html>
+    </>
+  );
+}

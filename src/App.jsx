@@ -8,7 +8,7 @@ export default function App() {
   // Active tab for dot highlight
   const [active, setActive] = useState("software");
 
-  // Refs to watch sections while scrolling (so the dot stays correct)
+  // Refs for scroll tracking
   const softwareRef = useRef(null);
   const expertiseRef = useRef(null);
   const languagesRef = useRef(null);
@@ -22,7 +22,6 @@ export default function App() {
 
     const obs = new IntersectionObserver(
       (entries) => {
-        // Pick the most visible one
         const visible = entries
           .filter(e => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -38,21 +37,37 @@ export default function App() {
   const css = `
     :root{
       --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
+      --mast:#f3f4f6;
       --badge-adv:#d1fae5; --badge-int:#dbeafe; --badge-bas:#fde68a;
+      --hero-img:url('/header-art.png');
     }
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);
       font: 400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
     html{scroll-behavior:smooth}
-    .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 72px}
+
+    /* Top hero with art */
+    .masthead{position:relative;height:240px;background:var(--mast);border-bottom:1px solid var(--line);overflow:hidden}
+    .masthead::before{content:"";position:absolute;inset:0;background-image:var(--hero-img);background-size:cover;background-position:right center;opacity:.55;filter:saturate(1.15) contrast(1.03)}
+    /* soft fade at bottom for readability */
+    .masthead::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom, #fff0 55%, #fff8 100%)}
+    .hero{height:100%;display:flex;align-items:flex-end;padding-bottom:12px}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 72px}
 
     /* Header */
-    .header{display:flex;align-items:center;gap:16px;padding:18px 0 22px;border-bottom:1px solid var(--line)}
+    .header{display:flex;align-items:center;gap:16px;padding:18px 0 12px}
     .logo{width:56px;height:56px;border-radius:12px;background:#e5e7eb;display:grid;place-items:center;font-size:28px}
-    h1{margin:0;font-weight:800;letter-spacing:-.02em}
+    h1{
+      margin:0;
+      font-weight:600;           /* less bold */
+      letter-spacing:-.01em;     /* subtler tracking */
+      font-size:22px;            /* minimal look */
+      color:#111827;
+    }
 
     /* 2-column layout */
-    .grid{display:grid;grid-template-columns: 0.9fr 1.4fr;gap:28px;margin-top:22px}
+    .grid{display:grid;grid-template-columns: 0.9fr 1.4fr;gap:28px;margin-top:8px}
     @media (max-width: 900px){.grid{grid-template-columns:1fr}}
 
     .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
@@ -60,9 +75,9 @@ export default function App() {
     .h3{font-size:18px;font-weight:700;margin:0 0 12px}
 
     /* Left column */
-    .name{font-weight:800;font-size:22px;margin:2px 0 2px}
-    .roles{font-weight:700;color:#374151}
-    .about{margin-top:10px}
+    .roles{font-weight:600;color:#374151}
+    .about{margin-top:10px; text-align:justify; text-justify:inter-word; hyphens:auto}
+
     .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .btn{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
     .btn:hover{background:#f3f4f6}
@@ -75,7 +90,7 @@ export default function App() {
     }
     .tab .dot{width:8px;height:8px;border-radius:999px;background:#1113;transition:background .15s ease}
     .tab.active{color:var(--text)}
-    .tab.active .dot{background:#000} /* <<< black when active */
+    .tab.active .dot{background:#000} /* black when active */
     .tab:focus-visible{outline:2px solid #0002; outline-offset:2px; border-radius:6px}
 
     .grid-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -100,33 +115,33 @@ export default function App() {
     .plink{font-weight:600;text-decoration:none;color:#0f62fe}
     .center{display:flex;justify-content:center;margin-top:16px}
 
-    /* Anchor offset (if you add sticky header later, tweak this) */
-    .section-anchor{position:relative;top:-8px}
+    /* Anchor offset + give anchors some height so observer works reliably */
+    .section-anchor{position:relative;top:-8px;display:block;height:1px}
   `;
 
-  // helper to both jump and mark active immediately
-  const handleTabClick = (id) => {
-    setActive(id);
-    // allow default anchor behavior via href to handle scroll
-  };
+  const handleTabClick = (id) => setActive(id);
 
   return (
     <>
       <style>{css}</style>
 
-      <div className="wrap">
-        {/* Header */}
-        <div className="header">
-          <div className="logo">🧪</div>
-          <div>
-            <h1>Syuzanna Matevosyan — Portfolio</h1>
+      {/* Hero masthead with art */}
+      <div className="masthead">
+        <div className="wrap hero">
+          <div className="header">
+            <div className="logo">🧪</div>
+            <div>
+              <h1>Syuzanna Matevosyan — Portfolio</h1>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="wrap">
 
         <div className="grid">
           {/* LEFT: About */}
           <section className="card">
-            <div className="name">SYUZANNA MATEVOSYAN</div>
             <div className="roles">AI & Rehabilitation • Biosignals • Medical Imaging</div>
             <p className="about">
               I design data-driven tools for prosthetics & neuro-rehab: real-time sEMG control, AR interactions,
@@ -135,15 +150,14 @@ export default function App() {
             <div className="links">
               <a className="btn" href="https://github.com/symatevo" target="_blank" rel="noreferrer">GitHub ↗</a>
               <a className="btn" href="https://www.linkedin.com/in/symatevo/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              <a className="btn" href="/Syuzanna_Matevosyan_CV.pdf" target="_blank" rel="noreferrer">Download CV ↗</a>
+              <a className="btn" href="/Syuzanna_Matevosyan_CV.pdf" target="_blank" rel="noreferrer">CV ↗</a>
             </div>
           </section>
 
-          {/* RIGHT: Skills (all visible) */}
+          {/* RIGHT: Skills (all visible + anchor tabs) */}
           <section className="card">
             <div className="h3">Skills</div>
 
-            {/* Tabs */}
             <nav className="tabs" aria-label="Jump to skills sections">
               <a
                 className={`tab ${active === "software" ? "active" : ""}`}

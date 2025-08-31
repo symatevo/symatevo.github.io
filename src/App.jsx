@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
   useEffect(() => {
     document.title = "Syuzanna Matevosyan — Portfolio";
   }, []);
+
+  const [activeTab, setActiveTab] = useState("software");
 
   const css = `
     :root{
@@ -36,12 +38,16 @@ export default function App() {
     .btn{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
     .btn:hover{background:#f3f4f6}
 
-    /* Skills */
+    /* Tabs */
     .tabs{display:flex;gap:18px;margin:0 0 14px}
-    .tab{display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600}
-    .tab.active{color:var(--text)}
+    .tab{
+      display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600;
+      background:none;border:0;padding:0;cursor:pointer;
+    }
     .tab .dot{width:8px;height:8px;border-radius:999px;background:#1113}
+    .tab.active{color:var(--text)}
     .tab.active .dot{background:#1119}
+    .tab:focus{outline:2px solid #0002; outline-offset:2px; border-radius:6px}
 
     .grid-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     @media (max-width: 700px){.grid-chips{grid-template-columns:1fr 1fr}}
@@ -80,7 +86,7 @@ export default function App() {
         </div>
 
         <div className="grid">
-          {/* LEFT: shorter About */}
+          {/* LEFT: About */}
           <section className="card">
             <div className="name">SYUZANNA MATEVOSYAN</div>
             <div className="roles">AI & Rehabilitation • Biosignals • Medical Imaging</div>
@@ -95,55 +101,83 @@ export default function App() {
             </div>
           </section>
 
-          {/* RIGHT: Skills only */}
+          {/* RIGHT: Skills with tabs */}
           <section className="card">
             <div className="h3">Skills</div>
-            <div className="tabs">
-              <div className="tab active"><span className="dot" />Software</div>
-              <div className="tab"><span className="dot" />Expertise</div>
-              <div className="tab"><span className="dot" />Language</div>
+
+            {/* Tabs */}
+            <div className="tabs" role="tablist" aria-label="Skills sections">
+              <button
+                role="tab"
+                aria-selected={activeTab === "software"}
+                className={`tab ${activeTab === "software" ? "active" : ""}`}
+                onClick={() => setActiveTab("software")}
+              >
+                <span className="dot" />Software
+              </button>
+
+              <button
+                role="tab"
+                aria-selected={activeTab === "expertise"}
+                className={`tab ${activeTab === "expertise" ? "active" : ""}`}
+                onClick={() => setActiveTab("expertise")}
+              >
+                <span className="dot" />Expertise
+              </button>
+
+              <button
+                role="tab"
+                aria-selected={activeTab === "languages"}
+                className={`tab ${activeTab === "languages" ? "active" : ""}`}
+                onClick={() => setActiveTab("languages")}
+              >
+                <span className="dot" />Language
+              </button>
             </div>
 
-            {/* Software */}
-            <div className="grid-chips">
-              <div className="chip"><span>Python</span><span className="badge adv">Advanced</span></div>
-              <div className="chip"><span>NumPy · Pandas</span><span className="badge adv">Advanced</span></div>
-              <div className="chip"><span>scikit-learn</span><span className="badge adv">Advanced</span></div>
-              <div className="chip"><span>TensorFlow · Keras</span><span className="badge int">Intermediate</span></div>
-              <div className="chip"><span>PyTorch</span><span className="badge bas">Basic</span></div>
-              <div className="chip"><span>OpenCV</span><span className="badge int">Intermediate</span></div>
-              <div className="chip"><span>MATLAB</span><span className="badge int">Intermediate</span></div>
-              <div className="chip"><span>Unity (C/C#)</span><span className="badge int">Intermediate</span></div>
-              <div className="chip"><span>OpenSim & Moco</span><span className="badge int">Intermediate</span></div>
-              <div className="chip"><span>Git / GitHub</span><span className="badge adv">Advanced</span></div>
-              <div className="chip"><span>Jupyter / Colab</span><span className="badge adv">Advanced</span></div>
-              <div className="chip"><span>Biometrics DataLite DLL</span><span className="badge int">Intermediate</span></div>
-            </div>
+            {/* SOFTWARE */}
+            {activeTab === "software" && (
+              <div className="grid-chips" role="tabpanel" aria-label="Software">
+                <div className="chip"><span>Python</span><span className="badge adv">Advanced</span></div>
+                <div className="chip"><span>NumPy · Pandas</span><span className="badge adv">Advanced</span></div>
+                <div className="chip"><span>scikit-learn</span><span className="badge adv">Advanced</span></div>
+                <div className="chip"><span>TensorFlow · Keras</span><span className="badge int">Intermediate</span></div>
+                <div className="chip"><span>PyTorch</span><span className="badge bas">Basic</span></div>
+                <div className="chip"><span>OpenCV</span><span className="badge int">Intermediate</span></div>
+                <div className="chip"><span>MATLAB</span><span className="badge int">Intermediate</span></div>
+                <div className="chip"><span>Unity (C/C#)</span><span className="badge int">Intermediate</span></div>
+                <div className="chip"><span>OpenSim & Moco</span><span className="badge int">Intermediate</span></div>
+                <div className="chip"><span>Git / GitHub</span><span className="badge adv">Advanced</span></div>
+                <div className="chip"><span>Jupyter / Colab</span><span className="badge adv">Advanced</span></div>
+                <div className="chip"><span>Biometrics DataLite DLL</span><span className="badge int">Intermediate</span></div>
+              </div>
+            )}
 
-            {/* Expertise */}
-            <div style={{ height: "18px" }} />
-            <div className="h3">Expertise</div>
-            <div className="grid-chips">
-              <div className="chip"><span>sEMG Acquisition & Control</span><span className="badge adv">Real-time</span></div>
-              <div className="chip"><span>AR/VR Interactions</span><span className="badge int">Unity</span></div>
-              <div className="chip"><span>Gesture Classification</span><span className="badge int">SVM · DT · RF RNN</span></div>
-              <div className="chip"><span>Signal Processing</span><span className="badge int">Feature · Selection</span></div>
-              <div className="chip"><span>Texture Features</span><span className="badge int">GLCM · LBP</span></div>
-              <div className="chip"><span>Segmentation</span><span className="badge int">CNN · U-Net</span></div>
-              <div className="chip"><span>Biomechanics</span><span className="badge int">Gait · Hemiparesis</span></div>
-              <div className="chip"><span>Optimization</span><span className="badge int">Moco</span></div>
-              <div className="chip"><span>Dataset Curation</span><span className="badge int">Ninapro DB7</span></div>
-            </div>
+            {/* EXPERTISE */}
+            {activeTab === "expertise" && (
+              <div className="grid-chips" role="tabpanel" aria-label="Expertise">
+                <div className="chip"><span>sEMG Acquisition & Control</span><span className="badge adv">Real-time</span></div>
+                <div className="chip"><span>AR/VR Interactions</span><span className="badge int">Unity</span></div>
+                <div className="chip"><span>Gesture Classification</span><span className="badge int">SVM · DT · RF RNN</span></div>
+                <div className="chip"><span>Signal Processing</span><span className="badge int">Feature · Selection</span></div>
+                <div className="chip"><span>Texture Features</span><span className="badge int">GLCM · LBP</span></div>
+                <div className="chip"><span>Segmentation</span><span className="badge int">CNN · U-Net</span></div>
+                <div className="chip"><span>Biomechanics</span><span className="badge int">Gait · Hemiparesis</span></div>
+                <div className="chip"><span>Optimization</span><span className="badge int">Moco</span></div>
+                <div className="chip"><span>Dataset Curation</span><span className="badge int">Ninapro DB7</span></div>
+              </div>
+            )}
 
-            {/* Languages */}
-            <div style={{ height: "18px" }} />
-            <div className="h3">Languages</div>
-            <div className="grid-chips">
-              <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
-              <div className="chip"><span>Russian</span><span className="badge adv">C2</span></div>
-              <div className="chip"><span>Armenian</span><span className="badge adv">Native</span></div>
-              <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
-            </div>
+            {/* LANGUAGES */}
+            {activeTab === "languages" && (
+              <div className="grid-chips" role="tabpanel" aria-label="Languages">
+                <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
+                {/* Russian C2 changed to green: use 'adv' badge */}
+                <div className="chip"><span>Russian</span><span className="badge adv">C2</span></div>
+                <div className="chip"><span>Armenian</span><span className="badge adv">Native</span></div>
+                <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
+              </div>
+            )}
           </section>
         </div>
 
@@ -226,7 +260,13 @@ export default function App() {
               <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
             </article>
           </div>
-          
+
+          {/* Download Portfolio */}
+          <div className="center">
+            <a className="btn" href="/SM_Portfolio.pdf" target="_blank" rel="noreferrer" download>
+              Download Portfolio (PDF)
+            </a>
+          </div>
         </section>
       </div>
     </>

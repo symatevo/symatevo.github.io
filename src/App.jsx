@@ -126,10 +126,10 @@ export default function App() {
             <div className="grid-chips">
               <div className="chip"><span>sEMG Acquisition & Control</span><span className="badge adv">Real-time</span></div>
               <div className="chip"><span>AR/VR Interactions</span><span className="badge int">Unity</span></div>
-              <div className="chip"><span>Gesture Classification</span><span className="badge int">17 classes</span></div>
-              <div className="chip"><span>Signal Processing</span><span className="badge int">Filtering · Features</span></div>
+              <div className="chip"><span>Gesture Classification</span><span className="badge int">SVM · DT · RF · ResNet</span></div>
+              <div className="chip"><span>Signal Processing</span><span className="badge int">Feature · Selection</span></div>
               <div className="chip"><span>Texture Features</span><span className="badge int">GLCM · LBP</span></div>
-              <div className="chip"><span>Segmentation</span><span className="badge int">U-Net</span></div>
+              <div className="chip"><span>Segmentation</span><span className="badge int">CNN · U-Net</span></div>
               <div className="chip"><span>Biomechanics</span><span className="badge int">Gait · Hemiparesis</span></div>
               <div className="chip"><span>Optimization</span><span className="badge int">Moco</span></div>
               <div className="chip"><span>Dataset Curation</span><span className="badge int">Ninapro DB7</span></div>
@@ -140,66 +140,11 @@ export default function App() {
             <div className="h3">Languages</div>
             <div className="grid-chips">
               <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
-              <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
-              <div className="chip"><span>Romanian</span><span className="badge bas">Learning</span></div>
+              <div className="chip"><span>Russian</span><span className="badge bas">C2</span></div>
               <div className="chip"><span>Armenian</span><span className="badge adv">Native</span></div>
-              <div className="chip"><span>Greek</span><span className="badge bas">Basic</span></div>
+              <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
             </div>
           </section>
-        </div>
-
-        {/* Projects start full width below */}
-        <div className="projects">
-          <div className="h3">Projects</div>
-          <div className="cards">
-            <article className="proj">
-              <h4>Real-time sEMG Acquisition & Control</h4>
-              <div className="tags"><span className="tag">Python</span><span className="tag">Biometrics DLL</span><span className="tag">UDP → Unity</span></div>
-              <p className="kv"><b>Problem:</b> Need robust, low-latency control for training & research.</p>
-              <p className="kv"><b>Approach:</b> Windowed features → classifier; UDP to a Unity game for feedback.</p>
-              <p className="kv"><b>Results:</b> Stable control across 17 movement classes; real-time demos.</p>
-            </article>
-
-            <article className="proj">
-              <h4>AR-based Myoelectric Training</h4>
-              <div className="tags"><span className="tag">Unity</span><span className="tag">C#</span><span className="tag">sEMG</span></div>
-              <p className="kv"><b>Problem:</b> Traditional training is monotonous; poor engagement.</p>
-              <p className="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; analytics.</p>
-              <p className="kv"><b>Results:</b> Higher engagement & smoother signal separation during sessions.</p>
-            </article>
-
-            <article className="proj">
-              <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
-              <div className="tags"><span className="tag">OpenSim</span><span className="tag">Moco</span><span className="tag">Optimization</span></div>
-              <p className="kv"><b>Problem:</b> Quantify effects of weakness and retraining strategies.</p>
-              <p className="kv"><b>Approach:</b> Build subject-specific models; cost functions for symmetry & effort.</p>
-              <p className="kv"><b>Results:</b> Insights on strengthening vs. retraining trade-offs; reproducible notebooks.</p>
-            </article>
-
-            <article className="proj">
-              <h4>Medical Imaging Segmentation</h4>
-              <div className="tags"><span className="tag">U-Net</span><span className="tag">OpenCV</span><span className="tag">GLCM/LBP</span></div>
-              <p className="kv"><b>Problem:</b> Tissue delineation & texture characterization.</p>
-              <p className="kv"><b>Approach:</b> U-Net baseline + classical features for analysis; clean training pipeline.</p>
-              <p className="kv"><b>Results:</b> Strong Dice on validation; interpretable texture metrics for regions.</p>
-            </article>
-
-            <article className="proj">
-              <h4>Stroke Rehabilitation Modeling</h4>
-              <div className="tags"><span className="tag">OpenSim</span><span className="tag">Moco</span><span className="tag">Rehab</span></div>
-              <p className="kv"><b>Problem:</b> Hemiparesis-related gait abnormalities require tailored strategies.</p>
-              <p className="kv"><b>Approach:</b> Simulate muscle strengthening and gait retraining in OpenSim with optimization.</p>
-              <p className="kv"><b>Results:</b> Identified effective intervention parameters; draft thesis simulations.</p>
-            </article>
-
-            <article className="proj">
-              <h4>EMG + AR Games for Prosthetics</h4>
-              <div className="tags"><span className="tag">Unity</span><span className="tag">Python</span><span className="tag">UDP</span></div>
-              <p className="kv"><b>Problem:</b> Amputees need motivating pre-prosthetic training.</p>
-              <p className="kv"><b>Approach:</b> Virtual arm controlled via EMG; AR games to encourage repeated practice.</p>
-              <p className="kv"><b>Results:</b> Prototype tested; smoother muscle signal generation in sessions.</p>
-            </article>
-          </div>
         </div>
 
         {/* FULL-WIDTH PROJECTS */}

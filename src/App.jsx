@@ -126,7 +126,7 @@ export default function App() {
             <div className="grid-chips">
               <div className="chip"><span>sEMG Acquisition & Control</span><span className="badge adv">Real-time</span></div>
               <div className="chip"><span>AR/VR Interactions</span><span className="badge int">Unity</span></div>
-              <div className="chip"><span>Gesture Classification</span><span className="badge int">SVM · DT · RF · ResNet</span></div>
+              <div className="chip"><span>Gesture Classification</span><span className="badge int">SVM · DT · RF RNN</span></div>
               <div className="chip"><span>Signal Processing</span><span className="badge int">Feature · Selection</span></div>
               <div className="chip"><span>Texture Features</span><span className="badge int">GLCM · LBP</span></div>
               <div className="chip"><span>Segmentation</span><span className="badge int">CNN · U-Net</span></div>
@@ -140,7 +140,7 @@ export default function App() {
             <div className="h3">Languages</div>
             <div className="grid-chips">
               <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
-              <div className="chip"><span>Russian</span><span className="badge bas">C2</span></div>
+              <div className="chip"><span>Russian</span><span className="badge adv">C2</span></div>
               <div className="chip"><span>Armenian</span><span className="badge adv">Native</span></div>
               <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
             </div>
@@ -226,13 +226,7 @@ export default function App() {
               <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
             </article>
           </div>
-
-          {/* Download Portfolio */}
-          <div className="center">
-            <a className="btn" href="/SM_Portfolio.pdf" target="_blank" rel="noreferrer" download>
-              Download Portfolio (PDF)
-            </a>
-          </div>
+          
         </section>
       </div>
     </>

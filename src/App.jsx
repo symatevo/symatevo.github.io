@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function App() {
   useEffect(() => {
     document.title = "Syuzanna Matevosyan — Portfolio";
   }, []);
-
-  const [activeTab, setActiveTab] = useState("software");
 
   const css = `
     :root{
@@ -15,6 +13,9 @@ export default function App() {
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);
       font: 400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
+    /* Smooth scroll to anchors */
+    html{scroll-behavior:smooth}
+
     .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 72px}
 
     /* Header */
@@ -38,16 +39,19 @@ export default function App() {
     .btn{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
     .btn:hover{background:#f3f4f6}
 
-    /* Tabs */
+    /* Tabs as anchor links */
     .tabs{display:flex;gap:18px;margin:0 0 14px}
     .tab{
       display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600;
-      background:none;border:0;padding:0;cursor:pointer;
+      text-decoration:none;
     }
+    .tab:hover{color:var(--text)}
     .tab .dot{width:8px;height:8px;border-radius:999px;background:#1113}
-    .tab.active{color:var(--text)}
-    .tab.active .dot{background:#1119}
-    .tab:focus{outline:2px solid #0002; outline-offset:2px; border-radius:6px}
+    .tab:focus-visible{outline:2px solid #0002; outline-offset:2px; border-radius:6px}
+    /* Optional: highlight the dot when the section is the target */
+    :target ~ .skills-content .section-anchor[data-for="software"]:target ~ .h3 .dot,
+    :target ~ .skills-content .section-anchor[data-for="expertise"]:target ~ .h3 .dot,
+    :target ~ .skills-content .section-anchor[data-for="languages"]:target ~ .h3 .dot { background:#1119 }
 
     .grid-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     @media (max-width: 700px){.grid-chips{grid-template-columns:1fr 1fr}}
@@ -70,6 +74,9 @@ export default function App() {
     .links-row{display:flex;gap:10px;flex-wrap:wrap}
     .plink{font-weight:600;text-decoration:none;color:#0f62fe}
     .center{display:flex;justify-content:center;margin-top:16px}
+
+    /* Anchor offset so headings don't hide under fixed UI (tweak if you add sticky header) */
+    .section-anchor{position:relative;top:-8px}
   `;
 
   return (
@@ -101,83 +108,62 @@ export default function App() {
             </div>
           </section>
 
-          {/* RIGHT: Skills with tabs */}
+          {/* RIGHT: Skills (all visible) */}
           <section className="card">
             <div className="h3">Skills</div>
 
-            {/* Tabs */}
-            <div className="tabs" role="tablist" aria-label="Skills sections">
-              <button
-                role="tab"
-                aria-selected={activeTab === "software"}
-                className={`tab ${activeTab === "software" ? "active" : ""}`}
-                onClick={() => setActiveTab("software")}
-              >
-                <span className="dot" />Software
-              </button>
+            {/* Tabs as anchor links */}
+            <nav className="tabs" aria-label="Jump to skills sections">
+              <a className="tab" href="#software"><span className="dot" />Software</a>
+              <a className="tab" href="#expertise"><span className="dot" />Expertise</a>
+              <a className="tab" href="#languages"><span className="dot" />Language</a>
+            </nav>
 
-              <button
-                role="tab"
-                aria-selected={activeTab === "expertise"}
-                className={`tab ${activeTab === "expertise" ? "active" : ""}`}
-                onClick={() => setActiveTab("expertise")}
-              >
-                <span className="dot" />Expertise
-              </button>
-
-              <button
-                role="tab"
-                aria-selected={activeTab === "languages"}
-                className={`tab ${activeTab === "languages" ? "active" : ""}`}
-                onClick={() => setActiveTab("languages")}
-              >
-                <span className="dot" />Language
-              </button>
+            {/* SOFTWARE (visible) */}
+            <a id="software" className="section-anchor" data-for="software" />
+            <div className="h3">Software</div>
+            <div className="grid-chips" aria-label="Software">
+              <div className="chip"><span>Python</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>NumPy · Pandas</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>scikit-learn</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>TensorFlow · Keras</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>PyTorch</span><span className="badge bas">Basic</span></div>
+              <div className="chip"><span>OpenCV</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>MATLAB</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>Unity (C/C#)</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>OpenSim & Moco</span><span className="badge int">Intermediate</span></div>
+              <div className="chip"><span>Git / GitHub</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>Jupyter / Colab</span><span className="badge adv">Advanced</span></div>
+              <div className="chip"><span>Biometrics DataLite DLL</span><span className="badge int">Intermediate</span></div>
             </div>
 
-            {/* SOFTWARE */}
-            {activeTab === "software" && (
-              <div className="grid-chips" role="tabpanel" aria-label="Software">
-                <div className="chip"><span>Python</span><span className="badge adv">Advanced</span></div>
-                <div className="chip"><span>NumPy · Pandas</span><span className="badge adv">Advanced</span></div>
-                <div className="chip"><span>scikit-learn</span><span className="badge adv">Advanced</span></div>
-                <div className="chip"><span>TensorFlow · Keras</span><span className="badge int">Intermediate</span></div>
-                <div className="chip"><span>PyTorch</span><span className="badge bas">Basic</span></div>
-                <div className="chip"><span>OpenCV</span><span className="badge int">Intermediate</span></div>
-                <div className="chip"><span>MATLAB</span><span className="badge int">Intermediate</span></div>
-                <div className="chip"><span>Unity (C/C#)</span><span className="badge int">Intermediate</span></div>
-                <div className="chip"><span>OpenSim & Moco</span><span className="badge int">Intermediate</span></div>
-                <div className="chip"><span>Git / GitHub</span><span className="badge adv">Advanced</span></div>
-                <div className="chip"><span>Jupyter / Colab</span><span className="badge adv">Advanced</span></div>
-                <div className="chip"><span>Biometrics DataLite DLL</span><span className="badge int">Intermediate</span></div>
-              </div>
-            )}
+            {/* EXPERTISE (visible) */}
+            <a id="expertise" className="section-anchor" data-for="expertise" />
+            <div style={{ height: "18px" }} />
+            <div className="h3">Expertise</div>
+            <div className="grid-chips" aria-label="Expertise">
+              <div className="chip"><span>sEMG Acquisition & Control</span><span className="badge adv">Real-time</span></div>
+              <div className="chip"><span>AR/VR Interactions</span><span className="badge int">Unity</span></div>
+              <div className="chip"><span>Gesture Classification</span><span className="badge int">SVM · DT · RF RNN</span></div>
+              <div className="chip"><span>Signal Processing</span><span className="badge int">Feature · Selection</span></div>
+              <div className="chip"><span>Texture Features</span><span className="badge int">GLCM · LBP</span></div>
+              <div className="chip"><span>Segmentation</span><span className="badge int">CNN · U-Net</span></div>
+              <div className="chip"><span>Biomechanics</span><span className="badge int">Gait · Hemiparesis</span></div>
+              <div className="chip"><span>Optimization</span><span className="badge int">Moco</span></div>
+              <div className="chip"><span>Dataset Curation</span><span className="badge int">Ninapro DB7</span></div>
+            </div>
 
-            {/* EXPERTISE */}
-            {activeTab === "expertise" && (
-              <div className="grid-chips" role="tabpanel" aria-label="Expertise">
-                <div className="chip"><span>sEMG Acquisition & Control</span><span className="badge adv">Real-time</span></div>
-                <div className="chip"><span>AR/VR Interactions</span><span className="badge int">Unity</span></div>
-                <div className="chip"><span>Gesture Classification</span><span className="badge int">SVM · DT · RF RNN</span></div>
-                <div className="chip"><span>Signal Processing</span><span className="badge int">Feature · Selection</span></div>
-                <div className="chip"><span>Texture Features</span><span className="badge int">GLCM · LBP</span></div>
-                <div className="chip"><span>Segmentation</span><span className="badge int">CNN · U-Net</span></div>
-                <div className="chip"><span>Biomechanics</span><span className="badge int">Gait · Hemiparesis</span></div>
-                <div className="chip"><span>Optimization</span><span className="badge int">Moco</span></div>
-                <div className="chip"><span>Dataset Curation</span><span className="badge int">Ninapro DB7</span></div>
-              </div>
-            )}
-
-            {/* LANGUAGES */}
-            {activeTab === "languages" && (
-              <div className="grid-chips" role="tabpanel" aria-label="Languages">
-                <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
-                {/* Russian C2 changed to green: use 'adv' badge */}
-                <div className="chip"><span>Russian</span><span className="badge adv">C2</span></div>
-                <div className="chip"><span>Armenian</span><span className="badge adv">Native</span></div>
-                <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
-              </div>
-            )}
+            {/* LANGUAGES (visible) */}
+            <a id="languages" className="section-anchor" data-for="languages" />
+            <div style={{ height: "18px" }} />
+            <div className="h3">Languages</div>
+            <div className="grid-chips" aria-label="Languages">
+              <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
+              {/* Russian → green */}
+              <div className="chip"><span>Russian</span><span className="badge adv">C2</span></div>
+              <div className="chip"><span>Armenian</span><span className="badge adv">Native</span></div>
+              <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
+            </div>
           </section>
         </div>
 

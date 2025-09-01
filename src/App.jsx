@@ -5,8 +5,36 @@ export default function App() {
     document.title = "Syuzanna Matevosyan — Portfolio";
   }, []);
 
+  // One-time typing animation for title (first visit only)
+  useEffect(() => {
+    try {
+      const already = localStorage.getItem("titleAnimated") === "1";
+      if (already) { setTypedTitle(titleFull); return; }
+      setIsTyping(true);
+      setTypedTitle("");
+      const speed = 45; // ms per character
+      let i = 0;
+      const id = setInterval(() => {
+        i++;
+        setTypedTitle(titleFull.slice(0, i));
+        if (i >= titleFull.length) {
+          clearInterval(id);
+          setIsTyping(false);
+          localStorage.setItem("titleAnimated", "1");
+        }
+      }, speed);
+      return () => clearInterval(id);
+    } catch (e) {
+      // localStorage blocked or unavailable
+      setTypedTitle(titleFull);
+    }
+  }, []);
+
   // Active tab for dot highlight
   const [active, setActive] = useState("software");
+  const titleFull = "Syuzanna Matevosyan — Portfolio";
+  const [typedTitle, setTypedTitle] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
   // Refs for scroll tracking
   const softwareRef = useRef(null);
@@ -39,6 +67,7 @@ export default function App() {
       --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
       --mast:#f3f4f6;
       --badge-adv:#d1fae5; --badge-int:#dbeafe; --badge-bas:#fde68a;
+      --hero-img:url('/header-art.png');
     }
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);
@@ -46,11 +75,8 @@ export default function App() {
     html{scroll-behavior:smooth}
 
     /* Top hero with art */
-    .masthead{position:relative;height:240px;background:var(--mast);border-bottom:1px solid var(--line);overflow:hidden}
-    .masthead::before{content:"";position:absolute;inset:0;background-image:var(--hero-img);background-size:cover;background-position:right center;opacity:.55;filter:saturate(1.15) contrast(1.03)}
-    /* soft fade at bottom for readability */
-    .masthead::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom, #fff0 55%, #fff8 100%)}
-    .hero{height:100%;display:flex;align-items:flex-end;padding-bottom:12px}
+    .masthead{position:relative;height:140px;background:var(--mast);border-bottom:1px solid var(--line);overflow:hidden}
+    .hero{height:100%;display:flex;align-items:flex-end;padding-bottom:8px}
 
     .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 72px}
 
@@ -64,6 +90,10 @@ export default function App() {
       font-size:22px;            /* minimal look */
       color:#111827;
     }
+
+    /* typing caret */
+    .caret{display:inline-block;width:2px;height:1.15em;background:#111827;margin-left:2px;vertical-align:-0.15em;animation:blink 1s step-end infinite}
+    @keyframes blink{50%{opacity:0}}
 
     /* 2-column layout */
     .grid{display:grid;grid-template-columns: 0.9fr 1.4fr;gap:28px;margin-top:8px}
@@ -129,7 +159,7 @@ export default function App() {
         <div className="wrap hero">
           <div className="header">
             <div>
-              <h1>Syuzanna Matevosyan — Portfolio</h1>
+              <h1 aria-label="Syuzanna Matevosyan — Portfolio">{typedTitle}{isTyping && <span className="caret" aria-hidden="true" />}</h1>
             </div>
           </div>
         </div>
@@ -306,6 +336,13 @@ export default function App() {
               <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training.</p>
               <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
             </article>
+          </div>
+
+          {/* Download Portfolio */}
+          <div className="center">
+            <a className="btn" href="/SM_Portfolio.pdf" target="_blank" rel="noreferrer" download>
+              Download Portfolio (PDF)
+            </a>
           </div>
         </section>
       </div>

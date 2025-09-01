@@ -269,12 +269,22 @@ export default function App() {
             {/* 1 */}
             <article className="proj">
               <h4>Augmented Reality System for Myoelectric Prosthesis Training</h4>
-              <div className="tags"><span className="tag">Python</span><span className="tag">Biometrics DLL</span><span className="tag">UDP → Unity</span><span className="tag">Keras</span></div>
-              <p className="kv"><p>I built a gamified training platform for amputees to practice 17 hand gestures before prosthesis fitting. 
-                Using AR, users could see an virtual arm and control it with their own EMG signals. 
-                The system achieved ~70% classification accuracy, and participants described the experience as engaging and motivating</p>
-              <div className="links-row"><a className="plink" href="#">Code</a> · <a className="plink" href="#">Demo</a></div>
+              <div className="tags">
+                <span className="tag">Python</span>
+                <span className="tag">Biometrics DLL</span>
+                <span className="tag">UDP → Unity</span>
+                <span className="tag">Keras</span>
+              </div>
+              <p className="kv">
+                I built a gamified training platform for amputees to practice 17 hand gestures before prosthesis fitting. 
+                Using AR, users could see a virtual arm and control it with their own EMG signals. 
+                The system achieved ~70% classification accuracy, and participants described the experience as engaging and motivating.
+              </p>
+              <div className="links-row">
+                <a className="plink" href="#">Code</a> · <a className="plink" href="#">Demo</a>
+              </div>
             </article>
+
             {/* 2 */}
             <article className="proj">
               <h4>EMG-Controlled Virtual Arm (Pre-prosthetic Training)</h4>

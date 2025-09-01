@@ -39,7 +39,7 @@ export default function App() {
       --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
       --mast:#f3f4f6;
       --badge-adv:#d1fae5; --badge-int:#dbeafe; --badge-bas:#fde68a;
-      --hero-img:url('/header.png');
+      --hero-img:url('/header_ankap.png');
     }
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);

@@ -11,29 +11,19 @@ export default function App() {
   const [isSubtitleTyping, setIsSubtitleTyping] = useState(false);
 
   useEffect(() => {
-    try {
-      const already = localStorage.getItem("subtitleAnimated") === "1";
-      if (already) {
-        setTypedSubtitle(subtitleFull);
-        return;
+    setIsSubtitleTyping(true);
+    setTypedSubtitle("");
+    const speed = 45; // ms per character
+    let i = 0;
+    const id = setInterval(() => {
+      i++;
+      setTypedSubtitle(subtitleFull.slice(0, i));
+      if (i >= subtitleFull.length) {
+        clearInterval(id);
+        setIsSubtitleTyping(false);
       }
-      setIsSubtitleTyping(true);
-      setTypedSubtitle("");
-      const speed = 45; // ms per character
-      let i = 0;
-      const id = setInterval(() => {
-        i++;
-        setTypedSubtitle(subtitleFull.slice(0, i));
-        if (i >= subtitleFull.length) {
-          clearInterval(id);
-          setIsSubtitleTyping(false);
-          localStorage.setItem("subtitleAnimated", "1");
-        }
-      }, speed);
-      return () => clearInterval(id);
-    } catch {
-      setTypedSubtitle(subtitleFull);
-    }
+    }, speed);
+    return () => clearInterval(id);
   }, []);
 
   // Active tab for dot highlight

@@ -1,54 +1,126 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function App() {
   useEffect(() => {
     document.title = "Syuzanna Matevosyan — Portfolio";
   }, []);
 
+  // One-time typing animation for SUBTITLE (first visit only)
+  const subtitleFull = "Erasmus Mundus Master in Biomedical Engineering";
+  const [typedSubtitle, setTypedSubtitle] = useState("");
+  const [isSubtitleTyping, setIsSubtitleTyping] = useState(false);
+
+  useEffect(() => {
+    setIsSubtitleTyping(true);
+    setTypedSubtitle("");
+    const speed = 45; // ms per character
+    let i = 0;
+    const id = setInterval(() => {
+      i++;
+      setTypedSubtitle(subtitleFull.slice(0, i));
+      if (i >= subtitleFull.length) {
+        clearInterval(id);
+        setIsSubtitleTyping(false);
+      }
+    }, speed);
+    return () => clearInterval(id);
+  }, []);
+
+  // Active tab for dot highlight
+  const [active, setActive] = useState("software");
+
+  // Refs for scroll tracking
+  const softwareRef = useRef(null);
+  const expertiseRef = useRef(null);
+  const languagesRef = useRef(null);
+
+  useEffect(() => {
+    const sections = [
+      { id: "software", el: softwareRef.current },
+      { id: "expertise", el: expertiseRef.current },
+      { id: "languages", el: languagesRef.current },
+    ].filter(s => s.el);
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target?.id) setActive(visible.target.id);
+      },
+      { rootMargin: "-30% 0px -60% 0px", threshold: [0.1, 0.25, 0.5, 0.75, 1] }
+    );
+
+    sections.forEach(s => obs.observe(s.el));
+    return () => obs.disconnect();
+  }, []);
+
   const css = `
     :root{
       --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
+      --mast:#f3f4f6;
       --badge-adv:#d1fae5; --badge-int:#dbeafe; --badge-bas:#fde68a;
     }
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);
-      font:400 16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-    .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 72px}
+      font: 400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
+    html{scroll-behavior:smooth}
 
-    /* Header */
-    .header{display:flex;align-items:center;gap:16px;padding:18px 0 22px;border-bottom:1px solid var(--line);position:relative}
-    .logo{width:56px;height:56px;border-radius:12px;background:#e5e7eb;display:grid;place-items:center;font-size:28px}
-    h1{margin:0;font-weight:800;letter-spacing:-.02em}
-    .subtitle{margin-top:4px;color:var(--muted);font-size:14px;font-weight:500}
-    .header-art{margin-left:auto;height:90px;max-width:46vw;object-fit:contain;pointer-events:none}
-    @media (max-width:900px){.header-art{display:none}}
+    /* Top gray header (made a bit taller so the text sits lower on the page) */
+    .masthead{position:relative;height:180px;background:var(--mast);border-bottom:1px solid var(--line);overflow:hidden}
+    .hero{height:100%;display:flex;align-items:flex-end;padding-bottom:0}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 72px}
+
+    /* Header text */
+    .header{display:flex;align-items:center;gap:16px;padding:18px 0 0}
+    h1{
+      margin:0;
+      font-weight:600;           /* title: no animation, minimal look */
+      letter-spacing:-.01em;
+      font-size:22px;
+      color:#111827;
+    }
+    .subtitle{font-style:italic;font-size:14px;color:var(--muted);margin-top:4px}
+
+    .title-wrap{padding-right:280px}
+    .header-art{position:absolute;top:0;right:0;height:100%;width:auto;pointer-events:none;opacity:.9}
+    @media (max-width: 900px){.title-wrap{padding-right:0}.header-art{display:none}}
+
+    /* caret for subtitle typing */
+    .caret{display:inline-block;width:2px;height:1.15em;background:#111827;margin-left:2px;vertical-align:-0.15em;animation:blink 1s step-end infinite}
+    @keyframes blink{50%{opacity:0}}
 
     /* 2-column layout */
-    .grid{display:grid;grid-template-columns:.9fr 1.4fr;gap:28px;margin-top:22px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .grid{display:grid;grid-template-columns: 0.9fr 1.4fr;gap:28px;margin-top:8px}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
 
     .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
     .muted{color:var(--muted)}
     .h3{font-size:18px;font-weight:700;margin:0 0 12px}
 
     /* Left column */
-    .name{font-weight:800;font-size:22px;margin:2px 0 2px}
-    .roles{font-weight:700;color:#374151}
-    .about{margin-top:10px}
+    .roles{font-weight:600;color:#374151}
+    .about{margin-top:10px; text-align:justify; text-justify:inter-word; hyphens:auto}
+
     .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .btn{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
     .btn:hover{background:#f3f4f6}
 
-    /* Skills */
+    /* Tabs as anchor links */
     .tabs{display:flex;gap:18px;margin:0 0 14px}
-    .tab{display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600}
+    .tab{
+      display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600;
+      text-decoration:none; cursor:pointer;
+    }
+    .tab .dot{width:8px;height:8px;border-radius:999px;background:#1113;transition:background .15s ease}
     .tab.active{color:var(--text)}
-    .tab .dot{width:8px;height:8px;border-radius:999px;background:#1113}
-    .tab.active .dot{background:#1119}
+    .tab.active .dot{background:#000} /* black when active */
+    .tab:focus-visible{outline:2px solid #0002; outline-offset:2px; border-radius:6px}
 
     .grid-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    @media (max-width:700px){.grid-chips{grid-template-columns:1fr 1fr}}
-    .chip{background:#f9fafb;border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    @media (max-width: 700px){.grid-chips{grid-template-columns:1fr 1fr}}
+    .chip{background:#f9fafb;border:1px solid var(--line);border-radius:10px;padding:12px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .badge{font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid #0001;background:#fff}
     .adv{background:var(--badge-adv);border-color:#065f46;color:#064e3b}
     .int{background:var(--badge-int);border-color:#1d4ed8;color:#1e40af}
@@ -57,7 +129,7 @@ export default function App() {
     /* Projects */
     .projects{margin-top:32px}
     .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    @media (max-width:900px){.cards{grid-template-columns:1fr}}
+    @media (max-width: 900px){.cards{grid-template-columns:1fr}}
     .proj{border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px}
     .proj h4{margin:2px 0 8px;font-size:16px}
     .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
@@ -67,28 +139,39 @@ export default function App() {
     .links-row{display:flex;gap:10px;flex-wrap:wrap}
     .plink{font-weight:600;text-decoration:none;color:#0f62fe}
     .center{display:flex;justify-content:center;margin-top:16px}
+
+    /* Anchor offset */
+    .section-anchor{position:relative;top:-8px;display:block;height:1px}
   `;
+
+  const handleTabClick = (id) => setActive(id);
 
   return (
     <>
       <style>{css}</style>
 
-      <div className="wrap">
-        {/* Header */}
-        <div className="header">
-          <div className="logo">🧪</div>
-          <div>
-            <h1>Syuzanna Matevosyan — Portfolio</h1>
-            <div className="subtitle">Erasmus Mundus Master in Biomedical Engineering</div>
+      {/* Gray masthead */}
+      <div className="masthead">
+        <img className="header-art" src="/header-wave.png" alt="" aria-hidden="true" />
+        <div className="wrap hero">
+          <div className="header">
+            <div className="title-wrap">
+              {/* Title: static (no animation) */}
+              <h1 aria-label="Syuzanna Matevosyan — Portfolio">Syuzanna Matevosyan — Portfolio</h1>
+              {/* Subtitle: animated on first visit only */}
+              <div className="subtitle">
+                {typedSubtitle}
+                {isSubtitleTyping && <span className="caret" aria-hidden="true" />}
+              </div>
+            </div>
           </div>
-          {/* <<< header art on the right >>> */}
-          <img className="header-art" src="/images/header-wave.png" alt="" />
         </div>
+      </div>
 
+      <div className="wrap">
         <div className="grid">
-          {/* LEFT: shorter About */}
+          {/* LEFT: About */}
           <section className="card">
-            <div className="name">SYUZANNA MATEVOSYAN</div>
             <div className="roles">AI & Rehabilitation • Biosignals • Medical Imaging</div>
             <p className="about">
               I design data-driven tools for prosthetics & neuro-rehab: real-time sEMG control, AR interactions,
@@ -97,20 +180,42 @@ export default function App() {
             <div className="links">
               <a className="btn" href="https://github.com/symatevo" target="_blank" rel="noreferrer">GitHub ↗</a>
               <a className="btn" href="https://www.linkedin.com/in/symatevo/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              <a className="btn" href="/Syuzanna_Matevosyan_CV.pdf" target="_blank" rel="noreferrer">Download CV ↗</a>
+              <a className="btn" href="/Syuzanna_Matevosyan_CV.pdf" target="_blank" rel="noreferrer">CV ↗</a>
             </div>
           </section>
 
-          {/* RIGHT: Skills */}
+          {/* RIGHT: Skills (all visible + anchor tabs) */}
           <section className="card">
             <div className="h3">Skills</div>
-            <div className="tabs">
-              <div className="tab active"><span className="dot" />Software</div>
-              <div className="tab"><span className="dot" />Expertise</div>
-              <div className="tab"><span className="dot" />Language</div>
-            </div>
 
-            <div className="grid-chips">
+            <nav className="tabs" aria-label="Jump to skills sections">
+              <a
+                className={`tab ${active === "software" ? "active" : ""}`}
+                href="#software"
+                onClick={() => handleTabClick("software")}
+              >
+                <span className="dot" />Software
+              </a>
+              <a
+                className={`tab ${active === "expertise" ? "active" : ""}`}
+                href="#expertise"
+                onClick={() => handleTabClick("expertise")}
+              >
+                <span className="dot" />Expertise
+              </a>
+              <a
+                className={`tab ${active === "languages" ? "active" : ""}`}
+                href="#languages"
+                onClick={() => handleTabClick("languages")}
+              >
+                <span className="dot" />Language
+              </a>
+            </nav>
+
+            {/* SOFTWARE */}
+            <a id="software" className="section-anchor" ref={softwareRef} />
+            <div className="h3">Software</div>
+            <div className="grid-chips" aria-label="Software">
               <div className="chip"><span>Python</span><span className="badge adv">Advanced</span></div>
               <div className="chip"><span>NumPy · Pandas</span><span className="badge adv">Advanced</span></div>
               <div className="chip"><span>scikit-learn</span><span className="badge adv">Advanced</span></div>
@@ -125,84 +230,34 @@ export default function App() {
               <div className="chip"><span>Biometrics DataLite DLL</span><span className="badge int">Intermediate</span></div>
             </div>
 
+            {/* EXPERTISE */}
+            <a id="expertise" className="section-anchor" ref={expertiseRef} />
             <div style={{ height: "18px" }} />
             <div className="h3">Expertise</div>
-            <div className="grid-chips">
+            <div className="grid-chips" aria-label="Expertise">
               <div className="chip"><span>sEMG Acquisition & Control</span><span className="badge adv">Real-time</span></div>
               <div className="chip"><span>AR/VR Interactions</span><span className="badge int">Unity</span></div>
-              <div className="chip"><span>Gesture Classification</span><span className="badge int">17 classes</span></div>
-              <div className="chip"><span>Signal Processing</span><span className="badge int">Filtering · Features</span></div>
+              <div className="chip"><span>Gesture Classification</span><span className="badge int">SVM · DT · RF RNN</span></div>
+              <div className="chip"><span>Signal Processing</span><span className="badge int">Feature · Selection</span></div>
               <div className="chip"><span>Texture Features</span><span className="badge int">GLCM · LBP</span></div>
-              <div className="chip"><span>Segmentation</span><span className="badge int">U-Net</span></div>
+              <div className="chip"><span>Segmentation</span><span className="badge int">CNN · U-Net</span></div>
               <div className="chip"><span>Biomechanics</span><span className="badge int">Gait · Hemiparesis</span></div>
               <div className="chip"><span>Optimization</span><span className="badge int">Moco</span></div>
               <div className="chip"><span>Dataset Curation</span><span className="badge int">Ninapro DB7</span></div>
             </div>
 
+            {/* LANGUAGES */}
+            <a id="languages" className="section-anchor" ref={languagesRef} />
             <div style={{ height: "18px" }} />
             <div className="h3">Languages</div>
-            <div className="grid-chips">
+            <div className="grid-chips" aria-label="Languages">
               <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
-              <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
-              <div className="chip"><span>Romanian</span><span className="badge bas">Learning</span></div>
+              {/* Russian → green */}
+              <div className="chip"><span>Russian</span><span className="badge adv">C2</span></div>
               <div className="chip"><span>Armenian</span><span className="badge adv">Native</span></div>
-              <div className="chip"><span>Greek</span><span className="badge bas">Basic</span></div>
+              <div className="chip"><span>French</span><span className="badge int">Intermediate</span></div>
             </div>
           </section>
-        </div>
-
-        {/* PROJECTS (unchanged content) */}
-        <div className="projects">
-          <div className="h3">Projects</div>
-          <div className="cards">
-            <article className="proj">
-              <h4>Real-time sEMG Acquisition & Control</h4>
-              <div className="tags"><span className="tag">Python</span><span className="tag">Biometrics DLL</span><span className="tag">UDP → Unity</span></div>
-              <p className="kv"><b>Problem:</b> Need robust, low-latency control for training & research.</p>
-              <p className="kv"><b>Approach:</b> Windowed features → classifier; UDP to a Unity game for feedback.</p>
-              <p className="kv"><b>Results:</b> Stable control across 17 movement classes; real-time demos.</p>
-            </article>
-
-            <article className="proj">
-              <h4>AR-based Myoelectric Training</h4>
-              <div className="tags"><span className="tag">Unity</span><span className="tag">C#</span><span className="tag">sEMG</span></div>
-              <p className="kv"><b>Problem:</b> Traditional training is monotonous; poor engagement.</p>
-              <p className="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; analytics.</p>
-              <p className="kv"><b>Results:</b> Higher engagement & smoother signal separation during sessions.</p>
-            </article>
-
-            <article className="proj">
-              <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
-              <div className="tags"><span className="tag">OpenSim</span><span className="tag">Moco</span><span className="tag">Optimization</span></div>
-              <p className="kv"><b>Problem:</b> Quantify effects of weakness and retraining strategies.</p>
-              <p className="kv"><b>Approach:</b> Build subject-specific models; cost functions for symmetry & effort.</p>
-              <p className="kv"><b>Results:</b> Insights on strengthening vs. retraining trade-offs; reproducible notebooks.</p>
-            </article>
-
-            <article className="proj">
-              <h4>Medical Imaging Segmentation</h4>
-              <div className="tags"><span className="tag">U-Net</span><span className="tag">OpenCV</span><span className="tag">GLCM/LBP</span></div>
-              <p className="kv"><b>Problem:</b> Tissue delineation & texture characterization.</p>
-              <p className="kv"><b>Approach:</b> U-Net baseline + classical features for analysis; clean training pipeline.</p>
-              <p className="kv"><b>Results:</b> Strong Dice on validation; interpretable texture metrics for regions.</p>
-            </article>
-
-            <article className="proj">
-              <h4>Stroke Rehabilitation Modeling</h4>
-              <div className="tags"><span className="tag">OpenSim</span><span className="tag">Moco</span><span className="tag">Rehab</span></div>
-              <p className="kv"><b>Problem:</b> Hemiparesis-related gait abnormalities require tailored strategies.</p>
-              <p className="kv"><b>Approach:</b> Simulate muscle strengthening and gait retraining in OpenSim with optimization.</p>
-              <p className="kv"><b>Results:</b> Identified effective intervention parameters; draft thesis simulations.</p>
-            </article>
-
-            <article className="proj">
-              <h4>EMG + AR Games for Prosthetics</h4>
-              <div className="tags"><span className="tag">Unity</span><span className="tag">Python</span><span className="tag">UDP</span></div>
-              <p className="kv"><b>Problem:</b> Amputees need motivating pre-prosthetic training.</p>
-              <p className="kv"><b>Approach:</b> Virtual arm controlled via EMG; AR games to encourage repeated practice.</p>
-              <p className="kv"><b>Results:</b> Prototype tested; smoother muscle signal generation in sessions.</p>
-            </article>
-          </div>
         </div>
 
         {/* FULL-WIDTH PROJECTS */}

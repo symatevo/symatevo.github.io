@@ -268,11 +268,11 @@ export default function App() {
           <div className="cards" style={{ marginTop: 12 }}>
             {/* 1 */}
             <article className="proj">
-              <h4>Real-time sEMG Acquisition & Control</h4>
+              <h4>Augmented Reality System for Myoelectric Prosthesis Training</h4>
               <div className="tags"><span className="tag">Python</span><span className="tag">Biometrics DLL</span><span className="tag">UDP → Unity</span><span className="tag">Keras</span></div>
-              <p className="kv"><b>Problem:</b> Robust, low-latency control for research & training.</p>
-              <p className="kv"><b>Approach:</b> Windowed features → NN classifier; streaming via UDP to game engine; logging & replay.</p>
-              <p className="kv"><b>Results:</b> Stable control across <b>17 movement classes</b>; reproducible pipeline.</p>
+              <p className="kv"><p>I built a gamified training platform for amputees to practice 17 hand gestures before prosthesis fitting. 
+                Using AR, users could see an virtual arm and control it with their own EMG signals. 
+                The system achieved ~70% classification accuracy, and participants described the experience as engaging and motivating</p>
               <div className="links-row"><a className="plink" href="#">Code</a> · <a className="plink" href="#">Demo</a></div>
             </article>
             {/* 2 */}

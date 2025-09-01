@@ -5,8 +5,36 @@ export default function App() {
     document.title = "Syuzanna Matevosyan — Portfolio";
   }, []);
 
+  // One-time typing animation for title (first visit only)
+  useEffect(() => {
+    try {
+      const already = localStorage.getItem("titleAnimated") === "1";
+      if (already) { setTypedTitle(titleFull); return; }
+      setIsTyping(true);
+      setTypedTitle("");
+      const speed = 45; // ms per character
+      let i = 0;
+      const id = setInterval(() => {
+        i++;
+        setTypedTitle(titleFull.slice(0, i));
+        if (i >= titleFull.length) {
+          clearInterval(id);
+          setIsTyping(false);
+          localStorage.setItem("titleAnimated", "1");
+        }
+      }, speed);
+      return () => clearInterval(id);
+    } catch (e) {
+      // localStorage blocked or unavailable
+      setTypedTitle(titleFull);
+    }
+  }, []);
+
   // Active tab for dot highlight
   const [active, setActive] = useState("software");
+  const titleFull = "Syuzanna Matevosyan — Portfolio";
+  const [typedTitle, setTypedTitle] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
   // Refs for scroll tracking
   const softwareRef = useRef(null);
@@ -39,19 +67,21 @@ export default function App() {
       --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
       --mast:#f3f4f6;
       --badge-adv:#d1fae5; --badge-int:#dbeafe; --badge-bas:#fde68a;
+      --hero-img:url('/header-art.png');
     }
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);
       font: 400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
     html{scroll-behavior:smooth}
 
-    /* Top gray strip */
-    .masthead{height:140px;background:var(--mast);border-bottom:1px solid var(--line)}
+    /* Top hero with art */
+    .masthead{position:relative;height:140px;background:var(--mast);border-bottom:1px solid var(--line);overflow:hidden}
+    .hero{height:100%;display:flex;align-items:flex-end;padding-bottom:0px}
 
     .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 72px}
 
     /* Header */
-    .header{display:flex;align-items:center;gap:16px;padding:18px 0 12px}
+    .header{display:flex;align-items:center;gap:16px;padding:18px 0 0}
     .logo{width:56px;height:56px;border-radius:12px;background:#e5e7eb;display:grid;place-items:center;font-size:28px}
     h1{
       margin:0;
@@ -60,6 +90,12 @@ export default function App() {
       font-size:22px;            /* minimal look */
       color:#111827;
     }
+
+    /* typing caret */
+    .caret{display:inline-block;width:2px;height:1.15em;background:#111827;margin-left:2px;vertical-align:-0.15em;animation:blink 1s step-end infinite}
+    @keyframes blink{50%{opacity:0}}
+
+    .subtitle{font-style:italic;font-size:14px;color:var(--muted);margin-top:4px}
 
     /* 2-column layout */
     .grid{display:grid;grid-template-columns: 0.9fr 1.4fr;gap:28px;margin-top:8px}
@@ -70,7 +106,6 @@ export default function App() {
     .h3{font-size:18px;font-weight:700;margin:0 0 12px}
 
     /* Left column */
-    .name{font-weight:600; /* was 800 */ font-size:22px;margin:2px 0 2px; letter-spacing:.02em}
     .roles{font-weight:600;color:#374151}
     .about{margin-top:10px; text-align:justify; text-justify:inter-word; hyphens:auto}
 
@@ -121,21 +156,23 @@ export default function App() {
     <>
       <style>{css}</style>
 
-      {/* Gray masthead */}
-      <div className="masthead" />
-
-      <div className="wrap">
-        {/* Header */}
-        <div className="header">
-          <div>
-            <h1>Syuzanna Matevosyan — Portfolio</h1>
+      {/* Hero masthead with art */}
+      <div className="masthead">
+        <div className="wrap hero">
+          <div className="header">
+            <div>
+              <h1 aria-label="Syuzanna Matevosyan — Portfolio">{typedTitle}{isTyping && <span className="caret" aria-hidden="true" />}</h1>
+              <div className="subtitle">Erasmus Mundus Master in Biomedical Engineering</div>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="wrap">
 
         <div className="grid">
           {/* LEFT: About */}
           <section className="card">
-            <div className="name">SYUZANNA MATEVOSYAN</div>
             <div className="roles">AI & Rehabilitation • Biosignals • Medical Imaging</div>
             <p className="about">
               I design data-driven tools for prosthetics & neuro-rehab: real-time sEMG control, AR interactions,
@@ -144,7 +181,7 @@ export default function App() {
             <div className="links">
               <a className="btn" href="https://github.com/symatevo" target="_blank" rel="noreferrer">GitHub ↗</a>
               <a className="btn" href="https://www.linkedin.com/in/symatevo/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              <a className="btn" href="/Syuzanna_Matevosyan_CV.pdf" target="_blank" rel="noreferrer">Download CV ↗</a>
+              <a className="btn" href="/Syuzanna_Matevosyan_CV.pdf" target="_blank" rel="noreferrer">CV ↗</a>
             </div>
           </section>
 
@@ -303,6 +340,7 @@ export default function App() {
               <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
             </article>
           </div>
+
         </section>
       </div>
     </>

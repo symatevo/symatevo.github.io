@@ -152,7 +152,6 @@ export default function App() {
 
       {/* Gray masthead */}
       <div className="masthead">
-        <img className="header-art" src="/header-wave.png" alt="" aria-hidden="true" />
         <div className="wrap hero">
           <div className="header">
             <div className="title-wrap">

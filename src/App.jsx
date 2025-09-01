@@ -1,10 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 
-export default function App() {
-  useEffect(() => {
-    document.title = "Syuzanna Matevosyan — Portfolio";
-  }, []);
-
   // Active tab for dot highlight
   const [active, setActive] = useState("software");
 

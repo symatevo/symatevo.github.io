@@ -263,7 +263,7 @@ export default function App() {
         <section className="card" style={{ marginTop: 24 }}>
           <div className="h3">Projects</div>
           <p className="muted" style={{ marginTop: 0 }}>
-            Selected, recent & in-progress. Problem → Approach → Results. Links to code / demos when available.
+            Highlights on my research and applied works, with concise summaries and links to code or demos where available.
           </p>
           <div className="cards" style={{ marginTop: 12 }}>
             {/* 1 */}

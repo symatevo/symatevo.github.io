@@ -268,7 +268,7 @@ export default function App() {
         <section className="card" style={{ marginTop: 24 }}>
           <div className="h3">Projects</div>
           <p className="muted" style={{ marginTop: 0 }}>
-            Highlights on my research and applied works, with concise summaries and links to code or demos where available.
+            Highlights on my research and applied work, with code or demos where available.
           </p>
           <div className="cards" style={{ marginTop: 12 }}>
             {/* 1 */}
@@ -289,7 +289,6 @@ export default function App() {
                 <a className="plink" href="#">Code</a> · <a className="plink" href="#">Demo</a>
               </div>
             </article>
-
             {/* 2 */}
             <article className="proj">
               <h4>EMG-Controlled Virtual Arm (Pre-prosthetic Training)</h4>

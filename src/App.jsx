@@ -173,8 +173,8 @@ export default function App() {
           <section className="card">
             <div className="roles">AI & Rehabilitation • Biosignals • Medical Imaging</div>
             <p className="about">
-              I design data-driven tools for prosthetics & neuro-rehab: real-time sEMG control, AR interactions,
-              gait modeling (OpenSim/Moco), and medical-image segmentation.
+              Biomedical engineer specializing in AI-driven signal/image processing. Hands-on experience developing 
+              EMG-based control systems, AR rehabilitation tools, and deep learning models.
             </p>
             <div className="links">
               <a className="btn" href="https://github.com/symatevo" target="_blank" rel="noreferrer">GitHub ↗</a>

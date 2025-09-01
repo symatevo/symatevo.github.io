@@ -95,6 +95,8 @@ export default function App() {
     .caret{display:inline-block;width:2px;height:1.15em;background:#111827;margin-left:2px;vertical-align:-0.15em;animation:blink 1s step-end infinite}
     @keyframes blink{50%{opacity:0}}
 
+    .subtitle{font-style:italic;font-size:14px;color:var(--muted);margin-top:4px}
+
     /* 2-column layout */
     .grid{display:grid;grid-template-columns: 0.9fr 1.4fr;gap:28px;margin-top:8px}
     @media (max-width: 900px){.grid{grid-template-columns:1fr}}
@@ -160,6 +162,7 @@ export default function App() {
           <div className="header">
             <div>
               <h1 aria-label="Syuzanna Matevosyan — Portfolio">{typedTitle}{isTyping && <span className="caret" aria-hidden="true" />}</h1>
+              <div className="subtitle">Erasmus Mundus Master in Biomedical Engineering</div>
             </div>
           </div>
         </div>
@@ -336,13 +339,6 @@ export default function App() {
               <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training.</p>
               <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
             </article>
-          </div>
-
-          {/* Download Portfolio */}
-          <div className="center">
-            <a className="btn" href="/SM_Portfolio.pdf" target="_blank" rel="noreferrer" download>
-              Download Portfolio (PDF)
-            </a>
           </div>
         </section>
       </div>

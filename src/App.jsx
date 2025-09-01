@@ -136,6 +136,11 @@ export default function App() {
     .tag{font-size:12px;padding:3px 8px;border-radius:999px;background:#f3f4f6;border:1px solid var(--line);color:#374151}
     .kv{margin:0 0 8px}
     .kv b{color:#111827}
+    .kv{
+  margin: 0 0 8px;
+  text-align: justify;
+  hyphens: auto;           /* nicer line breaks when justified */
+}
     .links-row{display:flex;gap:10px;flex-wrap:wrap}
     .plink{font-weight:600;text-decoration:none;color:#0f62fe}
     .center{display:flex;justify-content:center;margin-top:16px}

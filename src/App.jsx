@@ -281,7 +281,7 @@ export default function App() {
     <span className="tag">Keras</span>
   </div>
   <p className="kv">
-    I built a gamified training platform for amputees to practice 17 hand gestures before prosthesis fitting. 
+    Built a gamified training platform for amputees to practice 17 hand gestures before prosthesis fitting. 
     Using AR, users could see a virtual arm and control it with their own EMG signals. 
     The system achieved ~70% classification accuracy, and participants described the experience as engaging and motivating.
   </p>

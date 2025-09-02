@@ -343,14 +343,29 @@ export default function App() {
   </div>
 </article>
             {/* 3 */}
-            <article className="proj">
-              <h4>AR-Based Myoelectric Training</h4>
-              <div className="tags"><span className="tag">AR</span><span className="tag">Unity</span><span className="tag">Interaction</span></div>
-              <p className="kv"><b>Problem:</b> Monotony leads to abandonment in training.</p>
-              <p className="kv"><b>Approach:</b> AR tasks mapped to decoded gestures; adaptive difficulty; real-time feedback.</p>
-              <p className="kv"><b>Results:</b> Higher engagement & smoother signal separation.</p>
-              <div className="links-row"><a className="plink" href="#">Video</a></div>
-            </article>
+<article className="proj">
+  <h4>AI-Powered Chest X-ray Interpretation (Hackathon/Startup)</h4>
+  <div className="tags">
+    <span className="tag">Deep Learning</span>
+    <span className="tag">Chest X-ray</span>
+    <span className="tag">Radiology</span>
+    <span className="tag">Startup</span>
+  </div>
+  <p className="kv">
+    Built a deep learning tool to assist radiologists in detecting chest masses and generating descriptions. 
+    Incubated at TUMO Labs and awarded <b>1st place among 12 teams</b>.
+  </p>
+  <div className="links-row">
+    <a
+      className="plink"
+      href="https://www.youtube.com/watch?v=v3KYiwwXzuE"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Video
+    </a>
+  </div>
+</article>
             {/* 4 */}
             <article className="proj">
               <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>

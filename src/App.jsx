@@ -334,12 +334,12 @@ export default function App() {
                 <div className="links-row">
                   <a className="plink" href="/prosthesis-ar-training.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the article PDF in a new tab">Article (PDF)</a>
                   {" · "}
-                  <a className="plink" href="https://youtube.com/shorts/CcYEttrG2xQ?si=la2JTPu4_EptaBR1" target="_blank" rel="noopener noreferrer" aria-label="Watch the demo on YouTube">Demo</a>
+                  <a className="plink" href="https://www.youtube.com/shorts/CcYEttrG2xQ" target="_blank" rel="noopener noreferrer" aria-label="Watch the demo on YouTube">Demo</a>
                 </div>
               </div>
               <div className="preview video" aria-hidden="true">
                 <iframe
-                  src="https://youtube.com/shorts/CcYEttrG2xQ?si=la2JTPu4_EptaBR1"
+                  src="https://www.youtube.com/shorts/CcYEttrG2xQ"
                   title="AR Prosthesis Training Demo"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen

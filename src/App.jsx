@@ -367,23 +367,30 @@ export default function App() {
   </div>
 </article>
             {/* 4 */}
-            <article className="proj">
-              <h4>Gait Modeling for Hemiparesis (OpenSim/Moco)</h4>
-              <div className="tags"><span className="tag">OpenSim</span><span className="tag">Moco</span><span className="tag">Optimization</span></div>
-              <p className="kv"><b>Problem:</b> Evaluate strengthening vs. gait retraining strategies.</p>
-              <p className="kv"><b>Approach:</b> Subject-specific models; symmetry/effort costs; parameter sweeps.</p>
-              <p className="kv"><b>Results:</b> Clear trade-off insights; reusable notebooks for replication.</p>
-              <div className="links-row"><a className="plink" href="#">Notebook</a></div>
-            </article>
-            {/* 5 */}
-            <article className="proj">
-              <h4>Medical Imaging Segmentation</h4>
-              <div className="tags"><span className="tag">U-Net</span><span className="tag">OpenCV</span><span className="tag">PyTorch/TensorFlow</span></div>
-              <p className="kv"><b>Problem:</b> Tissue delineation for downstream quantification.</p>
-              <p className="kv"><b>Approach:</b> U-Net baseline; training pipeline with augmentation & QA.</p>
-              <p className="kv"><b>Results:</b> Strong Dice on validation; clean inference scripts.</p>
-              <div className="links-row"><a className="plink" href="#">Repo</a> · <a className="plink" href="#">Report</a></div>
-            </article>
+<article className="proj">
+  <h4>U-Net Polyp Segmentation for Colorectal Cancer Prevention</h4>
+  <div className="tags">
+    <span className="tag">Deep Learning</span>
+    <span className="tag">U-Net</span>
+    <span className="tag">Kvasir-SEG</span>
+    <span className="tag">Semantic Segmentation</span>
+    <span className="tag">Medical Imaging</span>
+  </div>
+  <p className="kv">
+    Developed and optimized U-Net architectures to segment gastrointestinal polyps from Kvasir-SEG images, helping improve early detection of colorectal cancer.  
+    Modified the depth, skip connections, and convolutional modules across variants, achieving up to 97% accuracy and Dice/IoU scores exceeding 70%.
+  </p>
+  <div className="links-row">
+    <a
+      className="plink"
+      href="https://colab.research.google.com/drive/1_7CyWgiHTNXJ4y4GnHwJHUdUhKxTFpvq?usp=sharing"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Notebook
+    </a>
+  </div>
+</article>
             {/* 6 */}
             <article className="proj">
               <h4>Tissue Characterization & Clustering</h4>

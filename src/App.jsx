@@ -344,7 +344,7 @@ export default function App() {
 </article>
             {/* 3 */}
 <article className="proj">
-  <h4>AI-Powered Chest X-ray Interpretation (Hackathon → Startup)</h4>
+  <h4>AI-Powered Chest X-ray Interpretation (Hackathon/Startup)</h4>
   <div className="tags">
     <span className="tag">Deep Learning</span>
     <span className="tag">Chest X-ray</span>
@@ -352,20 +352,31 @@ export default function App() {
     <span className="tag">Startup</span>
   </div>
   <p className="kv">
-    Built a deep learning tool to assist radiologists in detecting chest masses and generating descriptions. 
-    Incubated at TUMO Labs and awarded <b>1st place among 12 teams</b>.
+    Developed a supervised deep learning system to detect lung masses and generate descriptive reports from chest X-rays. 
+    The tool was designed to support radiologists in clinical decision-making and improve workflow efficiency in private hospitals. 
+    The project was incubated at <b>TUMO Labs Startup Program</b> and won <b>1st place among 12 teams</b>, demonstrating both technical strength and real-world impact.
   </p>
   <div className="links-row">
+    <a
+      className="plink"
+      href="https://github.com/symatevo/Chest-Xray-Mass-Detection"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Code
+    </a>
+    {" · "}
     <a
       className="plink"
       href="https://www.youtube.com/watch?v=v3KYiwwXzuE"
       target="_blank"
       rel="noopener noreferrer"
     >
-      Video
+      Demo
     </a>
   </div>
 </article>
+
             {/* 4 */}
 <article className="proj">
   <h4>U-Net Polyp Segmentation for Colorectal Cancer Prevention</h4>
@@ -454,7 +465,7 @@ export default function App() {
 </article>
             {/* 8 */}
             <article className="proj">
-              <h4>Socket-Level Haptic Feedback (Closed-Loop)</h4>
+              <h4>Socket-Level Haptic Feedback - Closed-Loop Virtual Arm for Amputees Training</h4>
               <div className="tags"><span className="tag">Prototype</span><span className="tag">Haptics</span><span className="tag">sEMG</span></div>
               <p className="kv"><b>Status:</b> In progress.</p>
               <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training of amputees.</p>

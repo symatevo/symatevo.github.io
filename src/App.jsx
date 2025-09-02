@@ -419,14 +419,39 @@ export default function App() {
 </article>
 
             {/* 7 */}
-            <article className="proj">
-              <h4>Ninapro DB7 Multimodal Decoding</h4>
-              <div className="tags"><span className="tag">sEMG</span><span className="tag">IMU</span><span className="tag">PCA</span><span className="tag">Tensor Decomp</span></div>
-              <p className="kv"><b>Problem:</b> Decode task variables from EMG/IMU.</p>
-              <p className="kv"><b>Approach:</b> Dimensionality reduction + supervised classifiers; response characterization.</p>
-              <p className="kv"><b>Results:</b> Competitive accuracy; clear visualizations of components.</p>
-              <div className="links-row"><a className="plink" href="#">Code</a></div>
-            </article>
+<article className="proj">
+  <h4>EMG Signal Acquisition System (Bachelor Thesis)</h4>
+  <div className="tags">
+    <span className="tag">EMG</span>
+    <span className="tag">Hardware + Software</span>
+    <span className="tag">Signal Processing</span>
+    <span className="tag">SVM · RF · DT</span>
+  </div>
+  <p className="kv">
+    Designed and built a three-electrode EMG acquisition system to capture hand movement signals. 
+    Collected data from volunteers, extracted features, and evaluated multiple ML algorithms (SVM, Random Forest, Decision Tree). 
+    Achieved up to <b>72.6% accuracy with SVM (RBF)</b>, with results highlighting subject variability and the need for more channels for robust prosthetic control.
+  </p>
+  <div className="links-row">
+    <a
+      className="plink"
+      href="https://github.com/symatevo/EMG-Signals-Classification"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Code
+    </a>
+    {" · "}
+    <a
+      className="plink"
+      href="/Syuzanna%20Matevosyan%20Poster.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Poster
+    </a>
+  </div>
+</article>
             {/* 8 */}
             <article className="proj">
               <h4>Socket-Level Haptic Feedback (Closed-Loop)</h4>

@@ -308,14 +308,40 @@ export default function App() {
   </div>
 </article>
 {/* 2 */}
-            <article className="proj">
-              <h4>EMG-Controlled Virtual Arm (Pre-prosthetic Training)</h4>
-              <div className="tags"><span className="tag">Unity</span><span className="tag">C#</span><span className="tag">sEMG</span></div>
-              <p className="kv"><b>Problem:</b> Users need engaging practice before prosthesis fitting.</p>
-              <p className="kv"><b>Approach:</b> UDP-driven avatar + task library; calibration & adaptive thresholds; session analytics.</p>
-              <p className="kv"><b>Results:</b> Robust control & improved session engagement.</p>
-              <div className="links-row"><a className="plink" href="#">Video</a></div>
-            </article>
+<article className="proj">
+  <h4>Decoding & Characterizing 17 Motor Intentions from sEMG</h4>
+  <div className="tags">
+    <span className="tag">sEMG</span>
+    <span className="tag">Ninapro DB7</span>
+    <span className="tag">PCA</span>
+    <span className="tag">Tensor Decomposition</span>
+    <span className="tag">Classification</span>
+  </div>
+  <p className="kv">
+    Analyzed sEMG signals from the Ninapro DB7 dataset to better understand and classify upper-limb motor activity. 
+    Reduced signal dimensionality with PCA and tensor decomposition to reveal key patterns of muscle activation. 
+    Trained machine learning models that decoded 17 distinct hand gestures, leveraging both spatial (electrode) and temporal (signal dynamics) information.
+  </p>
+  <div className="links-row">
+    <a
+      className="plink"
+      href="https://colab.research.google.com/drive/1gtwZ_kMRnot8MxaHUsqpGvB5tyPescMG?usp=sharing"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Notebook
+    </a>
+    {" · "}
+    <a
+      className="plink"
+      href="https://www.canva.com/design/DAGx1GroYW4/34abG64NkOJUTzC06bMWtA/view?utm_content=DAGx1GroYW4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h844003efbe"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Presentation
+    </a>
+  </div>
+</article>
             {/* 3 */}
             <article className="proj">
               <h4>AR-Based Myoelectric Training</h4>

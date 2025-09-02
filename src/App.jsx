@@ -28,6 +28,10 @@ export default function App() {
   // Active tab for dot highlight
   const [active, setActive] = useState("software");
 
+  // Project filter
+  const [filter, setFilter] = useState("all");
+  const visible = (key) => filter === "all" || key === filter;
+
   // Refs for scroll tracking
   const softwareRef = useRef(null);
   const expertiseRef = useRef(null);
@@ -40,12 +44,15 @@ export default function App() {
       { id: "languages", el: languagesRef.current },
     ].filter((s) => s.el);
 
+    if (!sections.length) return;
+
     const obs = new IntersectionObserver(
       (entries) => {
-        const visible = entries
+        const visibleEntry = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target?.id) setActive(visible.target.id);
+        const id = visibleEntry?.target?.id;
+        if (id) setActive(id);
       },
       { rootMargin: "-30% 0px -60% 0px", threshold: [0.1, 0.25, 0.5, 0.75, 1] }
     );
@@ -131,7 +138,7 @@ export default function App() {
     .projects{margin-top:32px}
     .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     @media (max-width: 900px){.cards{grid-template-columns:1fr}}
-    .proj{border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px;transition:transform .12s ease, box-shadow .12s ease}
+    .proj{border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px;transition:transform .12s ease, box-shadow .12s ease;overflow:hidden}
     .proj:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(17,24,39,.08)}
     .proj h4{margin:2px 0 8px;font-size:16px;font-weight:600;letter-spacing:.005em}
     .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
@@ -141,8 +148,27 @@ export default function App() {
     .plink{font-weight:600;text-decoration:none;color:var(--accent)}
     .plink:hover{text-decoration:underline}
 
+    /* Pills under titles */
+    .meta{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 8px}
+    .pill{font-size:12px;padding:4px 8px;border-radius:999px;background:#f1f5f9;border:1px solid var(--line);color:#334155}
+
+    /* Feature cards: text + video side-by-side */
+    .proj.feature{display:grid;grid-template-columns: 1.15fr 1fr;gap:16px;align-items:start}
+    .cards .proj.feature{grid-column:1 / -1}
+    @media (max-width: 900px){.proj.feature{grid-template-columns:1fr}}
+
+    /* Video preview wrapper: keeps iframes INSIDE boxes */
+    .preview.video{width:100%;border-radius:10px;overflow:hidden;background:#000;border:1px solid var(--line)}
+    .preview.video iframe{display:block;width:100%;aspect-ratio:16/9;height:auto;border:0}
+
+    /* Filter buttons */
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0}
+    .fbtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-weight:600;cursor:pointer}
+    .fbtn[aria-pressed="true"]{background:#eef2ff;border-color:#c7d2fe;color:#1e3a8a}
+    .fbtn:focus-visible{outline:2px solid #0002;outline-offset:2px}
+
     /* Section anchor offset */
-    .section-anchor{position:relative;top:-8px;display:block;height:1px}
+    .section-anchor{position:relative;top:-80px;display:block;height:1px}
 
     /* Footer */
     footer{padding:18px 0;color:var(--muted);font-size:14px}
@@ -259,53 +285,72 @@ export default function App() {
             </div>
           </section>
         </div>
-
         {/* FULL-WIDTH PROJECTS */}
-        <section className="card reveal" style={{ marginTop: 24 }}>
+        <section id="projects" className="card reveal" style={{ marginTop: 24 }}>
           <div className="h3">Projects</div>
           <p className="muted" style={{ marginTop: 0 }}>
-            Highlights on my research and applied work, with code or demos where available.
+            Highlights of my research and applied work. Use filters to browse.
           </p>
-          <div className="cards" style={{ marginTop: 12 }}>
-            {/* 1 */}
-            <article className="proj">
-              <h4>Augmented Reality System for Myoelectric Prosthesis Training</h4>
-              <div className="tags">
-                <span className="tag">Python</span>
-                <span className="tag">Biometrics DLL</span>
-                <span className="tag">UDP → Unity</span>
-                <span className="tag">Keras</span>
+
+          {/* Filters */}
+          <div className="filters" role="toolbar" aria-label="Filter projects">
+            {[
+              ["all","All"],
+              ["emg","EMG / AR"],
+              ["imaging","Medical Imaging"],
+              ["bci","EEG / BCI"],
+            ].map(([key,label]) => (
+              <button
+                key={key}
+                type="button"
+                className="fbtn"
+                aria-pressed={filter===key}
+                onClick={() => setFilter(key)}
+              >{label}</button>
+            ))}
+          </div>
+
+          <div className="cards" style={{ marginTop: 8 }}>
+            {/* FEATURED 1: EMG/AR with YouTube video on the right */}
+            <article className="proj feature" style={{display: visible('emg')?undefined:'none'}}>
+              <div>
+                <h4>Augmented Reality System for Myoelectric Prosthesis Training</h4>
+                <div className="meta">
+                  <span className="pill">EMG · AR</span>
+                  <span className="pill">Research Prototype</span>
+                  <span className="pill">~70% cls. acc.</span>
+                </div>
+                <div className="tags">
+                  <span className="tag">Python</span>
+                  <span className="tag">Biometrics DLL</span>
+                  <span className="tag">UDP → Unity</span>
+                  <span className="tag">Keras</span>
+                </div>
+                <p className="kv">
+                  Built a gamified training platform for amputees to practice 17 hand gestures before prosthesis fitting.
+                  Using AR, users could see a virtual arm and control it with their own EMG signals.
+                  The system achieved ~70% classification accuracy, and participants described the experience as engaging and motivating.
+                </p>
+                <div className="links-row">
+                  <a className="plink" href="/prosthesis-ar-training.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the article PDF in a new tab">Article (PDF)</a>
+                  {" · "}
+                  <a className="plink" href="https://youtube.com/shorts/EhQfJGpvC8A" target="_blank" rel="noopener noreferrer" aria-label="Watch the demo on YouTube">Demo</a>
+                </div>
               </div>
-              <p className="kv">
-                Built a gamified training platform for amputees to practice 17 hand gestures before prosthesis fitting.
-                Using AR, users could see a virtual arm and control it with their own EMG signals.
-                The system achieved ~70% classification accuracy, and participants described the experience as engaging and motivating.
-              </p>
-              <div className="links-row">
-                <a
-                  className="plink"
-                  href="/prosthesis-ar-training.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open the article PDF in a new tab"
-                >
-                  Article (PDF)
-                </a>
-                {" · "}
-                <a
-                  className="plink"
-                  href="https://youtube.com/shorts/EhQfJGpvC8A"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Watch the demo on YouTube"
-                >
-                  Demo
-                </a>
+              <div className="preview video" aria-hidden="true">
+                <iframe
+                  src="https://www.youtube.com/embed/EhQfJGpvC8A"
+                  title="AR Prosthesis Training Demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
               </div>
             </article>
-            {/* 2 */}
-            <article className="proj">
+
+            {/* 2: sEMG analysis */}
+            <article className="proj" style={{display: visible('emg')?undefined:'none'}}>
               <h4>Decoding & Characterizing 17 Motor Intentions from sEMG</h4>
+              <div className="meta"><span className="pill">EMG</span><span className="pill">Ninapro DB7</span><span className="pill">Up to 98% (SS)</span></div>
               <div className="tags">
                 <span className="tag">sEMG</span>
                 <span className="tag">Ninapro DB7</span>
@@ -324,29 +369,11 @@ export default function App() {
                 <a className="plink" href="https://www.canva.com/design/DAGx1GroYW4/34abG64NkOJUTzC06bMWtA/view?utm_content=DAGx1GroYW4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h844003efbe" target="_blank" rel="noopener noreferrer">Presentation</a>
               </div>
             </article>
-            {/* 3 */}
-            <article className="proj">
-              <h4>AI-Powered Chest X-ray Interpretation (Hackathon/Startup)</h4>
-              <div className="tags">
-                <span className="tag">Deep Learning</span>
-                <span className="tag">Chest X-ray</span>
-                <span className="tag">Radiology</span>
-                <span className="tag">Startup</span>
-              </div>
-              <p className="kv">
-                Developed a supervised deep learning system to detect lung masses and generate descriptive reports from chest X-rays.
-                The tool was designed to support radiologists in clinical decision-making and improve workflow efficiency in private hospitals.
-                The project was incubated at <b>TUMO Labs Startup Program</b> and won <b>1st place among 12 teams</b>, demonstrating both technical strength and real-world impact.
-              </p>
-              <div className="links-row">
-                <a className="plink" href="https://github.com/symatevo/Chest-Xray-Mass-Detection" target="_blank" rel="noopener noreferrer">Code</a>
-                {" · "}
-                <a className="plink" href="https://www.youtube.com/watch?v=v3KYiwwXzuE" target="_blank" rel="noopener noreferrer">Demo</a>
-              </div>
-            </article>
-            {/* 4 */}
-            <article className="proj">
+
+            {/* 3: U-Net Polyp */}
+            <article className="proj" style={{display: visible('imaging')?undefined:'none'}}>
               <h4>U-Net Polyp Segmentation for Colorectal Cancer Prevention</h4>
+              <div className="meta"><span className="pill">Imaging</span><span className="pill">Semantic Segmentation</span><span className="pill">Kvasir-SEG</span></div>
               <div className="tags">
                 <span className="tag">Deep Learning</span>
                 <span className="tag">U-Net</span>
@@ -362,9 +389,42 @@ export default function App() {
                 <a className="plink" href="https://colab.research.google.com/drive/1_7CyWgiHTNXJ4y4GnHwJHUdUhKxTFpvq?usp=sharing" target="_blank" rel="noopener noreferrer">Notebook</a>
               </div>
             </article>
-            {/* 5 */}
-            <article className="proj">
+
+            {/* FEATURED 2: Chest X-ray with video */}
+            <article className="proj feature" style={{display: visible('imaging')?undefined:'none'}}>
+              <div>
+                <h4>AI-Powered Chest X-ray Interpretation (Hackathon/Startup)</h4>
+                <div className="meta"><span className="pill">Imaging</span><span className="pill">Radiology</span><span className="pill">1st place</span></div>
+                <div className="tags">
+                  <span className="tag">Deep Learning</span>
+                  <span className="tag">Chest X-ray</span>
+                  <span className="tag">Radiology</span>
+                  <span className="tag">Startup</span>
+                </div>
+                <p className="kv">
+                  Developed a supervised deep learning system to detect lung masses and generate descriptive reports from chest X-rays.
+                  Designed to support radiologists and improve workflow efficiency in private hospitals. Incubated at <b>TUMO Labs</b>, won <b>1st place among 12 teams</b>.
+                </p>
+                <div className="links-row">
+                  <a className="plink" href="https://github.com/symatevo/Chest-Xray-Mass-Detection" target="_blank" rel="noopener noreferrer">Code</a>
+                  {" · "}
+                  <a className="plink" href="https://www.youtube.com/watch?v=v3KYiwwXzuE" target="_blank" rel="noopener noreferrer">Demo</a>
+                </div>
+              </div>
+              <div className="preview video" aria-hidden="true">
+                <iframe
+                  src="https://www.youtube.com/embed/v3KYiwwXzuE"
+                  title="Chest X-ray Project Demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </article>
+
+            {/* 5: BCI */}
+            <article className="proj" style={{display: visible('bci')?undefined:'none'}}>
               <h4>Brain–Computer Interface from EEG</h4>
+              <div className="meta"><span className="pill">EEG / BCI</span><span className="pill">MNE · CSP</span><span className="pill">Up to 86%</span></div>
               <div className="tags">
                 <span className="tag">EEG</span>
                 <span className="tag">MNE</span>
@@ -381,9 +441,11 @@ export default function App() {
                 <a className="plink" href="https://github.com/symatevo/Total-Perspective-Vortex/tree/main" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
               </div>
             </article>
-            {/* 7 */}
-            <article className="proj">
+
+            {/* 6: EMG hardware */}
+            <article className="proj" style={{display: visible('emg')?undefined:'none'}}>
               <h4>EMG Signal Acquisition System (Bachelor Thesis)</h4>
+              <div className="meta"><span className="pill">EMG</span><span className="pill">Hardware + Software</span><span className="pill">SVM · RF · DT</span></div>
               <div className="tags">
                 <span className="tag">EMG</span>
                 <span className="tag">Hardware + Software</span>
@@ -401,10 +463,11 @@ export default function App() {
                 <a className="plink" href="/Syuzanna%20Matevosyan%20Poster.pdf" target="_blank" rel="noopener noreferrer">Poster</a>
               </div>
             </article>
-            {/* 8 */}
-            <article className="proj">
+
+            {/* 7: In-progress */}
+            <article className="proj" style={{display: visible('emg')?undefined:'none'}}>
               <h4>Socket-Level Haptic Feedback - Closed-Loop Virtual Arm for Amputees Training</h4>
-              <div className="tags"><span className="tag">Prototype</span><span className="tag">Haptics</span><span className="tag">sEMG</span></div>
+              <div className="meta"><span className="pill">Prototype</span><span className="pill">Haptics</span><span className="pill">sEMG</span></div>
               <p className="kv"><b>Status:</b> In progress.</p>
               <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training of amputees.</p>
               <div className="links-row"><a className="plink" href="#">Design Notes</a></div>

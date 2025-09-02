@@ -253,7 +253,7 @@ export default function App() {
             {/* LANGUAGES */}
             <a id="languages" className="section-anchor" ref={languagesRef} />
             <div style={{ height: "18px" }} />
-            <div className="h3">Languages</div>
+            <div className="h3">Language</div>
             <div className="grid-chips" aria-label="Languages">
               <div className="chip"><span>English</span><span className="badge adv">C1</span></div>
               {/* Russian → green */}

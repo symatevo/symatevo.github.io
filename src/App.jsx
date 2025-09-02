@@ -318,9 +318,9 @@ export default function App() {
     <span className="tag">Classification</span>
   </div>
   <p className="kv">
-    Analyzed sEMG signals from the Ninapro DB7 dataset to better understand and classify upper-limb motor activity. 
-    Reduced signal dimensionality with PCA and tensor decomposition to reveal key patterns of muscle activation. 
-    Trained machine learning models that decoded 17 distinct hand gestures, leveraging both spatial (electrode) and temporal (signal dynamics) information.
+    Analyzed Ninapro DB7 sEMG signals to decode 17 upper-limb gestures. 
+    Reduced dimensionality with PCA and tensor decomposition to reveal key muscle activation patterns, then benchmarked classifiers from SVM/LDA to deep neural networks.  
+    DNNs achieved the best performance, reaching up to 98% accuracy in subject-specific cases.
   </p>
   <div className="links-row">
     <a

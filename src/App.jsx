@@ -271,7 +271,7 @@ export default function App() {
             Highlights on my research and applied work, with code or demos where available.
           </p>
           <div className="cards" style={{ marginTop: 12 }}>
-            {/* 1 */}
+{/* 1 */}
 <article className="proj">
   <h4>Augmented Reality System for Myoelectric Prosthesis Training</h4>
   <div className="tags">
@@ -288,11 +288,10 @@ export default function App() {
   <div className="links-row">
     <a
       className="plink"
-      href="/prosthesis-ar-training.pdf"
-      download
+      href="/prosthesis-ar-training.pdf"     // put PDF in /public
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Download the article PDF"
+      aria-label="Open the article PDF in a new tab"
     >
       Article (PDF)
     </a>

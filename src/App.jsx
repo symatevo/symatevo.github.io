@@ -391,15 +391,33 @@ export default function App() {
     </a>
   </div>
 </article>
-            {/* 6 */}
+            {/* 5 */}
             <article className="proj">
-              <h4>Tissue Characterization & Clustering</h4>
-              <div className="tags"><span className="tag">GLCM</span><span className="tag">LBP</span><span className="tag">11×11</span><span className="tag">44 features</span></div>
-              <p className="kv"><b>Problem:</b> Foreground/background & tissue-type separation.</p>
-              <p className="kv"><b>Approach:</b> Per-pixel feature vectors on 11×11 neighborhoods; classical stats + clustering.</p>
-              <p className="kv"><b>Results:</b> Reliable separation; interpretable feature importance.</p>
-              <div className="links-row"><a className="plink" href="#">Notebook</a></div>
-            </article>
+  <h4>Brain–Computer Interface from EEG (Motor Imagery)</h4>
+  <div className="tags">
+    <span className="tag">EEG</span>
+    <span className="tag">MNE</span>
+    <span className="tag">CSP · SPoC</span>
+    <span className="tag">PCA</span>
+    <span className="tag">Random Forest</span>
+  </div>
+  <p className="kv">
+    Built a BCI pipeline using the EEGBCI dataset to decode executed and imagined hand/foot movements. 
+    Applied preprocessing, ICA, and spatial filters (CSP/SPoC) combined with PCA and machine learning classifiers. 
+    Compared pipelines (LDA, Logistic Regression, Random Forest) and achieved up to 86% accuracy with CSP + Random Forest.
+  </p>
+  <div className="links-row">
+    <a
+      className="plink"
+      href="https://github.com/symatevo/Total-Perspective-Vortex/tree/main"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      GitHub Repo
+    </a>
+  </div>
+</article>
+
             {/* 7 */}
             <article className="proj">
               <h4>Ninapro DB7 Multimodal Decoding</h4>

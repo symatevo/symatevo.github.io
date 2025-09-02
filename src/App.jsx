@@ -505,7 +505,7 @@ export default function App() {
               <div className="meta"><span className="pill">Prototype</span><span className="pill">Haptics</span><span className="pill">sEMG</span></div>
               <p className="kv"><b>Status:</b> In progress.</p>
               <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training of amputees.</p>
-              <div className="links-row"><a className="plink" href="Socket_Haptic_Training_Project_Design.pdf" target="_blank" rel="noopener noreferrer">Design Notes (PDF)</a></div>
+              <div className="links-row"><a className="plink" href="Socket_Haptic_Training_Project_Design.pdf" target="_blank" rel="noopener noreferrer">Design Notes</a></div>
             </article>
           </div>
         </section>

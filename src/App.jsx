@@ -8,7 +8,6 @@ export default function App() {
 
   // Favicon (tab icon)
   useEffect(() => {
-    // Ensure a <link rel="icon"> exists and points to your 32x32 PNG
     const link =
       document.querySelector("link[rel~='icon']") || document.createElement("link");
     link.rel = "icon";
@@ -76,8 +75,8 @@ export default function App() {
 
   const css = `
     :root{
-      --bg:#ffffff; --text:#1f2328; --muted:#6b7280; --line:#e5e7eb; --card:#ffffff;
-      --mast:#fbfbfc; --accent:#2563eb; --accent-ink:#1e40af;
+      --bg:#ffffff; --text:#0f172a; --muted:#64748b; --line:#e5e7eb; --card:#ffffff;
+      --mast:#fafbff; --accent:#2563eb; --accent-ink:#1e40af;
     }
     *{box-sizing:border-box}
     html,body{margin:0;background:var(--bg);color:var(--text);
@@ -85,27 +84,49 @@ export default function App() {
       font: 400 16px/1.7 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
     html{scroll-behavior:smooth}
 
-    /* Masthead with very subtle mesh/pastel glow */
-    .masthead{position:relative;height:200px;background:var(--mast);border-bottom:1px solid var(--line);overflow:hidden}
-    .masthead:before{content:"";position:absolute;inset:-40% -20% -40% -20%;
+    /* ==== ELEVATED, BUT MINIMAL HEADER ==== */
+    .masthead{position:relative;height:280px;background:var(--mast);border-bottom:1px solid var(--line);overflow:hidden}
+    /* soft corner glows */
+    .masthead:before{content:"";position:absolute;inset:-30%;
       background:
-        radial-gradient(600px 400px at 85% -10%, rgba(191,219,254,.55) 0%, rgba(191,219,254,0) 60%),
-        radial-gradient(600px 400px at -10% 120%, rgba(167,243,208,.55) 0%, rgba(167,243,208,0) 60%);
-      filter: blur(20px); opacity:.45; pointer-events:none;
-    }
-    .hero{height:100%;display:flex;align-items:flex-end;padding-bottom:0}
+        radial-gradient(550px 380px at 85% -10%, rgba(191,219,254,.55) 0%, rgba(191,219,254,0) 60%),
+        radial-gradient(520px 360px at -10% 115%, rgba(167,243,208,.55) 0%, rgba(167,243,208,0) 60%);
+      filter: blur(24px); opacity:.5; pointer-events:none}
+    /* ultra-subtle grid, masked so it never feels busy */
+    .masthead:after{content:"";position:absolute;inset:0;
+      background:
+        repeating-linear-gradient(90deg, rgba(15,23,42,.06) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(0deg, rgba(15,23,42,.05) 0 1px, transparent 1px 40px);
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.6) 65%, transparent 100%);
+      pointer-events:none}
+
+    .hero{height:100%;display:flex;align-items:end;padding-bottom:22px}
 
     .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 72px}
 
     /* Header text */
-    .header{display:flex;align-items:flex-end;gap:16px;padding:18px 0 16px}
-    h1{margin:0;font-weight:600;letter-spacing:-.01em;font-size:24px;color:#0f172a}
-    .subtitle{font-style:italic;font-size:15px;color:var(--muted);margin-top:6px}
+    .header{display:flex;align-items:flex-end;gap:16px;padding:0}
+    .header h1{margin:0;letter-spacing:-.02em;font-weight:700;line-height:1.05}
+    /* responsive fluid size without being huge */
+    .header h1{font-size: clamp(28px, 4.2vw, 44px);}
+
+    /* tasteful gradient ink */
+    .header h1{
+      background: linear-gradient(90deg, #0f172a 0%, #111827 35%, #1e3a8a 65%, #0f172a 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* elegant underline that hugs the title width */
+    .header h1::after{content:""; display:block; height:2px; margin-top:10px;
+      background: linear-gradient(90deg, rgba(30,58,138,.0), rgba(30,58,138,.45), rgba(30,58,138,.0));
+      border-radius:2px}
+
+    .subtitle{font-style:italic;font-size:clamp(14px, 1.6vw, 16px);color:var(--muted);margin-top:10px;opacity:.95}
 
     .caret{display:inline-block;width:2px;height:1.15em;background:#111827;margin-left:2px;vertical-align:-0.15em;animation:blink 1s step-end infinite}
     @keyframes blink{50%{opacity:0}}
 
-    /* Light reveal animation */
+    /* gentle reveal */
     .reveal{opacity:0;transform:translateY(8px);animation:fadeUp .6s ease forwards}
     .reveal:nth-of-type(2){animation-delay:.05s}
     .reveal:nth-of-type(3){animation-delay:.1s}
@@ -196,10 +217,10 @@ export default function App() {
       {/* Masthead */}
       <div className="masthead">
         <div className="wrap hero">
-          <div className="header">
+          <div className="header" aria-label="Site header">
             <div>
               <h1 aria-label="Syuzanna Matevosyan — Portfolio">Syuzanna Matevosyan — Portfolio</h1>
-              <div className="subtitle">
+              <div className="subtitle" aria-live="polite">
                 {typedSubtitle}
                 {isSubtitleTyping && <span className="caret" aria-hidden="true" />}
               </div>
@@ -484,7 +505,6 @@ export default function App() {
               <div className="meta"><span className="pill">Prototype</span><span className="pill">Haptics</span><span className="pill">sEMG</span></div>
               <p className="kv"><b>Status:</b> In progress.</p>
               <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training of amputees.</p>
-              <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
             </article>
           </div>
         </section>

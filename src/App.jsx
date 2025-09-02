@@ -393,7 +393,7 @@ export default function App() {
 </article>
             {/* 5 */}
             <article className="proj">
-  <h4>Brain–Computer Interface from EEG (Motor Imagery)</h4>
+  <h4>Brain–Computer Interface from EEG</h4>
   <div className="tags">
     <span className="tag">EEG</span>
     <span className="tag">MNE</span>
@@ -430,7 +430,7 @@ export default function App() {
   <p className="kv">
     Designed and built a three-electrode EMG acquisition system to capture hand movement signals. 
     Collected data from volunteers, extracted features, and evaluated multiple ML algorithms (SVM, Random Forest, Decision Tree). 
-    Achieved up to <b>72.6% accuracy with SVM (RBF)</b>, with results highlighting subject variability and the need for more channels for robust prosthetic control.
+    Achieved up to 72.6% accuracy with SVM (RBF), with results highlighting subject variability and the need for more channels for robust prosthetic control.
   </p>
   <div className="links-row">
     <a
@@ -457,7 +457,7 @@ export default function App() {
               <h4>Socket-Level Haptic Feedback (Closed-Loop)</h4>
               <div className="tags"><span className="tag">Prototype</span><span className="tag">Haptics</span><span className="tag">sEMG</span></div>
               <p className="kv"><b>Status:</b> In progress.</p>
-              <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training.</p>
+              <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training of amputees.</p>
               <div className="links-row"><a className="plink" href="#">Design Notes</a></div>
             </article>
           </div>

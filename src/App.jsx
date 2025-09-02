@@ -344,7 +344,7 @@ export default function App() {
 </article>
             {/* 3 */}
 <article className="proj">
-  <h4>AI-Powered Chest X-ray Interpretation (Hackathon/Startup)</h4>
+  <h4>AI-Powered Chest X-ray Interpretation (Hackathon → Startup)</h4>
   <div className="tags">
     <span className="tag">Deep Learning</span>
     <span className="tag">Chest X-ray</span>

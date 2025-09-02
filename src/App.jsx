@@ -329,7 +329,7 @@ export default function App() {
                 <p className="kv">
                   Built a gamified training platform for amputees to practice 17 hand gestures before prosthesis fitting.
                   Using AR, users could see a virtual arm and control it with their own EMG signals.
-                  The system achieved ~70% classification accuracy, and participants described the experience as engaging and motivating.
+                  The system achieved mean ~70% classification accuracy, and participants described the experience as engaging and motivating.
                 </p>
                 <div className="links-row">
                   <a className="plink" href="/prosthesis-ar-training.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the article PDF in a new tab">Article (PDF)</a>

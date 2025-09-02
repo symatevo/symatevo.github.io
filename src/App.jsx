@@ -403,7 +403,7 @@ export default function App() {
                 </div>
                 <p className="kv">
                   Developed a supervised deep learning system to detect lung masses and generate descriptive reports from chest X-rays.
-                  Designed to support radiologists and improve workflow efficiency in private hospitals. Incubated at <b>TUMO Labs</b>, won <b>1st place among 12 teams</b>.
+                  Designed to support radiologists and improve workflow efficiency in private hospitals. Incubated at TUMO Labs, won <b>1st place among 12 teams</b>.
                 </p>
                 <div className="links-row">
                   <a className="plink" href="https://github.com/symatevo/Chest-Xray-Mass-Detection" target="_blank" rel="noopener noreferrer">Code</a>

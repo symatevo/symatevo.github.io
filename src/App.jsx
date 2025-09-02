@@ -1,8 +1,21 @@
 import { useEffect, useState, useRef } from "react";
 
 export default function App() {
+  // Page title
   useEffect(() => {
     document.title = "Syuzanna Matevosyan — Portfolio";
+  }, []);
+
+  // Favicon (tab icon)
+  useEffect(() => {
+    // Ensure a <link rel="icon"> exists and points to your 32x32 PNG
+    const link =
+      document.querySelector("link[rel~='icon']") || document.createElement("link");
+    link.rel = "icon";
+    link.type = "image/png";
+    link.sizes = "32x32";
+    link.href = "/favicon-32x32.png"; // place this file at your site root
+    document.head.appendChild(link);
   }, []);
 
   // Subtitle typing (every visit)
@@ -285,6 +298,7 @@ export default function App() {
             </div>
           </section>
         </div>
+
         {/* FULL-WIDTH PROJECTS */}
         <section id="projects" className="card reveal" style={{ marginTop: 24 }}>
           <div className="h3">Projects</div>
@@ -339,7 +353,7 @@ export default function App() {
               </div>
               <div className="preview video" aria-hidden="true">
                 <iframe
-                  src="https://youtube.com/shorts/CcYEttrG2xQ"
+                  src="https://www.youtube.com/embed/CcYEttrG2xQ"
                   title="AR Prosthesis Training Demo"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen

@@ -507,6 +507,57 @@ export default function App() {
               <p className="kv"><b>Goal:</b> Combine EMG control with tactile cues for simultaneous motor & perception training of amputees.</p>
               <div className="links-row"><a className="plink" href="Socket_Haptic_Training_Project_Design.pdf" target="_blank" rel="noopener noreferrer">Design Notes</a></div>
             </article>
+
+                        {/* 8: Rehabilitation Robotics Review */}
+            <article className="proj" style={{display: visible('emg')?undefined:'none'}}>
+              <h4>Rehabilitation Robotics: Current State, Technologies, and Future Directions</h4>
+              <div className="meta">
+                <span className="pill">Review</span>
+                <span className="pill">Robotics</span>
+                <span className="pill">Control Systems</span>
+              </div>
+              <div className="tags">
+                <span className="tag">Rehabilitation</span>
+                <span className="tag">Robotics</span>
+                <span className="tag">EMG</span>
+                <span className="tag">AI · VR</span>
+              </div>
+              <p className="kv">
+                Authored a review analyzing therapeutic robots, manipulation aids, and intelligent mobility systems.
+                Focused on control strategies (impedance, EMG-based, adaptive learning) and identified major gaps in
+                human–robot interaction. Highlighted emerging solutions integrating AI, VR, and multimodal control.
+              </p>
+              <div className="links-row">
+                <a className="plink"
+                   href="/Syuzanna%20Matevosyan%20Rehabilitation%20Robotics.pdf"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                   Article (PDF)
+                </a>
+              </div>
+            </article>
+
+            {/* 9: Musculoskeletal Modeling OpenSim */}
+            <article className="proj" style={{display: visible('emg')?undefined:'none'}}>
+              <h4>Musculoskeletal Modeling for Maximum Jump Height using OpenSim</h4>
+              <div className="meta">
+                <span className="pill">Biomechanics</span>
+                <span className="pill">OpenSim</span>
+                <span className="pill">Simulation</span>
+              </div>
+              <div className="tags">
+                <span className="tag">OpenSim</span>
+                <span className="tag">MATLAB</span>
+                <span className="tag">Muscle Excitations</span>
+                <span className="tag">Optimization</span>
+              </div>
+              <p className="kv">
+                Developed a jumper model in OpenSim to maximize jump height through muscle excitation optimization.
+                Iteratively tuned excitations for vastus (VAS), soleus (SOL), gastrocnemius (GAS), and gluteals (GMAX),
+                running forward dynamic simulations and analyzing outcomes with MATLAB.
+              </p>
+            </article>
+
           </div>
         </section>
 

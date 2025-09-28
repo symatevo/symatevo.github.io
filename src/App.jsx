@@ -331,7 +331,7 @@ export default function App() {
           <div className="filters" role="toolbar" aria-label="Filter projects">
             {[
               ["all","All"],
-              ["emg","EMG / AR"],
+              ["emg","EMG / AR / Rehab"],
               ["imaging","Medical Imaging"],
               ["bci","EEG / BCI"],
             ].map(([key,label]) => (

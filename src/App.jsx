@@ -375,7 +375,7 @@ export default function App() {
             </div>
             <div className="demo-hero-video">
               <video
-                src="https://symatevo.github.io/RehabOrchestra/video/Tutorial.mp4"
+                src="/videos/Tutorial_2.mp4"
                 autoPlay
                 muted
                 loop
@@ -557,6 +557,33 @@ export default function App() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
+              </div>
+            </article>
+
+            {/* CNN EMG: featured with local video */}
+            <article className="proj feature" style={{display: visible('emg')?undefined:'none'}}>
+              <div>
+                <h4>CNN Hand Gesture Classification based on EMG</h4>
+                <div className="meta">
+                  <span className="pill">EMG</span>
+                  <span className="pill">Deep Learning</span>
+                  <span className="pill">MyoArmband</span>
+                </div>
+                <div className="tags">
+                  <span className="tag">CNN</span>
+                  <span className="tag">MyoArmband</span>
+                  <span className="tag">Data Augmentation</span>
+                  <span className="tag">Python</span>
+                  <span className="tag">Keras</span>
+                </div>
+                <p className="kv">
+                  Uses a MyoArmband CNN to classify 6 gestures (including rest) directly from raw EMG signals.
+                  Trained on very small per-subject datasets and boosted with data augmentation techniques to
+                  achieve robust performance despite limited training examples.
+                </p>
+              </div>
+              <div className="preview video" aria-hidden="true">
+                <video src="/videos/emg-demo.mp4" autoPlay muted loop playsInline style={{width:"100%",borderRadius:10,display:"block"}} />
               </div>
             </article>
 

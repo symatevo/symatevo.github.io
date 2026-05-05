@@ -569,7 +569,6 @@ export default function App() {
                 </div>
                 <div className="tags">
                   <span className="tag">CNN</span>
-                  <span className="tag">MyoArmband</span>
                   <span className="tag">Data Augmentation</span>
                   <span className="tag">Python</span>
                   <span className="tag">Keras</span>

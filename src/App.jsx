@@ -385,22 +385,19 @@ export default function App() {
           </div>
 
           {/* Documentary */}
-          <div className="doc-title">
-            <div className="h3" style={{ fontSize: 16, marginBottom: 0 }}>Documentary Series</div>
-            <span className="doc-title-am">Վավերագրական Շարք</span>
-          </div>
-          <p className="muted" style={{ marginTop: 4, marginBottom: 14, fontSize: 14 }}>
+          <div className="h3" style={{ fontSize: 16, marginBottom: 4 }}>Վավերագրական Շարք</div>
+          <p className="muted" style={{ marginTop: 0, marginBottom: 14, fontSize: 14 }}>
             A 5-episode behind-the-scenes look at the thesis journey — from concept to working prototype.
           </p>
 
           <div className="thesis-reel-grid">
             {[
-              { id: "DXSr5QLi55E", ep: "Ep. 1" },
-              { id: "DXWU4kmiTbo", ep: "Ep. 2" },
-              { id: "DXcAAEsC3fY", ep: "Ep. 3" },
-              { id: "DXmSdRxC-i-", ep: "Ep. 4" },
-              { id: "DX5M1iwCklA", ep: "Ep. 5" },
-            ].map(({ id, ep }) => (
+              { id: "DXSr5QLi55E", ep: "Ep. 1", blocked: false },
+              { id: "DXWU4kmiTbo", ep: "Ep. 2", blocked: false },
+              { id: "DXcAAEsC3fY", ep: "Ep. 3", blocked: true },
+              { id: "DXmSdRxC-i-", ep: "Ep. 4", blocked: true },
+              { id: "DX5M1iwCklA", ep: "Ep. 5", blocked: true },
+            ].map(({ id, ep, blocked }) => (
               <div key={id}>
                 <div className="ep-label">{ep}</div>
                 <div className="reel-wrap">
@@ -409,6 +406,7 @@ export default function App() {
                     title={ep}
                     allowFullScreen
                     scrolling="no"
+                    style={blocked ? { pointerEvents: "none" } : undefined}
                   />
                 </div>
                 <a

@@ -205,17 +205,30 @@ export default function App() {
     .section-anchor{position:relative;top:-80px;display:block;height:1px}
 
     /* Master Thesis */
-    .thesis-demo-block{display:flex;align-items:flex-start;gap:18px;margin:14px 0 22px;flex-wrap:wrap}
-    .thesis-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
-    @media (max-width: 700px){.thesis-grid{grid-template-columns:1fr}}
+    .thesis-reel-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+    @media (max-width:1000px){.thesis-reel-grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:600px){.thesis-reel-grid{grid-template-columns:repeat(2,1fr)}}
     .reel-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#000}
-    .reel-wrap iframe{display:block;width:100%;height:560px;border:0}
-    .ep-label{font-size:13px;font-weight:700;color:var(--muted);margin:0 0 6px;letter-spacing:.04em;text-transform:uppercase}
-    .ig-link{font-weight:600;font-size:13px;text-decoration:none;color:var(--accent);display:inline-block;margin-top:6px}
+    .reel-wrap iframe{display:block;width:100%;height:320px;border:0}
+    .ep-label{font-size:11px;font-weight:700;color:var(--muted);margin:0 0 5px;letter-spacing:.05em;text-transform:uppercase}
+    .ig-link{font-weight:600;font-size:12px;text-decoration:none;color:var(--accent);display:inline-block;margin-top:5px}
     .ig-link:hover{text-decoration:underline}
-    .demo-banner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-      background:#f0f4ff;border:1px solid #c7d2fe;border-radius:12px;padding:16px 20px;margin:14px 0 22px}
-    .demo-banner p{margin:4px 0 0;font-size:14px;color:#374151}
+
+    /* Demo hero block */
+    .demo-hero{display:grid;grid-template-columns:1fr 1.4fr;gap:0;border-radius:14px;overflow:hidden;
+      border:1px solid #c7d2fe;margin:16px 0 26px;background:#0f172a}
+    @media (max-width:800px){.demo-hero{grid-template-columns:1fr}}
+    .demo-hero-text{padding:28px 28px;display:flex;flex-direction:column;justify-content:center;gap:14px;
+      background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 50%,#0c4a6e 100%)}
+    .demo-hero-text h4{margin:0;font-size:20px;font-weight:700;color:#fff;line-height:1.3}
+    .demo-hero-text p{margin:0;font-size:14px;color:#bfdbfe;line-height:1.6}
+    .demo-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#1e3a8a;
+      font-weight:700;font-size:14px;padding:10px 20px;border-radius:999px;text-decoration:none;
+      width:fit-content;transition:transform .12s ease,box-shadow .12s ease;
+      box-shadow:0 4px 14px rgba(255,255,255,.25)}
+    .demo-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,255,255,.35)}
+    .demo-hero-video{background:#000;display:flex;align-items:center;justify-content:center}
+    .demo-hero-video video{width:100%;display:block;max-height:340px;object-fit:cover}
 
     /* Footer */
     footer{padding:18px 0;color:var(--muted);font-size:14px}
@@ -340,29 +353,46 @@ export default function App() {
             EMG-driven mirror therapy system for upper-limb motor rehabilitation — combining real-time biosignal processing, augmented reality, and interactive music feedback.
           </p>
 
-          {/* Demo banner */}
-          <div className="demo-banner">
-            <div>
-              <div style={{ fontWeight: 700, fontSize: 15 }}>RehabOrchestra — Interactive Demo</div>
-              <p>The core interface of the thesis: mirror therapy driven by EMG signals with real-time biofeedback.</p>
+          {/* Demo hero */}
+          <div className="demo-hero">
+            <div className="demo-hero-text">
+              <h4>RehabOrchestra</h4>
+              <p>
+                The core interface built for the thesis — mirror therapy driven by EMG signals with real-time music biofeedback. Try it live in your browser.
+              </p>
+              <a
+                className="demo-cta"
+                href="https://symatevo.github.io/RehabOrchestra/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ▶ Launch Interactive Demo
+              </a>
             </div>
-            <a className="btn" href="https://symatevo.github.io/RehabOrchestra/" target="_blank" rel="noopener noreferrer" style={{ whiteSpace: "nowrap" }}>
-              Launch Demo ↗
-            </a>
+            <div className="demo-hero-video">
+              <video
+                src="https://symatevo.github.io/RehabOrchestra/video/Tutorial.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            </div>
           </div>
 
           {/* Documentary */}
           <div className="h3" style={{ fontSize: 16, marginBottom: 4 }}>Documentary Series</div>
           <p className="muted" style={{ marginTop: 0, marginBottom: 14, fontSize: 14 }}>
-            A 4-episode behind-the-scenes look at the thesis journey — from concept to working prototype.
+            A 5-episode behind-the-scenes look at the thesis journey — from concept to working prototype.
           </p>
 
-          <div className="thesis-grid">
+          <div className="thesis-reel-grid">
             {[
-              { id: "DXSr5QLi55E", ep: "Episode 1" },
-              { id: "DXWU4kmiTbo", ep: "Episode 2" },
-              { id: "DXcAAEsC3fY", ep: "Episode 3" },
-              { id: "DXmSdRxC-i-", ep: "Episode 4" },
+              { id: "DXSr5QLi55E", ep: "Ep. 1" },
+              { id: "DXWU4kmiTbo", ep: "Ep. 2" },
+              { id: "DXcAAEsC3fY", ep: "Ep. 3" },
+              { id: "DXmSdRxC-i-", ep: "Ep. 4" },
+              { id: "DX5M1iwCklA", ep: "Ep. 5" },
             ].map(({ id, ep }) => (
               <div key={id}>
                 <div className="ep-label">{ep}</div>
@@ -380,7 +410,7 @@ export default function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Watch on Instagram ↗
+                  Instagram ↗
                 </a>
               </div>
             ))}

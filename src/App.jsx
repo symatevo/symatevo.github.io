@@ -394,9 +394,9 @@ export default function App() {
             {[
               { id: "DXSr5QLi55E", ep: "Ep. 1", blocked: false },
               { id: "DXWU4kmiTbo", ep: "Ep. 2", blocked: false },
-              { id: "DXcAAEsC3fY", ep: "Ep. 3", blocked: true },
-              { id: "DXmSdRxC-i-", ep: "Ep. 4", blocked: true },
-              { id: "DX5M1iwCklA", ep: "Ep. 5", blocked: true },
+              { id: "DXcAAEsC3fY", ep: "Ep. 3", blocked: false },
+              { id: "DXmSdRxC-i-", ep: "Ep. 4", blocked: false },
+              { id: "DX5M1iwCklA", ep: "Ep. 5", blocked: false },
             ].map(({ id, ep, blocked }) => (
               <div key={id}>
                 <div className="ep-label">{ep}</div>

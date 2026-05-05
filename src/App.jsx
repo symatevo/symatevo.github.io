@@ -208,11 +208,15 @@ export default function App() {
     .thesis-reel-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
     @media (max-width:1000px){.thesis-reel-grid{grid-template-columns:repeat(3,1fr)}}
     @media (max-width:600px){.thesis-reel-grid{grid-template-columns:repeat(2,1fr)}}
-    .reel-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#000}
-    .reel-wrap iframe{display:block;width:100%;height:320px;border:0}
+    /* Force all reels to the same 9:16 portrait box, regardless of Instagram's own resizing */
+    .reel-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#000;
+      position:relative;padding-top:177.78%}
+    .reel-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
     .ep-label{font-size:11px;font-weight:700;color:var(--muted);margin:0 0 5px;letter-spacing:.05em;text-transform:uppercase}
     .ig-link{font-weight:600;font-size:12px;text-decoration:none;color:var(--accent);display:inline-block;margin-top:5px}
     .ig-link:hover{text-decoration:underline}
+    .doc-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+    .doc-title-am{font-size:13px;color:var(--muted);font-style:italic;font-weight:400}
 
     /* Demo hero block */
     .demo-hero{display:grid;grid-template-columns:1fr 1.4fr;gap:0;border-radius:14px;overflow:hidden;
@@ -350,7 +354,7 @@ export default function App() {
         <section className="card reveal" style={{ marginTop: 24 }}>
           <div className="h3">Master Thesis</div>
           <p className="muted" style={{ marginTop: 0, marginBottom: 0 }}>
-            EMG-driven mirror therapy system for upper-limb motor rehabilitation — combining real-time biosignal processing, augmented reality, and interactive music feedback.
+            Camera and/or EMG-driven mirror therapy system for upper-limb motor rehabilitation — combining real-time biosignal processing, augmented reality, and interactive music feedback.
           </p>
 
           {/* Demo hero */}
@@ -358,7 +362,7 @@ export default function App() {
             <div className="demo-hero-text">
               <h4>RehabOrchestra</h4>
               <p>
-                The core interface built for the thesis — mirror therapy driven by EMG signals with real-time music biofeedback. Try it live in your browser.
+                The core interface built for the thesis — mirror therapy driven by camera and/or EMG signals with real-time music biofeedback. Try it live in your browser.
               </p>
               <a
                 className="demo-cta"
@@ -381,8 +385,11 @@ export default function App() {
           </div>
 
           {/* Documentary */}
-          <div className="h3" style={{ fontSize: 16, marginBottom: 4 }}>Documentary Series</div>
-          <p className="muted" style={{ marginTop: 0, marginBottom: 14, fontSize: 14 }}>
+          <div className="doc-title">
+            <div className="h3" style={{ fontSize: 16, marginBottom: 0 }}>Documentary Series</div>
+            <span className="doc-title-am">Վավերագրական Շարք</span>
+          </div>
+          <p className="muted" style={{ marginTop: 4, marginBottom: 14, fontSize: 14 }}>
             A 5-episode behind-the-scenes look at the thesis journey — from concept to working prototype.
           </p>
 

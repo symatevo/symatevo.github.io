@@ -385,7 +385,7 @@ export default function App() {
           </div>
 
           {/* Documentary */}
-          <div className="h3" style={{ fontSize: 16, marginBottom: 4 }}>Վավերագրական Շարք</div>
+          <div className="h3" style={{ fontSize: 16, marginBottom: 4 }}>Documented Work (in Armenian)</div>
           <p className="muted" style={{ marginTop: 0, marginBottom: 14, fontSize: 14 }}>
             A 5-episode behind-the-scenes look at the thesis journey — from concept to working prototype.
           </p>

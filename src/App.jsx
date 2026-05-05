@@ -204,6 +204,19 @@ export default function App() {
     /* Section anchor offset */
     .section-anchor{position:relative;top:-80px;display:block;height:1px}
 
+    /* Master Thesis */
+    .thesis-demo-block{display:flex;align-items:flex-start;gap:18px;margin:14px 0 22px;flex-wrap:wrap}
+    .thesis-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+    @media (max-width: 700px){.thesis-grid{grid-template-columns:1fr}}
+    .reel-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#000}
+    .reel-wrap iframe{display:block;width:100%;height:560px;border:0}
+    .ep-label{font-size:13px;font-weight:700;color:var(--muted);margin:0 0 6px;letter-spacing:.04em;text-transform:uppercase}
+    .ig-link{font-weight:600;font-size:13px;text-decoration:none;color:var(--accent);display:inline-block;margin-top:6px}
+    .ig-link:hover{text-decoration:underline}
+    .demo-banner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+      background:#f0f4ff;border:1px solid #c7d2fe;border-radius:12px;padding:16px 20px;margin:14px 0 22px}
+    .demo-banner p{margin:4px 0 0;font-size:14px;color:#374151}
+
     /* Footer */
     footer{padding:18px 0;color:var(--muted);font-size:14px}
   `;
@@ -319,6 +332,60 @@ export default function App() {
             </div>
           </section>
         </div>
+
+        {/* MASTER THESIS */}
+        <section className="card reveal" style={{ marginTop: 24 }}>
+          <div className="h3">Master Thesis</div>
+          <p className="muted" style={{ marginTop: 0, marginBottom: 0 }}>
+            EMG-driven mirror therapy system for upper-limb motor rehabilitation — combining real-time biosignal processing, augmented reality, and interactive music feedback.
+          </p>
+
+          {/* Demo banner */}
+          <div className="demo-banner">
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 15 }}>RehabOrchestra — Interactive Demo</div>
+              <p>The core interface of the thesis: mirror therapy driven by EMG signals with real-time biofeedback.</p>
+            </div>
+            <a className="btn" href="https://symatevo.github.io/RehabOrchestra/" target="_blank" rel="noopener noreferrer" style={{ whiteSpace: "nowrap" }}>
+              Launch Demo ↗
+            </a>
+          </div>
+
+          {/* Documentary */}
+          <div className="h3" style={{ fontSize: 16, marginBottom: 4 }}>Documentary Series</div>
+          <p className="muted" style={{ marginTop: 0, marginBottom: 14, fontSize: 14 }}>
+            A 4-episode behind-the-scenes look at the thesis journey — from concept to working prototype.
+          </p>
+
+          <div className="thesis-grid">
+            {[
+              { id: "DXSr5QLi55E", ep: "Episode 1" },
+              { id: "DXWU4kmiTbo", ep: "Episode 2" },
+              { id: "DXcAAEsC3fY", ep: "Episode 3" },
+              { id: "DXmSdRxC-i-", ep: "Episode 4" },
+            ].map(({ id, ep }) => (
+              <div key={id}>
+                <div className="ep-label">{ep}</div>
+                <div className="reel-wrap">
+                  <iframe
+                    src={`https://www.instagram.com/reel/${id}/embed/`}
+                    title={ep}
+                    allowFullScreen
+                    scrolling="no"
+                  />
+                </div>
+                <a
+                  className="ig-link"
+                  href={`https://www.instagram.com/reel/${id}/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Watch on Instagram ↗
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* FULL-WIDTH PROJECTS */}
         <section id="projects" className="card reveal" style={{ marginTop: 24 }}>
